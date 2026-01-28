@@ -425,6 +425,9 @@ const api: ElectronAPI = {
   menuCopy: () => ipcRenderer.invoke(IPC_CHANNELS.MENU_COPY),
   menuPaste: () => ipcRenderer.invoke(IPC_CHANNELS.MENU_PASTE),
   menuSelectAll: () => ipcRenderer.invoke(IPC_CHANNELS.MENU_SELECT_ALL),
+
+  setLanguage: (language: string) => ipcRenderer.invoke(IPC_CHANNELS.LANGUAGE_SET, language),
+  getLanguage: () => ipcRenderer.invoke(IPC_CHANNELS.LANGUAGE_GET),
 }
 
 contextBridge.exposeInMainWorld('electronAPI', api)

@@ -6,6 +6,7 @@
  */
 
 import { ExternalLink } from "lucide-react"
+import { useTranslation } from 'react-i18next'
 import type { ApiSetupMethod } from "./APISetupStep"
 import { StepFormLayout, BackButton, ContinueButton } from "./primitives"
 import {
@@ -44,54 +45,25 @@ export function CredentialsStep({
 }: CredentialsStepProps) {
   const isOAuth = apiSetupMethod === 'claude_oauth'
 
+  const { t } = useTranslation('onboarding')
+
   // --- OAuth flow ---
   if (isOAuth) {
-    // Waiting for authorization code entry
-    if (isWaitingForCode) {
-      return (
-        <StepFormLayout
-          title="Enter Authorization Code"
-          description="Copy the code from the browser page and paste it below."
-          actions={
-            <>
-              <BackButton onClick={onCancelOAuth} disabled={status === 'validating'}>Cancel</BackButton>
-              <ContinueButton
-                type="submit"
-                form="auth-code-form"
-                disabled={false}
-                loading={status === 'validating'}
-                loadingText="Connecting..."
-              />
-            </>
-          }
-        >
-          <OAuthConnect
-            status={status as OAuthStatus}
-            errorMessage={errorMessage}
-            isWaitingForCode={true}
-            onStartOAuth={onStartOAuth!}
-            onSubmitAuthCode={onSubmitAuthCode}
-            onCancelOAuth={onCancelOAuth}
-          />
-        </StepFormLayout>
-      )
-    }
-
     return (
       <StepFormLayout
-        title="Connect Claude Account"
-        description="Use your Claude subscription to power multi-agent workflows."
+        title={t('credentials.claudeAccountTitle')}
+        description={t('credentials.claudeAccountDescription')}
         actions={
           <>
-            <BackButton onClick={onBack} disabled={status === 'validating'} />
+            <BackButton onClick={onBack} disabled={status === 'validating'}>{t('common.back')}</BackButton>
             <ContinueButton
               onClick={onStartOAuth}
               className="gap-2"
               loading={status === 'validating'}
-              loadingText="Connecting..."
+              loadingText={t('common.connecting')}
             >
               <ExternalLink className="size-4" />
-              Sign in with Claude
+              {t('credentials.signInWithClaude')}
             </ContinueButton>
           </>
         }
@@ -99,7 +71,7 @@ export function CredentialsStep({
         <OAuthConnect
           status={status as OAuthStatus}
           errorMessage={errorMessage}
-          isWaitingForCode={false}
+          isWaitingForCode={isWaitingForCode}
           onStartOAuth={onStartOAuth!}
           onSubmitAuthCode={onSubmitAuthCode}
           onCancelOAuth={onCancelOAuth}
@@ -111,17 +83,17 @@ export function CredentialsStep({
   // --- API Key flow ---
   return (
     <StepFormLayout
-      title="API Configuration"
-      description="Enter your API key. Optionally configure a custom endpoint for OpenRouter, Ollama, or compatible APIs."
+      title={t('credentials.apiConfigTitle')}
+      description={t('credentials.apiConfigDescription')}
       actions={
         <>
-          <BackButton onClick={onBack} disabled={status === 'validating'} />
+          <BackButton onClick={onBack} disabled={status === 'validating'}>{t('common.back')}</BackButton>
           <ContinueButton
             type="submit"
             form="api-key-form"
             disabled={false}
             loading={status === 'validating'}
-            loadingText="Validating..."
+            loadingText={t('common.validating')}
           />
         </>
       }

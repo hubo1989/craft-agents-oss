@@ -242,7 +242,7 @@ interface BackButtonProps extends Omit<ButtonProps, 'variant' | 'children'> {
 /**
  * BackButton - Consistent back/cancel button
  */
-export function BackButton({ children = 'Back', className, ...props }: BackButtonProps) {
+export function BackButton({ children, className, ...props }: BackButtonProps) {
   return (
     <Button variant="ghost" className={cn("flex-1 max-w-[320px] bg-foreground-2 shadow-minimal text-foreground hover:bg-foreground/5 rounded-lg", className)} {...props}>
       {children}
@@ -260,9 +260,9 @@ interface ContinueButtonProps extends Omit<ButtonProps, 'children'> {
  * ContinueButton - Consistent primary action button
  */
 export function ContinueButton({
-  children = 'Continue',
+  children,
   loading,
-  loadingText = 'Loading...',
+  loadingText,
   className,
   disabled,
   ...props

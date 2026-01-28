@@ -2340,4 +2340,29 @@ export function registerIpcHandlers(sessionManager: SessionManager, windowManage
   // Note: Permission mode cycling settings (cyclablePermissionModes) are now workspace-level
   // and managed via WORKSPACE_SETTINGS_GET/UPDATE channels
 
+  // Language: Get current language
+  ipcMain.handle(IPC_CHANNELS.LANGUAGE_GET, async () => {
+    const { getLanguage } = await import('@craft-agent/shared/config/storage')
+    return getLanguage()
+  })
+
+  // Language: Set language and update menu
+  ipcMain.handle(IPC_CHANNELS.LANGUAGE_SET, async (_event, language: string) => {
+    const { setLanguage } = await import('@craft-agent/shared/config/storage')
+    setLanguage(language)
+
+    // Update menu to reflect new language
+    const { updateMenuLanguage } = await import('./menu')
+    updateMenuLanguage(language)
+
+    // Broadcast language change to all windows
+    const { BrowserWindow } = await import('electron')
+    const windows = BrowserWindow.getAllWindows()
+    windows.forEach((window: Electron.BrowserWindow) => {
+      if (!window.isDestroyed()) {
+        window.webContents.send(IPC_CHANNELS.LANGUAGE_CHANGED, { language })
+      }
+    })
+  })
+
 }

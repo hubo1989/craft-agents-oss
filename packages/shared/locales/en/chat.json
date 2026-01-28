@@ -1,8 +1,9 @@
 {
   "sidebar": {
+    "newChat": "New Chat",
     "allChats": "All Chats",
-    "flagged": "Flagged",
-    "inbox": "Inbox"
+    "inbox": "Inbox",
+    "archived": "Archived"
   },
   "nav": {
     "statuses": "Statuses",
@@ -30,6 +31,51 @@
     "openInNewWindow": "Open in New Window",
     "viewInFinder": "View in Finder",
     "copyPath": "Copy Path",
-    "delete": "Delete"
+    "delete": "Delete",
+    "sources": "Sources",
+    "skills": "Skills",
+    "statuses": "Statuses",
+    "permissions": "Permissions",
+    "allDocumentation": "All Documentation"
+  },
+  "toast": {
+    "linkCopied": "Link copied to clipboard",
+    "failedToShare": "Failed to share",
+    "shareUpdated": "Share updated",
+    "failedToUpdateShare": "Failed to update share",
+    "sharingStopped": "Sharing stopped",
+    "failedToStopSharing": "Failed to stop sharing",
+    "pathCopied": "Path copied to clipboard",
+    "titleRefreshed": "Title refreshed",
+    "failedToRefreshTitle": "Failed to refresh title"
+  },
+  "input": {
+    "placeholder": {
+      "typeMessage": "Type a message...",
+      "workOn": "What would you like to work on?",
+      "modeSwitch": "Use Shift + Tab to switch between Explore and Execute",
+      "mention": "Type @ to mention files, folders, or skills",
+      "labels": "Type # to apply labels to this conversation",
+      "newLine": "Press Shift + Return to add a new line"
+    },
+    "attachFiles": "Attach Files",
+    "attachments": {
+      "oneFile": "1 file",
+      "manyFiles": "{{count}} files"
+    },
+    "chooseSources": "Choose Sources",
+    "sourcesCount": "{{count}} sources",
+    "sourcesTooltip": "Sources",
+    "noSourcesConfigured": "No sources configured.",
+    "addSourcesInSettings": "Add sources in Settings.",
+    "searchSources": "Search sources..."
+  },
+  "permissionMode": {
+    "explore": "Explore",
+    "ask": "Ask",
+    "execute": "Execute",
+    "exploreDescription": "Read-only exploration. Blocks writes, never prompts.",
+    "askDescription": "Prompts before making edits.",
+    "executeDescription": "Automatic execution, no prompts."
   }
 }

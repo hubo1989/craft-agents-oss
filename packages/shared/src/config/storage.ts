@@ -46,6 +46,8 @@ export interface StoredConfig {
   colorTheme?: string;  // ID of selected preset theme (e.g., 'dracula', 'nord'). Default: 'default'
   // Auto-update
   dismissedUpdateVersion?: string;  // Version that user dismissed (skip notifications for this version)
+
+  language?: string;
 }
 
 const CONFIG_FILE = join(CONFIG_DIR, 'config.json');
@@ -1100,4 +1102,16 @@ export function resolveModelId(defaultModelId: string): string {
   const customModel = getCustomModel();
   if (customModel) return customModel;
   return defaultModelId;
+}
+
+export function getLanguage(): string {
+  const config = loadStoredConfig();
+  return config?.language || 'en';
+}
+
+export function setLanguage(language: string): void {
+  const config = loadStoredConfig();
+  if (!config) return;
+  config.language = language;
+  saveConfig(config);
 }

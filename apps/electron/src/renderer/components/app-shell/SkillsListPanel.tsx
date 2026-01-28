@@ -7,6 +7,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MoreHorizontal, Zap } from 'lucide-react'
 import { SkillAvatar } from '@/components/ui/skill-avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -49,6 +50,8 @@ export function SkillsListPanel({
   workspaceRootPath,
   className,
 }: SkillsListPanelProps) {
+  const { t } = useTranslation('settings')
+
   // Empty state - rendered outside ScrollArea for proper vertical centering
   if (skills.length === 0) {
     return (
@@ -57,9 +60,9 @@ export function SkillsListPanel({
           <EmptyMedia variant="icon">
             <Zap />
           </EmptyMedia>
-          <EmptyTitle>No skills configured</EmptyTitle>
+          <EmptyTitle>{t('skills.noSkills')}</EmptyTitle>
           <EmptyDescription>
-            Skills are reusable instructions that teach your agent specialized behaviors.
+            {t('skills.emptyDescription')}
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
@@ -67,14 +70,14 @@ export function SkillsListPanel({
             onClick={() => window.electronAPI.openUrl(getDocUrl('skills'))}
             className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-foreground/[0.02] shadow-minimal hover:bg-foreground/[0.05] transition-colors"
           >
-            Learn more
+            {t('skills.learnMore')}
           </button>
           {workspaceRootPath && (
             <EditPopover
               align="center"
               trigger={
                 <button className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-background shadow-minimal hover:bg-foreground/[0.03] transition-colors">
-                  Add Skill
+                  {t('skills.addSkill')}
                 </button>
               }
               {...getEditConfig('add-skill', workspaceRootPath)}

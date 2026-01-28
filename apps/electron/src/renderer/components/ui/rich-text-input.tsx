@@ -478,7 +478,7 @@ export const RichTextInput = React.forwardRef<RichTextInputHandle, RichTextInput
     {
       value,
       onChange,
-      placeholder = 'Type a message...',
+      placeholder = 'input.placeholder.typeMessage',
       skills = [],
       sources = [],
       workspaceId,

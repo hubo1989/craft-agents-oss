@@ -9,6 +9,7 @@
   "loading": "加载中...",
   "search": "搜索",
   "filter": "筛选",
+  "clear": "清除",
   "settings": "设置",
   "preferences": "偏好设置",
   "language": "语言",
@@ -16,8 +17,21 @@
   "dark": "深色",
   "light": "浅色",
   "system": "跟随系统",
+  "appearance": "外观",
+  "notifications": "通知",
+  "newChat": "新建对话",
+  "open": "打开",
+  "copy": "复制",
+  "refresh": "刷新",
+  "help": "帮助",
+  "documentation": "文档",
   "navigation": {
     "invalidLinkTitle": "无效链接",
     "contentMissingDescription": "内容可能已被移动或删除。"
+  },
+  "tooltips": {
+    "openSidebar": "打开侧边栏",
+    "closeSidebar": "关闭侧边栏",
+    "helpDocumentation": "帮助与文档"
   }
 }

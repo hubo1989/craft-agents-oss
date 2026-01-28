@@ -7,6 +7,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MoreHorizontal, DatabaseZap } from 'lucide-react'
 import { Tooltip, TooltipTrigger, TooltipContent } from '@craft-agent/ui'
 import { SourceAvatar } from '@/components/ui/source-avatar'
@@ -71,6 +72,8 @@ export function SourcesListPanel({
   localMcpEnabled = true,
   className,
 }: SourcesListPanelProps) {
+  const { t } = useTranslation('settings')
+
   // Filter sources based on type filter if active
   const filteredSources = React.useMemo(() => {
     if (!sourceFilter) {
@@ -83,10 +86,10 @@ export function SourcesListPanel({
   // Build empty state message based on filter
   const emptyMessage = React.useMemo(() => {
     if (sourceFilter?.kind === 'type') {
-      return `No ${getSourceTypeFilterLabel(sourceFilter.sourceType)} sources configured.`
+      return t('sources.noTypeSources', { type: t(getSourceTypeFilterLabelKey(sourceFilter.sourceType)) })
     }
-    return 'No sources configured.'
-  }, [sourceFilter])
+    return t('sources.noSources')
+  }, [sourceFilter, t])
 
   // Empty state - rendered outside ScrollArea for proper vertical centering
   if (filteredSources.length === 0) {
@@ -98,7 +101,7 @@ export function SourcesListPanel({
           </EmptyMedia>
           <EmptyTitle>{emptyMessage}</EmptyTitle>
           <EmptyDescription>
-            Sources connect your agent to external data — MCP servers, REST APIs, and local folders.
+            {t('sources.emptyDescription')}
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
@@ -106,14 +109,14 @@ export function SourcesListPanel({
             onClick={() => window.electronAPI.openUrl(getDocUrl('sources'))}
             className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-foreground/[0.02] shadow-minimal hover:bg-foreground/[0.05] transition-colors"
           >
-            Learn more
+            {t('sources.learnMore')}
           </button>
           {workspaceRootPath && (
             <EditPopover
               align="center"
               trigger={
                 <button className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-background shadow-minimal hover:bg-foreground/[0.03] transition-colors">
-                  Add Source
+                  {t('sources.addSource')}
                 </button>
               }
               {...getEditConfig(
@@ -193,24 +196,41 @@ function getSourceTypeBadgeClasses(type: string): string {
  * Get status badge info for non-connected sources
  * Returns null if source is connected (no badge needed)
  */
-function getStatusBadge(status: SourceConnectionStatus): { label: string; classes: string } | null {
+function getStatusBadge(status: SourceConnectionStatus): { labelKey: string; classes: string } | null {
   switch (status) {
     case 'connected':
       return null // No badge for connected sources
     case 'needs_auth':
-      return { label: 'Auth Required', classes: 'bg-warning/10 text-warning' }
+      return { labelKey: 'sources.authRequired', classes: 'bg-warning/10 text-warning' }
     case 'failed':
-      return { label: 'Disconnected', classes: 'bg-destructive/10 text-destructive' }
+      return { labelKey: 'sources.disconnected', classes: 'bg-destructive/10 text-destructive' }
     case 'untested':
-      return { label: 'Not Tested', classes: 'bg-foreground/10 text-foreground/50' }
+      return { labelKey: 'sources.notTested', classes: 'bg-foreground/10 text-foreground/50' }
     case 'local_disabled':
-      return { label: 'Disabled', classes: 'bg-foreground/10 text-foreground/50' }
+      return { labelKey: 'sources.disabled', classes: 'bg-foreground/10 text-foreground/50' }
     default:
       return null
   }
 }
 
+/**
+ * Get translation key for source type filter label
+ */
+function getSourceTypeFilterLabelKey(sourceType: string): string {
+  switch (sourceType) {
+    case 'mcp':
+      return 'sources.type.mcp'
+    case 'api':
+      return 'sources.type.api'
+    case 'local':
+      return 'sources.type.local'
+    default:
+      return 'sources.type.unknown'
+  }
+}
+
 function SourceItem({ source, isSelected, isFirst, localMcpEnabled, onClick, onDelete }: SourceItemProps) {
+  const { t } = useTranslation('settings')
   const [menuOpen, setMenuOpen] = useState(false)
   const [contextMenuOpen, setContextMenuOpen] = useState(false)
   const { config } = source
@@ -275,7 +295,7 @@ function SourceItem({ source, isSelected, isFirst, localMcpEnabled, onClick, onD
                       "shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded cursor-default",
                       statusBadge.classes
                     )}>
-                      {statusBadge.label}
+                      {t(statusBadge.labelKey)}
                     </span>
                   </TooltipTrigger>
                   {config.connectionError && (

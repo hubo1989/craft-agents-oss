@@ -8,10 +8,20 @@
     "continue": "Continue"
   },
   "apiSetup": {
-    "title": "Connect API",
-    "description": "Choose your AI provider and enter your API key to get started."
+    "title": "Set Up API Connection",
+    "description": "Select how you'd like to power your AI agents.",
+    "claudeOption": "Claude Pro/Max",
+    "claudeDescription": "Use your Claude subscription for unlimited access.",
+    "apiKeyOption": "API Key",
+    "apiKeyDescription": "Anthropic, OpenRouter, Ollama, or compatible APIs.",
+    "recommended": "Recommended"
   },
   "credentials": {
+    "claudeAccountTitle": "Connect Claude Account",
+    "claudeAccountDescription": "Use your Claude subscription to power multi-agent workflows.",
+    "signInWithClaude": "Sign in with Claude",
+    "apiConfigTitle": "API Configuration",
+    "apiConfigDescription": "Enter your API key. Optionally configure a custom endpoint for OpenRouter, Ollama, or compatible APIs.",
     "apiKey": {
       "label": "API Key",
       "placeholder": "Enter your API key",
@@ -19,5 +29,16 @@
       "format": "Format: provider/model-name",
       "help": "Your API key is stored locally and never sent to our servers."
     }
+  },
+  "oauth": {
+    "authorizationCode": "Authorization Code",
+    "pasteCodePlaceholder": "Paste your authorization code here"
+  },
+  "common": {
+    "back": "Back",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "connecting": "Connecting...",
+    "validating": "Validating..."
   }
 }

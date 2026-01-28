@@ -1,13 +1,13 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import en from '../../../packages/shared/locales/en/chat.json'
-import commonEn from '../../../packages/shared/locales/en/common.json'
-import onboardingEn from '../../../packages/shared/locales/en/onboarding.json'
-import settingsEn from '../../../packages/shared/locales/en/settings.json'
-import zh from '../../../packages/shared/locales/zh-CN/chat.json'
-import commonZh from '../../../packages/shared/locales/zh-CN/common.json'
-import onboardingZh from '../../../packages/shared/locales/zh-CN/onboarding.json'
-import settingsZh from '../../../packages/shared/locales/zh-CN/settings.json'
+import en from '@locales/en/chat.json'
+import commonEn from '@locales/en/common.json'
+import onboardingEn from '@locales/en/onboarding.json'
+import settingsEn from '@locales/en/settings.json'
+import zh from '@locales/zh-CN/chat.json'
+import commonZh from '@locales/zh-CN/common.json'
+import onboardingZh from '@locales/zh-CN/onboarding.json'
+import settingsZh from '@locales/zh-CN/settings.json'
 
 // Get saved language preference or detect from system
 const getInitialLanguage = (): string => {

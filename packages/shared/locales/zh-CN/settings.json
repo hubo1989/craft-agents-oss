@@ -1,10 +1,251 @@
 {
+  "title": "设置",
+  "navigation": {
+    "app": "应用",
+    "appDescription": "外观、通知、API 连接",
+    "workspace": "工作区",
+    "workspaceDescription": "模型、模式切换、高级设置",
+    "permissions": "权限",
+    "permissionsDescription": "探索模式下允许的命令",
+    "labels": "标签",
+    "labelsDescription": "标签层级和自动应用规则",
+    "shortcuts": "快捷键",
+    "shortcutsDescription": "键盘快捷键参考",
+    "preferences": "偏好设置",
+    "preferencesDescription": "您的个人偏好",
+    "openInNewWindow": "在新窗口中打开"
+  },
   "permissions": {
+    "title": "权限",
     "about": {
       "title": "关于权限",
-      "description": "权限控制你的智能体拥有多大的自主权。在探索模式下，智能体只能读取和研究 — 非常适合在提交更改之前了解问题。当你准备好后，切换到执行模式让智能体自主实施计划。",
+      "description": "权限控制您的智能体拥有多大的自主权。在探索模式下，智能体只能读取和研究 — 非常适合在提交更改之前了解问题。当您准备好后，切换到执行模式让智能体自主实施计划。",
       "workflow": "推荐的工作流程：从探索模式开始让智能体调查，审查建议的计划，然后自信地执行。",
       "learnMore": "了解更多"
+    },
+    "defaultPermissions": "默认权限",
+    "defaultPermissionsDescription": "应用级别的权限模式，适用于探索模式。未在此列表中的命令将被阻止。",
+    "workspaceCustomizations": "工作区自定义",
+    "workspaceCustomizationsDescription": "在此工作区的 permissions.json 文件中定义的额外权限。",
+    "noDefaultPermissions": "未找到默认权限",
+    "noWorkspacePermissions": "未找到工作区自定义设置",
+    "editFile": "编辑文件",
+    "columns": {
+      "access": "访问",
+      "type": "类型",
+      "pattern": "模式",
+      "comment": "注释"
+    },
+    "access": {
+      "allowed": "允许",
+      "blocked": "阻止"
+    },
+    "types": {
+      "bash": "Bash",
+      "mcp": "MCP",
+      "api": "API",
+      "tool": "工具"
     }
+  },
+  "appSettings": {
+    "title": "应用设置",
+    "appearance": {
+      "title": "外观",
+      "mode": "模式",
+      "modeSystem": "跟随系统",
+      "modeLight": "浅色",
+      "modeDark": "深色",
+      "colorTheme": "配色主题",
+      "defaultTheme": "默认",
+      "font": "字体",
+      "systemFont": "系统字体",
+      "language": "语言"
+    },
+    "notifications": {
+      "title": "通知",
+      "enable": "启用通知",
+      "description": "当智能体任务完成时接收通知"
+    },
+    "connection": {
+      "title": "API 连接",
+      "description": "智能体如何连接到语言模型。",
+      "type": "连接类型",
+      "claudePro": "Claude Pro/Max — 使用您的 Claude 订阅",
+      "apiKey": "API 密钥 — Anthropic、OpenRouter 或兼容的 API",
+      "notConfigured": "未配置",
+      "edit": "编辑",
+      "status": "状态",
+      "connected": "已连接",
+      "disconnected": "未连接",
+      "model": "模型",
+      "customModel": "自定义模型覆盖",
+      "customModelPlaceholder": "例如：openrouter/anthropic/claude-3.5-sonnet",
+      "customModelDescription": "使用此模型 ID 覆盖所有模型调用（适用于 OpenRouter、Ollama 等）",
+      "test": "测试连接",
+      "testing": "测试中...",
+      "success": "连接成功",
+      "error": "连接失败"
+    },
+    "about": {
+      "title": "关于",
+      "version": "版本",
+      "loading": "加载中...",
+      "updateTo": "更新到 {{version}}",
+      "checkUpdates": "检查更新",
+      "checkNow": "立即检查",
+      "checking": "检查中...",
+      "installUpdate": "安装更新",
+      "restartToUpdate": "重启以更新",
+      "restart": "重启以应用",
+      "noUpdate": "没有可用更新",
+      "updateAvailable": "有可用更新",
+      "updateError": "检查更新失败"
+    }
+  },
+  "preferences": {
+    "title": "偏好设置",
+    "basicInfo": "基本信息",
+    "basicInfoDesc": "帮助 Craft Agent 为您个性化响应。",
+    "name": "姓名",
+    "nameDesc": "Craft Agent 如何称呼您。",
+    "namePlaceholder": "您的姓名",
+    "timezone": "时区",
+    "timezoneDesc": "用于相对日期，如「明天」或「下周」。",
+    "timezonePlaceholder": "例如：Asia/Shanghai",
+    "language": "语言",
+    "languageDesc": "Craft Agent 响应的首选语言。",
+    "languagePlaceholder": "例如：中文",
+    "location": "位置",
+    "locationDesc": "启用位置感知响应，如天气、当地时间和地区上下文。",
+    "city": "城市",
+    "cityDesc": "您的城市，用于本地信息和上下文。",
+    "cityPlaceholder": "例如：北京",
+    "country": "国家",
+    "countryDesc": "您的国家，用于地区格式和上下文。",
+    "countryPlaceholder": "例如：中国",
+    "notes": "备注",
+    "notesDesc": "帮助 Craft Agent 了解您偏好的自由形式上下文。",
+    "notesPlaceholder": "您希望 Craft Agent 了解的任何其他信息...",
+    "editFile": "编辑文件"
+  },
+  "shortcuts": {
+    "title": "键盘快捷键",
+    "description": "所有可用键盘快捷键的快速参考",
+    "sections": {
+      "general": "通用",
+      "chat": "对话",
+      "navigation": "导航"
+    },
+    "keys": {
+      "newChat": "新建对话",
+      "focusInput": "聚焦输入框",
+      "sendMessage": "发送消息",
+      "toggleSidebar": "切换侧边栏",
+      "search": "搜索",
+      "close": "关闭/取消",
+      "confirm": "确认",
+      "cycleMode": "切换权限模式"
+    }
+  },
+  "workspaceSettings": {
+    "title": "工作区设置",
+    "noWorkspace": "未选择工作区",
+    "info": {
+      "title": "工作区信息",
+      "name": "名称",
+      "untitled": "未命名",
+      "edit": "编辑",
+      "icon": "图标",
+      "uploading": "上传中...",
+      "change": "更换",
+      "renameTitle": "重命名工作区",
+      "namePlaceholder": "输入工作区名称..."
+    },
+    "model": {
+      "title": "模型",
+      "defaultModel": "默认模型",
+      "setViaApi": "通过 API 连接设置",
+      "description": "新对话使用的 AI 模型",
+      "opusDesc": "最适合复杂工作",
+      "sonnetDesc": "最适合日常任务",
+      "haikuDesc": "最快的响应速度",
+      "thinkingLevel": "思考级别",
+      "thinkingDesc": "新对话的推理深度"
+    },
+    "permissions": {
+      "title": "权限",
+      "defaultMode": "默认模式",
+      "description": "控制 AI 的操作权限",
+      "safeDesc": "只读，不允许修改",
+      "askDesc": "编辑前需确认",
+      "autoDesc": "完全自主执行"
+    },
+    "modeCycling": {
+      "title": "模式切换",
+      "description": "选择使用 Shift+Tab 循环的模式"
+    },
+    "advanced": {
+      "title": "高级",
+      "workingDir": "默认工作目录",
+      "notSet": "未设置（使用会话文件夹）",
+      "clear": "清除",
+      "change": "更改...",
+      "localMcp": "本地 MCP 服务器",
+      "localMcpDesc": "启用 stdio 子进程服务器"
+    }
+  },
+  "labels": {
+    "title": "标签",
+    "description": "使用标签整理您的对话",
+    "noLabels": "暂无标签",
+    "createFirst": "创建第一个标签来整理对话",
+    "addLabel": "添加标签",
+    "editLabel": "编辑标签",
+    "deleteLabel": "删除标签",
+    "confirmDelete": "确定要删除此标签吗？",
+    "name": "名称",
+    "color": "颜色",
+    "autoApply": "自动应用",
+    "autoApplyDesc": "自动将此标签应用到新对话"
+  },
+  "sidebar": {
+    "allChats": "所有对话",
+    "inbox": "收件箱",
+    "archived": "已归档",
+    "starred": "已加星",
+    "settings": "设置",
+    "newChat": "新建对话",
+    "search": "搜索",
+    "noChats": "暂无对话",
+    "startNewChat": "开始新对话"
+  },
+  "sources": {
+    "title": "数据源",
+    "noSources": "未配置数据源。",
+    "noTypeSources": "未配置 {{type}} 数据源。",
+    "emptyTitle": "无数据源",
+    "emptyDescription": "数据源将您的智能体连接到外部数据 — MCP 服务器、REST API 和本地文件夹。",
+    "learnMore": "了解更多",
+    "addSource": "添加数据源",
+    "authRequired": "需要授权",
+    "disconnected": "未连接",
+    "notTested": "未测试",
+    "disabled": "已禁用",
+    "type": {
+      "mcp": "MCP",
+      "api": "API",
+      "local": "本地",
+      "unknown": "未知"
+    }
+  },
+  "skills": {
+    "noSkills": "未配置技能",
+    "emptyDescription": "技能是可复用的指令，用于教您的智能体专业的行为。",
+    "learnMore": "了解更多",
+    "addSkill": "添加技能"
+  },
+  "workspace": {
+    "addWorkspace": "添加工作区...",
+    "created": "已创建工作区 \"{{name}}\""
   }
 }

@@ -10,6 +10,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PanelHeader } from '@/components/app-shell/PanelHeader'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
@@ -36,6 +37,7 @@ import { useOnboarding } from '@/hooks/useOnboarding'
 import { OnboardingWizard } from '@/components/onboarding'
 import { useAppShellContext } from '@/context/AppShellContext'
 import type { PresetTheme } from '@config/theme'
+import i18n from '@/i18n'
 
 export const meta: DetailsPageMeta = {
   navigator: 'settings',
@@ -47,8 +49,11 @@ export const meta: DetailsPageMeta = {
 // ============================================
 
 export default function AppSettingsPage() {
+  const { t } = useTranslation('settings')
   const { mode, setMode, colorTheme, setColorTheme, font, setFont } = useTheme()
   const { refreshCustomModel } = useAppShellContext()
+
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language || 'en')
 
   // Preset themes state
   const [presetThemes, setPresetThemes] = useState<PresetTheme[]>([])
@@ -93,6 +98,21 @@ export default function AppSettingsPage() {
 
   useEffect(() => {
     loadConnectionInfo()
+  }, [])
+
+  useEffect(() => {
+    const loadLanguage = async () => {
+      if (!window.electronAPI) return
+      try {
+        const language = await window.electronAPI.getLanguage()
+        if (language) {
+          setCurrentLanguage(language)
+        }
+      } catch (error) {
+        console.error('Failed to load language:', error)
+      }
+    }
+    loadLanguage()
   }, [])
 
   // Load preset themes when workspace changes (themes are workspace-scoped)
@@ -153,33 +173,40 @@ export default function AppSettingsPage() {
     await window.electronAPI.setNotificationsEnabled(enabled)
   }, [])
 
+  const handleLanguageChange = useCallback(async (language: string) => {
+    setCurrentLanguage(language)
+    await i18n.changeLanguage(language)
+    window.localStorage.setItem('craft-language', language)
+    await window.electronAPI.setLanguage(language)
+  }, [])
+
   return (
     <div className="h-full flex flex-col">
-      <PanelHeader title="App Settings" actions={<HeaderMenu route={routes.view.settings('app')} helpFeature="app-settings" />} />
+      <PanelHeader title={t('appSettings.title')} actions={<HeaderMenu route={routes.view.settings('app')} helpFeature="app-settings" />} />
       <div className="flex-1 min-h-0 mask-fade-y">
         <ScrollArea className="h-full">
           <div className="px-5 py-7 max-w-3xl mx-auto">
           <div className="space-y-8">
             {/* Appearance */}
-            <SettingsSection title="Appearance">
+            <SettingsSection title={t('appSettings.appearance.title')}>
               <SettingsCard>
-                <SettingsRow label="Mode">
+                <SettingsRow label={t('appSettings.appearance.mode')}>
                   <SettingsSegmentedControl
                     value={mode}
                     onValueChange={setMode}
                     options={[
-                      { value: 'system', label: 'System', icon: <Monitor className="w-4 h-4" /> },
-                      { value: 'light', label: 'Light', icon: <Sun className="w-4 h-4" /> },
-                      { value: 'dark', label: 'Dark', icon: <Moon className="w-4 h-4" /> },
+                      { value: 'system', label: t('appSettings.appearance.modeSystem'), icon: <Monitor className="w-4 h-4" /> },
+                      { value: 'light', label: t('appSettings.appearance.modeLight'), icon: <Sun className="w-4 h-4" /> },
+                      { value: 'dark', label: t('appSettings.appearance.modeDark'), icon: <Moon className="w-4 h-4" /> },
                     ]}
                   />
                 </SettingsRow>
-                <SettingsRow label="Color theme">
+                <SettingsRow label={t('appSettings.appearance.colorTheme')}>
                   <SettingsMenuSelect
                     value={colorTheme}
                     onValueChange={setColorTheme}
                     options={[
-                      { value: 'default', label: 'Default' },
+                      { value: 'default', label: t('appSettings.appearance.defaultTheme') },
                       ...presetThemes
                         .filter(t => t.id !== 'default')
                         .map(t => ({
@@ -189,13 +216,23 @@ export default function AppSettingsPage() {
                     ]}
                   />
                 </SettingsRow>
-                <SettingsRow label="Font">
+                <SettingsRow label={t('appSettings.appearance.font')}>
                   <SettingsSegmentedControl
                     value={font}
                     onValueChange={setFont}
                     options={[
                       { value: 'inter', label: 'Inter' },
-                      { value: 'system', label: 'System' },
+                      { value: 'system', label: t('appSettings.appearance.systemFont') },
+                    ]}
+                  />
+                </SettingsRow>
+                <SettingsRow label={t('appSettings.appearance.language')}>
+                  <SettingsMenuSelect
+                    value={currentLanguage}
+                    onValueChange={handleLanguageChange}
+                    options={[
+                      { value: 'en', label: 'English' },
+                      { value: 'zh-CN', label: '简体中文' },
                     ]}
                   />
                 </SettingsRow>
@@ -203,11 +240,11 @@ export default function AppSettingsPage() {
             </SettingsSection>
 
             {/* Notifications */}
-            <SettingsSection title="Notifications">
+            <SettingsSection title={t('appSettings.notifications.title')}>
               <SettingsCard>
                 <SettingsToggle
-                  label="Desktop notifications"
-                  description="Get notified when AI finishes working in a chat."
+                  label={t('appSettings.notifications.enable')}
+                  description={t('appSettings.notifications.description')}
                   checked={notificationsEnabled}
                   onCheckedChange={handleNotificationsEnabledChange}
                 />
@@ -215,16 +252,16 @@ export default function AppSettingsPage() {
             </SettingsSection>
 
             {/* API Connection */}
-            <SettingsSection title="API Connection" description="How your AI agents connect to language models.">
+            <SettingsSection title={t('appSettings.connection.title')} description={t('appSettings.connection.description')}>
               <SettingsCard>
                 <SettingsRow
-                  label="Connection type"
+                  label={t('appSettings.connection.type')}
                   description={
                     authType === 'oauth_token' && hasCredential
-                      ? 'Claude Pro/Max — using your Claude subscription'
+                      ? t('appSettings.connection.claudePro')
                       : authType === 'api_key' && hasCredential
-                        ? 'API Key — Anthropic, OpenRouter, or compatible API'
-                        : 'Not configured'
+                        ? t('appSettings.connection.apiKey')
+                        : t('appSettings.connection.notConfigured')
                   }
                 >
                   <Button
@@ -232,7 +269,7 @@ export default function AppSettingsPage() {
                     size="sm"
                     onClick={openApiSetup}
                   >
-                    Edit
+                    {t('appSettings.connection.edit')}
                   </Button>
                 </SettingsRow>
               </SettingsCard>
@@ -273,12 +310,12 @@ export default function AppSettingsPage() {
             </FullscreenOverlayBase>
 
             {/* About */}
-            <SettingsSection title="About">
+            <SettingsSection title={t('appSettings.about.title')}>
               <SettingsCard>
-                <SettingsRow label="Version">
+                <SettingsRow label={t('appSettings.about.version')}>
                   <div className="flex items-center gap-2">
                     <span className="text-muted-foreground">
-                      {updateChecker.updateInfo?.currentVersion ?? 'Loading...'}
+                      {updateChecker.updateInfo?.currentVersion ?? t('appSettings.about.loading')}
                     </span>
                     {updateChecker.updateAvailable && updateChecker.updateInfo?.latestVersion && (
                       <Button
@@ -286,12 +323,12 @@ export default function AppSettingsPage() {
                         size="sm"
                         onClick={updateChecker.installUpdate}
                       >
-                        Update to {updateChecker.updateInfo.latestVersion}
+                        {t('appSettings.about.updateTo', { version: updateChecker.updateInfo.latestVersion })}
                       </Button>
                     )}
                   </div>
                 </SettingsRow>
-                <SettingsRow label="Check for updates">
+                <SettingsRow label={t('appSettings.about.checkUpdates')}>
                   <Button
                     variant="outline"
                     size="sm"
@@ -301,20 +338,20 @@ export default function AppSettingsPage() {
                     {isCheckingForUpdates ? (
                       <>
                         <Spinner className="mr-1.5" />
-                        Checking...
+                        {t('appSettings.about.checking')}
                       </>
                     ) : (
-                      'Check Now'
+                      t('appSettings.about.checkNow')
                     )}
                   </Button>
                 </SettingsRow>
                 {updateChecker.isReadyToInstall && (
-                  <SettingsRow label="Install update">
+                  <SettingsRow label={t('appSettings.about.installUpdate')}>
                     <Button
                       size="sm"
                       onClick={updateChecker.installUpdate}
                     >
-                      Restart to Update
+                      {t('appSettings.about.restartToUpdate')}
                     </Button>
                   </SettingsRow>
                 )}

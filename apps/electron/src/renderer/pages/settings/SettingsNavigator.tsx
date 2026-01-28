@@ -10,6 +10,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { MoreHorizontal, AppWindow } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -138,44 +139,47 @@ interface SettingsItem {
   description: string
 }
 
-const settingsItems: SettingsItem[] = [
-  {
-    id: 'app',
-    label: 'App',
-    icon: AppSettingsIcon,
-    description: 'Appearance, notifications, API connection',
-  },
-  {
-    id: 'workspace',
-    label: 'Workspace',
-    icon: WorkspaceIcon,
-    description: 'Model, mode cycling, advanced',
-  },
-  {
-    id: 'permissions',
-    label: 'Permissions',
-    icon: ShieldIcon,
-    description: 'Allowed commands in Explore mode',
-  },
-  {
-    id: 'labels',
-    label: 'Labels',
-    icon: LabelsIcon,
-    description: 'Label hierarchy and auto-apply rules',
-  },
-  {
-    id: 'shortcuts',
-    label: 'Shortcuts',
-    icon: KeyboardIcon,
-    description: 'Keyboard shortcuts reference',
-  },
-  {
-    id: 'preferences',
-    label: 'Preferences',
-    icon: PreferencesIcon,
-    description: 'Your personal preferences',
-  },
-]
+function useSettingsItems(): SettingsItem[] {
+  const { t } = useTranslation('settings')
+  return [
+    {
+      id: 'app',
+      label: t('navigation.app'),
+      icon: AppSettingsIcon,
+      description: t('navigation.appDescription'),
+    },
+    {
+      id: 'workspace',
+      label: t('navigation.workspace'),
+      icon: WorkspaceIcon,
+      description: t('navigation.workspaceDescription'),
+    },
+    {
+      id: 'permissions',
+      label: t('navigation.permissions'),
+      icon: ShieldIcon,
+      description: t('navigation.permissionsDescription'),
+    },
+    {
+      id: 'labels',
+      label: t('navigation.labels'),
+      icon: LabelsIcon,
+      description: t('navigation.labelsDescription'),
+    },
+    {
+      id: 'shortcuts',
+      label: t('navigation.shortcuts'),
+      icon: KeyboardIcon,
+      description: t('navigation.shortcutsDescription'),
+    },
+    {
+      id: 'preferences',
+      label: t('navigation.preferences'),
+      icon: PreferencesIcon,
+      description: t('navigation.preferencesDescription'),
+    },
+  ]
+}
 
 interface SettingsItemRowProps {
   item: SettingsItem
@@ -191,6 +195,7 @@ interface SettingsItemRowProps {
 function SettingsItemRow({ item, isSelected, isFirst, onSelect }: SettingsItemRowProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const Icon = item.icon
+  const { t } = useTranslation('settings')
 
   // Open settings page in a new window via deep link
   const handleOpenInNewWindow = () => {
@@ -264,7 +269,7 @@ function SettingsItemRow({ item, isSelected, isFirst, onSelect }: SettingsItemRo
                 <DropdownMenuProvider>
                   <StyledDropdownMenuItem onClick={handleOpenInNewWindow}>
                     <AppWindow className="h-3.5 w-3.5" />
-                    <span className="flex-1">Open in New Window</span>
+                    <span className="flex-1">{t('navigation.openInNewWindow')}</span>
                   </StyledDropdownMenuItem>
                 </DropdownMenuProvider>
               </StyledDropdownMenuContent>
@@ -280,6 +285,8 @@ export default function SettingsNavigator({
   selectedSubpage,
   onSelectSubpage,
 }: SettingsNavigatorProps) {
+  const settingsItems = useSettingsItems()
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">
