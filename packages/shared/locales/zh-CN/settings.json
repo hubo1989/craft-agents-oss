@@ -129,23 +129,27 @@
     "editFile": "编辑文件"
   },
   "shortcuts": {
-    "title": "键盘快捷键",
-    "description": "所有可用键盘快捷键的快速参考",
-    "sections": {
-      "general": "通用",
-      "chat": "对话",
-      "navigation": "导航"
-    },
-    "keys": {
-      "newChat": "新建对话",
-      "focusInput": "聚焦输入框",
-      "sendMessage": "发送消息",
-      "toggleSidebar": "切换侧边栏",
-      "search": "搜索",
-      "close": "关闭/取消",
-      "confirm": "确认",
-      "cycleMode": "切换权限模式"
-    }
+    "title": "快捷键",
+    "global": "全局",
+    "navigation": "导航",
+    "sessionList": "会话列表",
+    "chat": "聊天",
+    "focusSidebar": "聚焦侧边栏",
+    "focusSessionList": "聚焦会话列表",
+    "focusChatInput": "聚焦聊天输入框",
+    "newChat": "新建对话",
+    "toggleSidebar": "切换侧边栏",
+    "openSettings": "打开设置",
+    "moveToNextZone": "移动到下一个区域",
+    "cyclePermissionMode": "循环权限模式",
+    "moveBetweenZones": "在区域间移动（列表中）",
+    "navigateItems": "在列表中导航项目",
+    "goToFirstItem": "前往第一个项目",
+    "goToLastItem": "前往最后一个项目",
+    "closeDialog": "关闭对话框 / 模糊输入",
+    "deleteSession": "删除会话",
+    "sendMessage": "发送消息",
+    "newLine": "换行"
   },
   "workspaceSettings": {
     "title": "工作区设置",
@@ -196,17 +200,56 @@
   },
   "labels": {
     "title": "标签",
-    "description": "使用标签整理您的对话",
-    "noLabels": "暂无标签",
-    "createFirst": "创建第一个标签来整理对话",
-    "addLabel": "添加标签",
-    "editLabel": "编辑标签",
-    "deleteLabel": "删除标签",
-    "confirmDelete": "确定要删除此标签吗？",
-    "name": "名称",
-    "color": "颜色",
-    "autoApply": "自动应用",
-    "autoApplyDesc": "自动将此标签应用到新对话"
+    "editFile": "编辑文件",
+    "aboutTitle": "关于标签",
+    "description1": "标签帮助您使用彩色标记整理会话。使用它们按项目、主题或优先级对对话进行分类 — 让您以后可以轻松筛选和查找相关会话。",
+    "description2": "每个标签可以选择性地携带一个具有特定类型的值（文本、数字或日期）。这会将标签转换为结构化元数据 — 例如，值为 3 的「优先级」标签，或带有日期的「截止日期」标签。",
+    "description3": "自动应用规则会在消息匹配正则表达式模式时自动分配标签。例如，粘贴 Linear 问题 URL 可以自动用项目名称和问题 ID 标记会话 — 无需手动标记。",
+    "learnMore": "了解更多",
+    "hierarchyTitle": "标签层级",
+    "hierarchyDescription": "为此工作区配置的所有标签。标签可以嵌套形成组。",
+    "noLabels": "未配置标签。",
+    "noLabelsDescription": "标签可以由智能体创建，也可以通过编辑工作区中的 labels/config.json 来创建。",
+    "autoApplyRulesTitle": "自动应用规则",
+    "autoApplyRulesDescription": "当与用户消息匹配时自动应用标签的正则表达式模式。例如，粘贴 Linear 问题 URL 并自动用项目名称和问题 ID 标记会话。",
+    "noAutoApplyRules": "未配置自动应用规则",
+    "label": "标签",
+    "pattern": "模式",
+    "flags": "标志",
+    "template": "模板",
+    "description": "描述",
+    "searchRules": "搜索规则...",
+    "rule": "规则",
+    "rules": "规则",
+    "placeholder": {
+      "default": "描述您想要更改的内容...",
+      "whatFolder": "您想连接哪个文件夹？",
+      "whatSkill": "我应该学习做什么？",
+      "whatLabel": "您想创建什么标签？"
+    }
+  },
+  "permissions": {
+    "title": "权限",
+    "about": {
+      "title": "关于权限",
+      "description": "权限控制 AI 在工作区中可以执行的操作。您可以为不同的上下文设置不同的权限级别。",
+      "workflow": "使用权限为 AI 操作创建安全边界。您可以允许只读访问、要求更改批准，或授予完全自主权。",
+      "learnMore": "了解更多"
+    },
+    "defaultPermissions": "默认权限",
+    "defaultPermissionsDescription": "此工作区的默认权限设置",
+    "editFile": "编辑文件",
+    "createPermissionsJson": "在工作区中创建 permissions.json 文件以添加自定义规则。",
+    "access": "访问",
+    "type": "类型",
+    "pattern": "模式",
+    "comment": "注释",
+    "workspaceCustomizations": "工作区自定义",
+    "workspaceCustomizationsDescription": "为工作区中的特定文件、文件夹或工具自定义权限。",
+    "noWorkspacePermissions": "未配置工作区权限"
+  },
+  "common": {
+    "edit": "编辑"
   },
   "sidebar": {
     "allChats": "所有对话",
@@ -246,6 +289,12 @@
   },
   "workspace": {
     "addWorkspace": "添加工作区...",
-    "created": "已创建工作区 \"{{name}}\""
+    "created": "已创建工作区 \"{{name}}\"",
+    "addWorkspaceTitle": "添加工作区",
+    "addWorkspaceDescription": "在这里，您的想法与实现它们的工具相遇。",
+    "createNew": "创建新工作区",
+    "createNewDesc": "从空白工作区开始。",
+    "openFolder": "打开文件夹",
+    "openFolderDesc": "选择现有文件夹作为工作区。"
   }
 }

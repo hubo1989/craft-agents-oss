@@ -7,6 +7,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Maximize2 } from 'lucide-react'
 import { Info_DataTable, SortableHeader } from './Info_DataTable'
@@ -178,7 +179,93 @@ export function PermissionsDataTable({
   className,
 }: PermissionsDataTableProps) {
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const { t } = useTranslation('settings')
   const { isDark } = useTheme()
+
+  const columnsWithType: ColumnDef<PermissionRow>[] = [
+    {
+      accessorKey: 'access',
+      header: ({ column }) => <SortableHeader column={column} title={t('permissions.access')} />,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          <Info_StatusBadge status={row.original.access} className="whitespace-nowrap" />
+        </div>
+      ),
+      minSize: 80,
+    },
+    {
+      accessorKey: 'type',
+      header: ({ column }) => <SortableHeader column={column} title={t('permissions.type')} />,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          <Info_Badge color="muted" className="capitalize whitespace-nowrap">
+            {row.original.type}
+          </Info_Badge>
+        </div>
+      ),
+      minSize: 80,
+    },
+    {
+      accessorKey: 'pattern',
+      header: ({ column }) => <SortableHeader column={column} title={t('permissions.pattern')} />,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          <PatternBadge pattern={row.original.pattern} />
+        </div>
+      ),
+      minSize: 100,
+    },
+    {
+      id: 'comment',
+      accessorKey: 'comment',
+      header: () => <span className="p-1.5 pl-2.5">{t('permissions.comment')}</span>,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5 min-w-0">
+          <span className="truncate block">
+            {row.original.comment || '—'}
+          </span>
+        </div>
+      ),
+      meta: { fillWidth: true, truncate: true },
+    },
+  ]
+
+  const columnsWithoutType: ColumnDef<PermissionRow>[] = [
+    {
+      accessorKey: 'access',
+      header: ({ column }) => <SortableHeader column={column} title={t('permissions.access')} />,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          <Info_StatusBadge status={row.original.access} className="whitespace-nowrap" />
+        </div>
+      ),
+      minSize: 80,
+    },
+    {
+      accessorKey: 'pattern',
+      header: ({ column }) => <SortableHeader column={column} title={t('permissions.pattern')} />,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          <PatternBadge pattern={row.original.pattern} />
+        </div>
+      ),
+      minSize: 100,
+    },
+    {
+      id: 'comment',
+      accessorKey: 'comment',
+      header: () => <span className="p-1.5 pl-2.5">{t('permissions.comment')}</span>,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5 min-w-0">
+          <span className="truncate block">
+            {row.original.comment || '—'}
+          </span>
+        </div>
+      ),
+      meta: { fillWidth: true, truncate: true },
+    },
+  ]
+
   const columns = hideTypeColumn ? columnsWithoutType : columnsWithType
 
   // Fullscreen button for toolbar - shown on hover
@@ -192,7 +279,7 @@ export function PermissionsDataTable({
         'text-muted-foreground/50 hover:text-foreground',
         'focus:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:opacity-100'
       )}
-      title="View Fullscreen"
+      title={t('common.viewFullscreen')}
     >
       <Maximize2 className="w-3.5 h-3.5" />
     </button>
@@ -222,8 +309,8 @@ export function PermissionsDataTable({
           <Info_DataTable
             columns={columns}
             data={data}
-            searchable={searchable ? { placeholder: 'Search patterns...' } : false}
-            emptyContent="No permissions configured"
+        searchable={searchable ? { placeholder: t('permissions.searchPatterns') } : false}
+            emptyContent={t('permissions.noPermissions')}
           />
         </DataTableOverlay>
       )}

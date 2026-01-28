@@ -3,7 +3,18 @@
     "newChat": "新对话",
     "allChats": "所有对话",
     "inbox": "收件箱",
-    "archived": "归档"
+    "archived": "归档",
+    "flagged": "已标记",
+    "status": "状态",
+    "labels": "标签",
+    "sources": "数据源",
+    "apis": "API",
+    "mcps": "MCP",
+    "localFolders": "本地文件夹",
+    "skills": "技能",
+    "allSkills": "所有技能",
+    "settings": "设置",
+    "views": "视图"
   },
   "nav": {
     "statuses": "状态",
@@ -15,6 +26,9 @@
     "statuses": "状态",
     "labels": "标签",
     "noLabelsConfigured": "未配置标签"
+  },
+  "share": {
+    "shareOnline": "在线分享"
   },
   "sessionMenu": {
     "share": "分享",
@@ -48,6 +62,11 @@
     "pathCopied": "路径已复制到剪贴板",
     "titleRefreshed": "标题已刷新",
     "failedToRefreshTitle": "刷新标题失败"
+  },
+  "emptyState": {
+    "noConversations": "暂无对话",
+    "startConversation": "与智能体的对话将显示在这里。开始一个新对话吧。",
+    "newConversation": "新建对话"
   },
   "input": {
     "placeholder": {

@@ -1,0 +1,378 @@
+# Craft Agents 项目指南
+
+本文档为 Claude code 提供 Craft Agents 项目的全面技术背景和开发指南。
+
+## 项目概述
+
+Craft Agents 是一个基于 Electron + React 的桌面 AI 智能体应用，使用 Anthropic Claude Agent SDK 构建。它提供类似 Claude Code 的体验，但具有更多定制化功能和优美的用户界面。
+
+**核心特性：**
+- 多会话管理（收件箱/归档、标记、状态工作流）
+- Claude Code 风格体验（流式响应、工具可视化、实时更新）
+- Craft MCP 集成（32+ 个 Craft 文档工具）
+- 多种数据源支持（MCP 服务器、REST API、本地文件系统）
+- 三级权限模式（探索、询问编辑、自动）
+- 后台任务与进度追踪
+- 动态状态系统（可自定义工作流状态）
+- 级联主题系统（应用级和工作区级）
+- 多文件差异视图（VS Code 风格）
+- 技能系统（按工作区存储的专用智能体指令）
+- 文件附件（支持图片、PDF、Office 文档自动转换）
+
+## 技术栈
+
+| 层级 | 技术 |
+|------|------|
+| 运行时 | [Bun](https://bun.sh/) |
+| AI SDK | [@anthropic-ai/claude-agent-sdk](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) |
+| 桌面应用 | [Electron](https://www.electronjs.org/) + React 18 |
+| UI 组件 | [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS v4](https://tailwindcss.com/) |
+| UI 基础 | [Radix UI](https://www.radix-ui.com/) |
+| 状态管理 | [Jotai](https://jotai.org/) |
+| 构建 | esbuild (主进程) + [Vite](https://vitejs.dev/) (渲染进程) |
+| 类型系统 | TypeScript (严格模式) |
+| 代码高亮 | [Shiki](https://shiki.style/) |
+| 图标库 | [Lucide React](https://lucide.dev/) |
+| 通知系统 | [Sonner](https://sonner.emilkowal.ski/) |
+
+## 项目结构
+
+```
+craft-agent/
+├── apps/
+│   ├── electron/              # 桌面应用（主应用）
+│   │   ├── src/
+│   │   │   ├── main/          # Electron 主进程
+│   │   │   │   ├── index.ts   # 主入口，应用生命周期管理
+│   │   │   │   ├── ipc.ts     # IPC 通信处理器
+│   │   │   │   ├── menu.ts    # 应用菜单
+│   │   │   │   ├── window-manager.ts    # 窗口管理器
+│   │   │   │   ├── sessions.ts          # 会话管理器
+│   │   │   │   ├── auto-update.ts       # 自动更新
+│   │   │   │   ├── deep-link.ts         # 深链接处理
+│   │   │   │   ├── notifications.ts     # 通知服务
+│   │   │   │   └── logger.ts            # 日志系统
+│   │   │   ├── preload/       # 上下文桥接（安全层）
+│   │   │   │   └── index.ts
+│   │   │   └── renderer/      # React UI（Vite + shadcn）
+│   │   │       ├── App.tsx     # 主应用组件
+│   │   │       ├── pages/      # 页面组件
+│   │   │       ├── components/ # React 组件
+│   │   │       ├── atoms/      # Jotai 状态原子
+│   │   │       ├── contexts/   # React Context
+│   │   │       └── hooks/      # 自定义 Hooks
+│   │   ├── resources/          # 应用资源
+│   │   │   ├── themes/         # 预定义主题
+│   │   │   ├── permissions/    # 默认权限配置
+│   │   │   └── backgrounds/    # 背景图片
+│   │   ├── electron-builder.yml # 打包配置
+│   │   └── package.json
+│   └── viewer/                # 会话查看器（Web 应用）
+│       └── src/
+│           └── components/
+├── packages/
+│   ├── core/                  # 核心类型定义
+│   │   └── src/
+│   │       ├── types/         # TypeScript 类型定义
+│   │       │   ├── index.ts   # 主要类型导出
+│   │       │   ├── message.ts # 消息类型
+│   │       │   ├── session.ts # 会话类型
+│   │       │   └── workspace.ts # 工作区类型
+│   │       └── utils/         # 工具函数
+│   └── shared/                # 共享业务逻辑（关键模块）
+│       ├── src/
+│       │   ├── agent/         # 智能体核心逻辑
+│       │   │   ├── craft-agent.ts    # CraftAgent 主类
+│       │   │   ├── mode-manager.ts   # 权限模式管理
+│       │   │   ├── permissions-config.ts  # 权限配置
+│       │   │   ├── thinking-levels.ts    # 思考级别
+│       │   │   ├── options.ts       # SDK 选项配置
+│       │   │   ├── session-scoped-tools.ts  # 会话作用域工具
+│       │   │   └── diagnostics.ts    # 错误诊断
+│       │   ├── auth/          # 认证模块
+│       │   │   ├── claude-oauth.ts   # Claude OAuth
+│       │   │   ├── google-oauth.ts   # Google OAuth
+│       │   │   ├── callback-server.ts # OAuth 回调服务器
+│       │   │   └── claude-token.ts   # 令牌管理
+│       │   ├── config/        # 配置管理
+│       │   │   ├── storage.ts  # 配置存储
+│       │   │   ├── preferences.ts  # 用户偏好设置
+│       │   │   ├── models.ts   # 模型配置
+│       │   │   ├── watcher.ts  # 配置文件监听
+│       │   │   └── validators.ts  # 配置验证
+│       │   ├── credentials/   # 凭证管理（AES-256-GCM 加密）
+│       │   ├── sessions/      # 会话管理
+│       │   │   ├── storage.ts  # 会话存储（JSONL 格式）
+│       │   │   └── recovery.ts # 会话恢复逻辑
+│       │   ├── sources/       # 数据源管理
+│       │   │   ├── index.ts    # 数据源加载器
+│       │   │   ├── mcp.ts      # MCP 服务器管理
+│       │   │   ├── api/        # API 数据源（Google, Slack, Microsoft）
+│       │   │   ├── local/      # 本地文件系统
+│       │   │   └── credential-manager.ts  # 数据源凭证
+│       │   ├── workspaces/    # 工作区管理
+│       │   ├── skills/        # 技能系统
+│       │   ├── prompts/       # 系统提示生成
+│       │   ├── statuses/      # 状态系统
+│       │   └── utils/         # 工具函数
+│       └── resources/
+│           └── config-defaults.json  # 默认配置
+└── scripts/
+    ├── install-app.sh         # macOS/Linux 安装脚本
+    ├── install-app.ps1         # Windows 安装脚本
+    └── sync-version.ts        # 版本同步
+```
+
+## 关键模块说明
+
+### packages/shared/src/agent/craft-agent.ts
+这是项目的核心类，封装了 Anthropic Claude Agent SDK 并添加了 Craft 特有的功能：
+
+**核心功能：**
+- 与 Claude Agent SDK 集成，处理流式 AI 响应
+- 权限模式管理（safe/ask/allow-all）
+- MCP 服务器集成和管理
+- 会话恢复和上下文管理
+- 工具权限请求和批准
+- 思考级别控制（off/think/max）
+- 大型响应自动摘要（使用 Claude Haiku）
+
+**关键方法：**
+- `chat()` - 发送消息并接收流式响应
+- `respondToPermission()` - 处理权限请求
+- `setThinkingLevel()` - 设置思考级别
+- `isInSafeMode()` - 检查安全模式状态
+
+### packages/shared/src/agent/mode-manager.ts
+管理三种权限模式：
+
+| 模式 | 内部名称 | 行为 |
+|------|---------|------|
+| 探索 | `safe` | 只读，阻止所有写入操作 |
+| 询问编辑 | `ask` | 提示批准（默认） |
+| 自动 | `allow-all` | 自动批准所有命令 |
+
+使用 `SHIFT+TAB` 在聊天界面中循环切换模式。
+
+### packages/shared/src/config/
+配置管理模块，负责存储和加载配置：
+
+**存储位置：** `~/.craft-agent/`
+- `config.json` - 主配置（工作区、认证类型）
+- `credentials.enc` - 加密凭证（AES-256-GCM）
+- `preferences.json` - 用户偏好设置
+- `theme.json` - 应用级主题
+- `workspaces/{id}/` - 工作区目录
+
+**工作区结构：**
+- `config.json` - 工作区设置
+- `theme.json` - 工作区主题覆盖
+- `sessions/` - 会话数据（JSONL 格式）
+- `sources/` - 连接的数据源
+- `skills/` - 自定义技能
+- `statuses/` - 状态配置
+
+### packages/shared/src/sessions/
+会话管理模块，负责会话持久化和恢复：
+
+**存储格式：** JSONL（每行一个 JSON 对象）
+- 每个会话是一个独立的文件
+- 支持流式写入（追加模式）
+- 自动处理会话压缩
+
+### packages/shared/src/sources/
+数据源管理模块，支持多种类型：
+
+| 类型 | 示例 |
+|------|------|
+| MCP 服务器 | Craft, Linear, GitHub, Notion, 自定义服务器 |
+| REST API | Google (Gmail, Calendar, Drive), Slack, Microsoft |
+| 本地文件 | 文件系统, Obsidian vaults, Git 仓库 |
+
+## 开发指南
+
+### 环境要求
+- Node.js >= 18.0.0
+- Bun（推荐）或 npm/pnpm
+
+### 安装依赖
+```bash
+bun install
+```
+
+### 开发模式
+启动 Electron 开发服务器（热重载）：
+```bash
+bun run electron:dev
+```
+
+这会启动：
+1. Vite 开发服务器（渲染进程）
+2. esbuild 监听模式（主进程和预加载脚本）
+3. Electron 应用
+
+### 类型检查
+```bash
+# 检查所有包
+bun run typecheck:all
+
+# 检查共享包
+bun run typecheck
+```
+
+### 构建和运行
+```bash
+# 构建并运行
+bun run electron:start
+```
+
+### 代码检查
+```bash
+# Lint Electron 应用
+bun run lint:electron
+
+# 自动修复问题
+bun run lint:electron --fix
+```
+
+### 打包应用
+```bash
+# macOS (ARM64)
+bun run electron:dist:mac
+
+# macOS (x64)
+bun run electron:dist:mac:x64
+
+# Windows
+bun run electron:dist:win
+
+# Linux
+bun run electron:dist:linux
+```
+
+### 环境变量
+创建 `.env` 文件用于 OAuth 集成：
+
+```bash
+# Google OAuth（用于 Gmail, Calendar, Drive）
+GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
+GOOGLE_OAUTH_CLIENT_SECRET=your-client-secret
+
+# Slack OAuth
+SLACK_OAUTH_CLIENT_ID=your-slack-client-id
+SLACK_OAUTH_CLIENT_SECRET=your-slack-client-secret
+
+# Microsoft OAuth（用于 Outlook, OneDrive, Teams）
+MICROSOFT_OAUTH_CLIENT_ID=your-microsoft-client-id
+```
+
+### 配置文件热重载
+开发模式下，配置文件更改会自动触发重新加载。这通过 `packages/shared/src/config/watcher.ts` 实现。
+
+### 日志调试
+开发模式下，日志会自动写入 `~/Library/Logs/Craft Agents/`（macOS）。
+
+查看实时日志：
+```bash
+tail -f ~/Library/Logs/Craft\ Agents/main.log
+```
+
+## TypeScript 配置
+
+项目使用严格的 TypeScript 配置（`tsconfig.json`）：
+
+- **目标：** ESNext
+- **模块系统：** ESNext
+- **JSX：** react-jsx
+- **严格模式：** 启用
+- **未检查索引访问：** 启用（`noUncheckedIndexedAccess: true`）
+- **路径别名：** `@/*` 映射到 `src/*`
+
+## 开发约定
+
+### 代码风格
+- 使用 TypeScript 严格模式
+- 优先使用函数式组件和 Hooks
+- 使用 Jotai 进行状态管理
+- 使用 Radix UI 组件作为基础
+- 使用 Tailwind CSS 进行样式设计
+- 代码注释应简洁，解释"为什么"而非"是什么"
+
+### 测试
+使用 Bun 的内置测试框架：
+```bash
+bun test
+```
+
+### 安全最佳实践
+- 所有敏感凭证使用 AES-256-GCM 加密存储
+- 本地 MCP 服务器启动时会过滤敏感环境变量
+- 权限模式默认为"询问编辑"
+- 危险命令（rm, sudo 等）永远不会自动批准
+
+### Git 工作流
+- 主分支：`main`
+- 提交前运行类型检查：`bun run typecheck:all`
+- 提交前运行 lint：`bun run lint:electron`
+
+## 高级功能
+
+### 深链接
+应用支持 `craftagents://` URL 协议进行导航：
+
+```
+craftagents://allChats                    # 所有聊天视图
+craftagents://allChats/chat/session123    # 特定聊天
+craftagents://settings                    # 设置
+craftagents://sources/source/github       # 数据源信息
+craftagents://action/new-chat             # 创建新聊天
+```
+
+### 自动更新
+应用在启动时检查更新（仅生产模式）：
+- 自动安装挂起的更新
+- 检查失败不会阻止应用启动
+- 开发模式下跳过自动更新
+
+### 多实例支持
+支持开发模式下的多实例运行：
+- 使用 `CRAFT_APP_NAME` 环境变量设置实例名称
+- 使用 `CRAFT_DEEPLINK_SCHEME` 环境变量设置不同的深链接方案
+- macOS dock 图标会显示实例编号徽章
+
+### 大型响应处理
+工具响应超过 ~60KB 时，会使用 Claude Haiku 自动进行意图感知的摘要。`_intent` 字段被注入到 MCP 工具模式中，以保留摘要的关注点。
+
+### 会话恢复
+SDK 提供会话恢复功能，但失败时会自动注入之前的对话上下文进行重试。这通过 `getRecoveryMessages()` 回调实现。
+
+## 常见问题
+
+### Q: 如何添加新的数据源类型？
+A: 在 `packages/shared/src/sources/` 中实现新的数据源类型，并在 UI 中添加相应的配置界面。
+
+### Q: 如何自定义权限规则？
+A: 编辑 `~/.craft-agent/workspaces/{id}/permissions.json` 文件或使用 UI 中的权限配置页面。
+
+### Q: 如何添加新主题？
+A: 在 `apps/electron/resources/themes/` 中添加新的 JSON 主题文件，遵循现有主题的结构。
+
+### Q: 会话数据存储在哪里？
+A: `~/.craft-agent/workspaces/{id}/sessions/`，每个会话一个 JSONL 文件。
+
+### Q: 如何调试 MCP 连接问题？
+A: 检查 `~/Library/Logs/Craft Agents/` 中的日志，并使用开发模式查看详细错误信息。
+
+## 相关文档
+
+- [README.md](./README.md) - 项目概述和快速入门
+- [CONTRIBUTING.md](./CONTRIBUTING.md) - 贡献指南
+- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) - 行为准则
+- [SECURITY.md](./SECURITY.md) - 安全政策
+- [TRADEMARK.md](./TRADEMARK.md) - 商标使用指南
+
+## 许可证
+
+Apache License 2.0 - 详见 [LICENSE](./LICENSE) 文件。
+
+**重要：** 本项目使用 [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk)，该 SDK 受 [Anthropic 商业服务条款](https://www.anthropic.com/legal/commercial-terms) 约束。

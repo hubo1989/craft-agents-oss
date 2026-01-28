@@ -26,8 +26,16 @@
       "label": "API Key",
       "placeholder": "Enter your API key",
       "baseUrlLabel": "Base URL (optional)",
-      "format": "Format: provider/model-name",
-      "help": "Your API key is stored locally and never sent to our servers."
+      "format": "Format",
+      "help": "Your API key is stored locally and never sent to our servers.",
+      "modelLabel": "Model",
+      "optional": "optional",
+      "modelPlaceholder": "e.g. openai/gpt-5, qwen3-coder",
+      "leaveEmptyClaude": "Leave empty for Claude models. Only set for non-Claude models.",
+      "browseModels": "Browse models",
+      "viewSupported": "View supported models",
+      "ollamaHelp": "Use any model pulled via ollama pull. No API key required.",
+      "defaultsToAnthropic": "Defaults to Anthropic model names (Opus, Sonnet, Haiku) when empty"
     }
   },
   "oauth": {
@@ -39,6 +47,7 @@
     "continue": "Continue",
     "cancel": "Cancel",
     "connecting": "Connecting...",
-    "validating": "Validating..."
+    "validating": "Validating...",
+    "optional": "optional"
   }
 }

@@ -3,7 +3,18 @@
     "newChat": "New Chat",
     "allChats": "All Chats",
     "inbox": "Inbox",
-    "archived": "Archived"
+    "archived": "Archived",
+    "flagged": "Flagged",
+    "status": "Status",
+    "labels": "Labels",
+    "sources": "Sources",
+    "apis": "APIs",
+    "mcps": "MCPs",
+    "localFolders": "Local Folders",
+    "skills": "Skills",
+    "allSkills": "All Skills",
+    "settings": "Settings",
+    "views": "Views"
   },
   "nav": {
     "statuses": "Statuses",
@@ -15,6 +26,9 @@
     "statuses": "Statuses",
     "labels": "Labels",
     "noLabelsConfigured": "No labels configured"
+  },
+  "share": {
+    "shareOnline": "Share Online"
   },
   "sessionMenu": {
     "share": "Share",
@@ -48,6 +62,11 @@
     "pathCopied": "Path copied to clipboard",
     "titleRefreshed": "Title refreshed",
     "failedToRefreshTitle": "Failed to refresh title"
+  },
+  "emptyState": {
+    "noConversations": "No conversations yet",
+    "startConversation": "Conversations with your agent appear here. Start one to get going.",
+    "newConversation": "New Conversation"
   },
   "input": {
     "placeholder": {

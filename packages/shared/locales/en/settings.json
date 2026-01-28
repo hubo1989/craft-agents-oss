@@ -129,23 +129,27 @@
     "editFile": "Edit File"
   },
   "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "description": "Quick reference for all available keyboard shortcuts",
-    "sections": {
-      "general": "General",
-      "chat": "Chat",
-      "navigation": "Navigation"
-    },
-    "keys": {
-      "newChat": "New Chat",
-      "focusInput": "Focus Input",
-      "sendMessage": "Send Message",
-      "toggleSidebar": "Toggle Sidebar",
-      "search": "Search",
-      "close": "Close/Cancel",
-      "confirm": "Confirm",
-      "cycleMode": "Cycle Permission Mode"
-    }
+    "title": "Shortcuts",
+    "global": "Global",
+    "navigation": "Navigation",
+    "sessionList": "Session List",
+    "chat": "Chat",
+    "focusSidebar": "Focus sidebar",
+    "focusSessionList": "Focus session list",
+    "focusChatInput": "Focus chat input",
+    "newChat": "New chat",
+    "toggleSidebar": "Toggle sidebar",
+    "openSettings": "Open settings",
+    "moveToNextZone": "Move to next zone",
+    "cyclePermissionMode": "Cycle permission mode",
+    "moveBetweenZones": "Move between zones (in lists)",
+    "navigateItems": "Navigate items in list",
+    "goToFirstItem": "Go to first item",
+    "goToLastItem": "Go to last item",
+    "closeDialog": "Close dialog / blur input",
+    "deleteSession": "Delete session",
+    "sendMessage": "Send message",
+    "newLine": "New line"
   },
   "workspaceSettings": {
     "title": "Workspace Settings",
@@ -196,17 +200,56 @@
   },
   "labels": {
     "title": "Labels",
-    "description": "Organize your chats with labels",
-    "noLabels": "No labels yet",
-    "createFirst": "Create your first label to organize chats",
-    "addLabel": "Add Label",
-    "editLabel": "Edit Label",
-    "deleteLabel": "Delete Label",
-    "confirmDelete": "Are you sure you want to delete this label?",
-    "name": "Name",
-    "color": "Color",
-    "autoApply": "Auto Apply",
-    "autoApplyDesc": "Automatically apply this label to new chats"
+    "editFile": "Edit File",
+    "aboutTitle": "About Labels",
+    "description1": "Labels help you organize sessions with colored tags. Use them to categorize conversations by project, topic, or priority — making it easy to filter and find related sessions later.",
+    "description2": "Each label can optionally carry a value with a specific type (text, number, or date). This turns labels into structured metadata — for example, a \"priority\" label with value 3, or a \"due\" label with a date.",
+    "description3": "Auto-apply rules assign labels automatically when a message matches a regex pattern. For example, pasting a Linear issue URL can auto-tag the session with the project name and issue ID — no manual tagging needed.",
+    "learnMore": "Learn more",
+    "hierarchyTitle": "Label Hierarchy",
+    "hierarchyDescription": "All labels configured for this workspace. Labels can be nested to form groups.",
+    "noLabels": "No labels configured.",
+    "noLabelsDescription": "Labels can be created by the agent or by editing labels/config.json in your workspace.",
+    "autoApplyRulesTitle": "Auto-Apply Rules",
+    "autoApplyRulesDescription": "Regex patterns that automatically apply labels when matched in user messages. For example, paste a Linear issue URL and automatically tag the session with the project name and issue ID.",
+    "noAutoApplyRules": "No auto-apply rules configured",
+    "label": "Label",
+    "pattern": "Pattern",
+    "flags": "Flags",
+    "template": "Template",
+    "description": "Description",
+    "searchRules": "Search rules...",
+    "rule": "rule",
+    "rules": "rules",
+    "placeholder": {
+      "default": "Describe what you'd like to change...",
+      "whatFolder": "What folder would you like to connect?",
+      "whatSkill": "What should I learn to do?",
+      "whatLabel": "What label would you like to create?"
+    }
+  },
+  "permissions": {
+    "title": "Permissions",
+    "about": {
+      "title": "About Permissions",
+      "description": "Permissions control what AI can do in your workspace. You can set different permission levels for different contexts.",
+      "workflow": "Use permissions to create safe boundaries for AI operations. You can allow read-only access, require approval for changes, or grant full autonomy.",
+      "learnMore": "Learn more"
+    },
+    "defaultPermissions": "Default Permissions",
+    "defaultPermissionsDescription": "Default permission settings for this workspace",
+    "editFile": "Edit File",
+    "createPermissionsJson": "Create a permissions.json file in your workspace to add custom rules.",
+    "access": "Access",
+    "type": "Type",
+    "pattern": "Pattern",
+    "comment": "Comment",
+    "workspaceCustomizations": "Workspace Customizations",
+    "workspaceCustomizationsDescription": "Customize permissions for specific files, folders, or tools in your workspace.",
+    "noWorkspacePermissions": "No workspace permissions configured"
+  },
+  "common": {
+    "edit": "Edit"
   },
   "sidebar": {
     "allChats": "All Chats",
@@ -246,6 +289,12 @@
   },
   "workspace": {
     "addWorkspace": "Add Workspace...",
-    "created": "Created workspace \"{{name}}\""
+    "created": "Created workspace \"{{name}}\"",
+    "addWorkspaceTitle": "Add Workspace",
+    "addWorkspaceDescription": "Where your ideas meet the tools to make them happen.",
+    "createNew": "Create new",
+    "createNewDesc": "Start fresh with an empty workspace.",
+    "openFolder": "Open folder",
+    "openFolderDesc": "Choose an existing folder as workspace."
   }
 }

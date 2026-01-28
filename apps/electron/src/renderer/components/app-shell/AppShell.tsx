@@ -1401,35 +1401,35 @@ function AppShellContent({
   const listTitle = React.useMemo(() => {
     // Sources navigator
     if (isSourcesNavigation(navState)) {
-      return 'Sources'
+      return t('sidebar.sources')
     }
 
     // Skills navigator
     if (isSkillsNavigation(navState)) {
-      return 'All Skills'
+      return t('sidebar.allSkills')
     }
 
     // Settings navigator
-    if (isSettingsNavigation(navState)) return 'Settings'
+    if (isSettingsNavigation(navState)) return t('sidebar.settings')
 
     // Chats navigator - use chatFilter
-    if (!chatFilter) return 'All Chats'
+    if (!chatFilter) return t('sidebar.allChats')
 
     switch (chatFilter.kind) {
       case 'flagged':
-        return 'Flagged'
+        return t('sidebar.flagged')
       case 'state': {
         const state = effectiveTodoStates.find(s => s.id === chatFilter.stateId)
-        return state?.label || 'All Chats'
+        return state?.label || t('sidebar.allChats')
       }
       case 'label':
-        return chatFilter.labelId === '__all__' ? 'Labels' : getLabelDisplayName(labelConfigs, chatFilter.labelId)
+        return chatFilter.labelId === '__all__' ? t('sidebar.labels') : getLabelDisplayName(labelConfigs, chatFilter.labelId)
       case 'view':
-        return chatFilter.viewId === '__all__' ? 'Views' : viewConfigs.find(v => v.id === chatFilter.viewId)?.name || 'Views'
+        return chatFilter.viewId === '__all__' ? t('sidebar.views') : viewConfigs.find(v => v.id === chatFilter.viewId)?.name || t('sidebar.views')
       default:
-        return 'All Chats'
+        return t('sidebar.allChats')
     }
-  }, [navState, chatFilter, effectiveTodoStates, labelConfigs, viewConfigs])
+  }, [navState, chatFilter, effectiveTodoStates, labelConfigs, viewConfigs, t])
 
   // Build recursive sidebar items from label tree.
   // Each node renders with condensed height (compact: true) since many labels expected.

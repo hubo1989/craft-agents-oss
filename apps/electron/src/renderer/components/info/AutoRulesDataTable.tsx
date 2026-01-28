@@ -11,6 +11,7 @@
 
 import * as React from 'react'
 import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Maximize2 } from 'lucide-react'
 import { Info_DataTable, SortableHeader } from './Info_DataTable'
@@ -182,14 +183,88 @@ export function AutoRulesDataTable({
   searchable = false,
   maxHeight = 400,
   fullscreen = false,
-  fullscreenTitle = 'Auto-Apply Rules',
+  fullscreenTitle,
   className,
 }: AutoRulesDataTableProps) {
+  const { t } = useTranslation('settings')
   const [isFullscreen, setIsFullscreen] = useState(false)
   const { isDark } = useTheme()
 
   // Flatten label tree into auto-rule rows
   const rows = useMemo(() => collectAutoRules(data), [data])
+
+  // Generate columns with translations
+  const columns = useMemo<ColumnDef<AutoRuleRow>[]>(
+    () => [
+      {
+        id: 'label',
+        header: ({ column }) => <SortableHeader column={column} title={t('labels.label')} />,
+        accessorFn: (row) => row.label.name,
+        cell: ({ row }) => (
+          <div className="p-1.5 pl-2.5 flex items-center gap-1.5">
+            <LabelIcon label={row.original.label} size="xs" />
+            <span className="text-sm truncate">{row.original.label.name}</span>
+          </div>
+        ),
+        minSize: 100,
+      },
+      {
+        id: 'pattern',
+        header: ({ column }) => <SortableHeader column={column} title={t('labels.pattern')} />,
+        accessorFn: (row) => row.rule.pattern,
+        cell: ({ row }) => (
+          <div className="p-1.5 pl-2.5">
+            <PatternBadge pattern={row.original.rule.pattern} />
+          </div>
+        ),
+        minSize: 120,
+      },
+      {
+        id: 'flags',
+        header: () => <span className="p-1.5 pl-2.5">{t('labels.flags')}</span>,
+        accessorFn: (row) => row.rule.flags ?? 'gi',
+        cell: ({ row }) => (
+          <div className="p-1.5 pl-2.5">
+            <span className="text-xs text-muted-foreground font-mono">
+              {row.original.rule.flags ?? 'gi'}
+            </span>
+          </div>
+        ),
+        minSize: 50,
+      },
+      {
+        id: 'template',
+        header: () => <span className="p-1.5 pl-2.5">{t('labels.template')}</span>,
+        accessorFn: (row) => row.rule.valueTemplate ?? '',
+        cell: ({ row }) => (
+          <div className="p-1.5 pl-2.5">
+            {row.original.rule.valueTemplate ? (
+              <Info_Badge color="muted" className="font-mono whitespace-nowrap">
+                {row.original.rule.valueTemplate}
+              </Info_Badge>
+            ) : (
+              <span className="text-muted-foreground/50 text-sm">—</span>
+            )}
+          </div>
+        ),
+        minSize: 80,
+      },
+      {
+        id: 'description',
+        header: () => <span className="p-1.5 pl-2.5">{t('labels.description')}</span>,
+        accessorFn: (row) => row.rule.description ?? '',
+        cell: ({ row }) => (
+          <div className="p-1.5 pl-2.5 min-w-0">
+            <span className="truncate block text-sm">
+              {row.original.rule.description || '—'}
+            </span>
+          </div>
+        ),
+        meta: { fillWidth: true, truncate: true },
+      },
+    ],
+    [t]
+  )
 
   // Fullscreen button (shown on hover)
   const fullscreenButton = fullscreen ? (
@@ -225,15 +300,15 @@ export function AutoRulesDataTable({
         <DataTableOverlay
           isOpen={isFullscreen}
           onClose={() => setIsFullscreen(false)}
-          title={fullscreenTitle}
-          subtitle={`${rows.length} ${rows.length === 1 ? 'rule' : 'rules'}`}
+          title={fullscreenTitle ?? t('labels.autoApplyRulesTitle')}
+          subtitle={`${rows.length} ${rows.length === 1 ? t('labels.rule') : t('labels.rules')}`}
           theme={isDark ? 'dark' : 'light'}
         >
           <Info_DataTable
             columns={columns}
             data={rows}
-            searchable={searchable ? { placeholder: 'Search rules...' } : false}
-            emptyContent="No auto-apply rules configured"
+        searchable={searchable ? { placeholder: t('labels.searchRules') } : false}
+            emptyContent={t('labels.noAutoApplyRules')}
           />
         </DataTableOverlay>
       )}

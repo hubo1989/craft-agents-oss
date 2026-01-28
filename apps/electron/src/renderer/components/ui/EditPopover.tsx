@@ -8,6 +8,7 @@
 
 import * as React from 'react'
 import { useState, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ArrowUp } from 'lucide-react'
 import { Popover, PopoverTrigger, PopoverContent } from './popover'
 import { Button } from './button'
@@ -541,9 +542,11 @@ export function EditPopover({
   onOpenChange: controlledOnOpenChange,
   modal = false,
 }: EditPopoverProps) {
+  const { t } = useTranslation('settings')
+
   // Build placeholder: use override if provided, otherwise default to "change" wording
   // overridePlaceholder allows contexts like add-source/add-skill to say "add" instead of "change"
-  const basePlaceholder = overridePlaceholder ?? "Describe what you'd like to change..."
+  const basePlaceholder = overridePlaceholder ?? t('labels.placeholder.default')
   const placeholder = example
     ? `${basePlaceholder.replace(/\.{3}$/, '')}, e.g., "${example}"`
     : basePlaceholder
@@ -712,17 +715,16 @@ export function EditPopover({
 export const EditButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof Button>
->(function EditButton({ className, ...props }, ref) {
+>(function EditButton({ className, children, ...props }, ref) {
   return (
     <Button
       ref={ref}
       variant="ghost"
       size="sm"
-      // Merge our base styles with any className from asChild props
       className={cn("h-8 px-3 rounded-[6px] bg-background shadow-minimal text-foreground/70 hover:text-foreground", className)}
       {...props}
     >
-      Edit
+      {children ?? 'Edit'}
     </Button>
   )
 })

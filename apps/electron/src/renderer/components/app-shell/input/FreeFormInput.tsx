@@ -246,9 +246,15 @@ export function FreeFormInput({
     return appShellCtx.workspaces.find(w => w.id === workspaceId)?.rootPath ?? null
   }, [appShellCtx, workspaceId])
 
-  // Shuffle placeholder order once per mount so each session feels fresh
   const shuffledPlaceholder = React.useMemo(
-    () => Array.isArray(placeholder) ? shuffleArray(placeholder) : placeholder,
+    () => {
+      const isTranslationKey = (str: string) => str.startsWith('input.placeholder.')
+      if (Array.isArray(placeholder)) {
+        const translatedPlaceholders = placeholder.map(p => isTranslationKey(p) ? t(p) : p)
+        return shuffleArray(translatedPlaceholders)
+      }
+      return placeholder && isTranslationKey(placeholder) ? t(placeholder) : placeholder
+    },
     [] // eslint-disable-line react-hooks/exhaustive-deps -- intentionally shuffle only on mount
   )
 

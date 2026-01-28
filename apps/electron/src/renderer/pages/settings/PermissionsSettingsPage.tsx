@@ -307,7 +307,7 @@ export default function PermissionsSettingsPage() {
                         <div className="p-8 text-center text-muted-foreground">
                           <p className="text-sm">{t('permissions.noWorkspacePermissions')}</p>
                           <p className="text-xs mt-1 text-foreground/40">
-                            Create a <code className="bg-foreground/5 px-1 rounded">permissions.json</code> file in your workspace to add custom rules.
+                            {t('permissions.createPermissionsJson')}
                           </p>
                         </div>
                       )}

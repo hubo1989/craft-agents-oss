@@ -11,6 +11,7 @@
  */
 
 import { useState } from "react"
+import { useTranslation } from 'react-i18next'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -71,6 +72,7 @@ export function ApiKeyInput({
   formId = "api-key-form",
   disabled,
 }: ApiKeyInputProps) {
+  const { t } = useTranslation('onboarding')
   const [apiKey, setApiKey] = useState('')
   const [showValue, setShowValue] = useState(false)
   const [baseUrl, setBaseUrl] = useState(PRESETS[0].url)
@@ -196,7 +198,7 @@ export function ApiKeyInput({
       {activePreset !== 'anthropic' && (
         <div className="space-y-2">
           <Label htmlFor="custom-model" className="text-muted-foreground font-normal">
-            Model <span className="text-foreground/30">· optional</span>
+            {t('credentials.apiKey.modelLabel')} <span className="text-foreground/30">· {t('common.optional')}</span>
           </Label>
           <div className={cn(
             "rounded-md shadow-minimal transition-colors",
@@ -207,7 +209,7 @@ export function ApiKeyInput({
               type="text"
               value={customModel}
               onChange={(e) => setCustomModel(e.target.value)}
-              placeholder="e.g. openai/gpt-5, qwen3-coder"
+              placeholder={t('credentials.apiKey.modelPlaceholder')}
               className="border-0 bg-transparent shadow-none"
               disabled={isDisabled}
             />
@@ -215,32 +217,32 @@ export function ApiKeyInput({
           {/* Contextual help links for providers that need model format guidance */}
           {activePreset === 'openrouter' && (
             <p className="text-xs text-foreground/30">
-              Leave empty for Claude models. Only set for non-Claude models.
+              {t('credentials.apiKey.leaveEmptyClaude')}
               <br />
-              Format: <code className="text-foreground/40">provider/model-name</code>.{' '}
+              {t('credentials.apiKey.format')}: <code className="text-foreground/40">provider/model-name</code>.{' '}
               <a href="https://openrouter.ai/models" target="_blank" rel="noopener noreferrer" className="text-foreground/50 underline hover:text-foreground/70">
-                Browse models
+                {t('credentials.apiKey.browseModels')}
               </a>
             </p>
           )}
           {activePreset === 'vercel' && (
             <p className="text-xs text-foreground/30">
-              Leave empty for Claude models. Only set for non-Claude models.
+              {t('credentials.apiKey.leaveEmptyClaude')}
               <br />
-              Format: <code className="text-foreground/40">provider/model-name</code>.{' '}
+              {t('credentials.apiKey.format')}: <code className="text-foreground/40">provider/model-name</code>.{' '}
               <a href="https://vercel.com/docs/ai-gateway" target="_blank" rel="noopener noreferrer" className="text-foreground/50 underline hover:text-foreground/70">
-                View supported models
+                {t('credentials.apiKey.viewSupported')}
               </a>
             </p>
           )}
           {activePreset === 'ollama' && (
             <p className="text-xs text-foreground/30">
-              Use any model pulled via <code className="text-foreground/40">ollama pull</code>. No API key required.
+              {t('credentials.apiKey.ollamaHelp')}
             </p>
           )}
           {(activePreset === 'custom' || !activePreset) && (
             <p className="text-xs text-foreground/30">
-              Defaults to Anthropic model names (Opus, Sonnet, Haiku) when empty
+              {t('credentials.apiKey.defaultsToAnthropic')}
             </p>
           )}
         </div>

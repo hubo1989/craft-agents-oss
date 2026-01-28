@@ -1,0 +1,15 @@
+{
+  "id": "cf261a33-b476-4c93-a742-1f0e6bed887b",
+  "status": "interrupted",
+  "startedAt": "2026-01-26T15:08:31.594Z",
+  "updatedAt": "2026-01-26T15:27:07.223Z",
+  "agentPlugin": "claude",
+  "trackerPlugin": "json",
+  "prdPath": "./tasks/prd.json",
+  "currentIteration": 3,
+  "maxIterations": 10,
+  "totalTasks": 0,
+  "tasksCompleted": 3,
+  "cwd": "/Users/hubo/Tools/craft-agents-oss",
+  "endedAt": "2026-01-26T15:27:07.223Z"
+}

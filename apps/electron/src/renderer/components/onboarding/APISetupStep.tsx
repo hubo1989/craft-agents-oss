@@ -16,15 +16,15 @@ interface ApiSetupOption {
 const API_SETUP_OPTIONS: ApiSetupOption[] = [
   {
     id: 'claude_oauth',
-    nameKey: 'onboarding.apiSetup.claudeOption',
-    descriptionKey: 'onboarding.apiSetup.claudeDescription',
+    nameKey: 'apiSetup.claudeOption',
+    descriptionKey: 'apiSetup.claudeDescription',
     icon: <CreditCard className="size-4" />,
     recommended: true,
   },
   {
     id: 'api_key',
-    nameKey: 'onboarding.apiSetup.apiKeyOption',
-    descriptionKey: 'onboarding.apiSetup.apiKeyDescription',
+    nameKey: 'apiSetup.apiKeyOption',
+    descriptionKey: 'apiSetup.apiKeyDescription',
     icon: <Key className="size-4" />,
   },
 ]
@@ -98,7 +98,7 @@ export function APISetupStep({
                   <span className="font-medium text-sm">{t(option.nameKey)}</span>
                   {option.recommended && (
                     <span className="rounded-[4px] bg-background shadow-minimal px-2 py-0.5 text-[11px] font-medium text-foreground/70">
-                      {t('onboarding.apiSetup.recommended')}
+                      {t('apiSetup.recommended')}
                     </span>
                   )}
                 </div>

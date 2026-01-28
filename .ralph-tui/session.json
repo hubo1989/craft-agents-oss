@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "sessionId": "cf261a33-b476-4c93-a742-1f0e6bed887b",
+  "status": "running",
+  "startedAt": "2026-01-26T15:08:32.488Z",
+  "updatedAt": "2026-01-26T15:27:07.211Z",
+  "currentIteration": 3,
+  "maxIterations": 10,
+  "tasksCompleted": 3,
+  "isPaused": false,
+  "agentPlugin": "claude",
+  "trackerState": {
+    "plugin": "json",
+    "prdPath": "./tasks/prd.json",
+    "totalTasks": 18,
+    "tasks": [
+      {
+        "id": "US-001",
+        "title": "创建迁移分支并备份当前工作",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-002",
+        "title": "迁移 i18n 翻译资源",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-003",
+        "title": "迁移主进程 i18n 实现",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-004",
+        "title": "迁移渲染进程 i18n 实现",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-005",
+        "title": "合并 IPC 通道添加 LANGUAGE_CHANGE 支持",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-006",
+        "title": "集成 i18n 到菜单系统",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-007",
+        "title": "集成 i18n 到应用入口",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-008",
+        "title": "迁移通知系统的 i18n 集成",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-009",
+        "title": "迁移窗口管理器的 i18n 集成",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-010",
+        "title": "迁移 artifact 组件",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-011",
+        "title": "集成 artifact 到 CodeBlock 组件",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-012",
+        "title": "更新 UI 包导出",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-013",
+        "title": "验证依赖配置",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-014",
+        "title": "验证配置存储兼容性",
+        "status": "completed",
+        "completedInSession": false
+      },
+      {
+        "id": "US-015",
+        "title": "端到端测试 i18n 功能",
+        "status": "completed",
+        "completedInSession": true
+      },
+      {
+        "id": "US-016",
+        "title": "端到端测试 artifact 功能",
+        "status": "completed",
+        "completedInSession": true
+      },
+      {
+        "id": "US-017",
+        "title": "验证上游新功能基础兼容性",
+        "status": "completed",
+        "completedInSession": true
+      },
+      {
+        "id": "US-018",
+        "title": "清理和提交迁移",
+        "status": "open",
+        "completedInSession": false
+      }
+    ]
+  },
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-015",
+      "taskTitle": "端到端测试 i18n 功能",
+      "taskCompleted": true,
+      "durationMs": 446728,
+      "startedAt": "2026-01-26T15:08:36.452Z",
+      "endedAt": "2026-01-26T15:16:03.180Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-016",
+      "taskTitle": "端到端测试 artifact 功能",
+      "taskCompleted": true,
+      "durationMs": 505858,
+      "startedAt": "2026-01-26T15:16:04.365Z",
+      "endedAt": "2026-01-26T15:24:30.223Z"
+    },
+    {
+      "iteration": 3,
+      "status": "completed",
+      "taskId": "US-017",
+      "taskTitle": "验证上游新功能基础兼容性",
+      "taskCompleted": true,
+      "durationMs": 134040,
+      "startedAt": "2026-01-26T15:24:31.385Z",
+      "endedAt": "2026-01-26T15:26:45.425Z"
+    }
+  ],
+  "skippedTaskIds": [],
+  "cwd": "/Users/hubo/Tools/craft-agents-oss",
+  "activeTaskIds": [],
+  "subagentPanelVisible": false
+}
