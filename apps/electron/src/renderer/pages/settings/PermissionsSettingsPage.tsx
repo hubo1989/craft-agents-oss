@@ -29,6 +29,7 @@ import { EditPopover, EditButton, getEditConfig } from '@/components/ui/EditPopo
 import { getDocUrl } from '@craft-agent/shared/docs/doc-links'
 import { routes } from '@/lib/navigate'
 import type { DetailsPageMeta } from '@/lib/navigation-registry'
+import { useTranslation } from 'react-i18next'
 
 export const meta: DetailsPageMeta = {
   navigator: 'settings',
@@ -130,6 +131,7 @@ function buildCustomPermissionsData(config: PermissionsConfigFile): PermissionRo
 }
 
 export default function PermissionsSettingsPage() {
+  const { t } = useTranslation('settings')
   const { activeWorkspaceId } = useAppShellContext()
   const activeWorkspace = useActiveWorkspace()
 
@@ -205,7 +207,7 @@ export default function PermissionsSettingsPage() {
               ) : (
                 <>
                   {/* About Section */}
-                  <SettingsSection title="About Permissions">
+                  <SettingsSection title=t('permissions.about.title')>
                     <SettingsCard className="px-4 py-3.5">
                       <div className="text-sm text-muted-foreground leading-relaxed space-y-1.5">
                         <p>

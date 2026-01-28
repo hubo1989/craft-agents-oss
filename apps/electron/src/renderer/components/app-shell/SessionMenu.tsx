@@ -43,6 +43,7 @@ import type { TodoState } from '@/config/todo-states'
 import type { LabelConfig } from '@craft-agent/shared/labels'
 import { extractLabelId } from '@craft-agent/shared/labels'
 import { LabelIcon } from '@/components/ui/label-icon'
+import { useTranslation } from 'react-i18next'
 
 export interface SessionMenuProps {
   /** Session ID */
@@ -101,6 +102,7 @@ export function SessionMenu({
   onOpenInNewWindow,
   onDelete,
 }: SessionMenuProps) {
+  const { t } = useTranslation('chat')
   // Share handlers
   const handleShare = async () => {
     const result = await window.electronAPI.sessionCommand(sessionId, { type: 'shareToViewer' }) as { success: boolean; url?: string; error?: string } | undefined
