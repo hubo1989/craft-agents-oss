@@ -1,0 +1,35 @@
+{
+  "sidebar": {
+    "allChats": "All Chats",
+    "flagged": "Flagged",
+    "inbox": "Inbox"
+  },
+  "nav": {
+    "statuses": "Statuses",
+    "labels": "Labels",
+    "views": "Views"
+  },
+  "sidebarControls": {
+    "filterChats": "Filter Chats",
+    "statuses": "Statuses",
+    "labels": "Labels",
+    "noLabelsConfigured": "No labels configured"
+  },
+  "sessionMenu": {
+    "share": "Share",
+    "shared": "Shared",
+    "openInBrowser": "Open in Browser",
+    "copyLink": "Copy Link",
+    "updateShare": "Update Share",
+    "stopSharing": "Stop Sharing",
+    "flag": "Flag",
+    "unflag": "Unflag",
+    "markAsUnread": "Mark as Unread",
+    "rename": "Rename",
+    "regenerateTitle": "Regenerate Title",
+    "openInNewWindow": "Open in New Window",
+    "viewInFinder": "View in Finder",
+    "copyPath": "Copy Path",
+    "delete": "Delete"
+  }
+}

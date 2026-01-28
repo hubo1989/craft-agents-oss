@@ -1,0 +1,23 @@
+{
+  "appName": "Craft Agents",
+  "ok": "确定",
+  "cancel": "取消",
+  "save": "保存",
+  "delete": "删除",
+  "edit": "编辑",
+  "close": "关闭",
+  "loading": "加载中...",
+  "search": "搜索",
+  "filter": "筛选",
+  "settings": "设置",
+  "preferences": "偏好设置",
+  "language": "语言",
+  "theme": "主题",
+  "dark": "深色",
+  "light": "浅色",
+  "system": "跟随系统",
+  "navigation": {
+    "invalidLinkTitle": "无效链接",
+    "contentMissingDescription": "内容可能已被移动或删除。"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "sidebar": {
+    "allChats": "所有对话",
+    "flagged": "已标记",
+    "inbox": "收件箱"
+  },
+  "nav": {
+    "statuses": "状态",
+    "labels": "标签",
+    "views": "视图"
+  },
+  "sidebarControls": {
+    "filterChats": "筛选对话",
+    "statuses": "状态",
+    "labels": "标签",
+    "noLabelsConfigured": "未配置标签"
+  },
+  "sessionMenu": {
+    "share": "分享",
+    "shared": "已分享",
+    "openInBrowser": "在浏览器中打开",
+    "copyLink": "复制链接",
+    "updateShare": "更新分享",
+    "stopSharing": "停止分享",
+    "flag": "标记",
+    "unflag": "取消标记",
+    "markAsUnread": "标记为未读",
+    "rename": "重命名",
+    "regenerateTitle": "重新生成标题",
+    "openInNewWindow": "在新窗口中打开",
+    "viewInFinder": "在访达中查看",
+    "copyPath": "复制路径",
+    "delete": "删除"
+  }
+}

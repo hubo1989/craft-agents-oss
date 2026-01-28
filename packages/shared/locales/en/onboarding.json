@@ -1,0 +1,23 @@
+{
+  "welcome": {
+    "title": "Welcome to Craft Agents",
+    "subtitle": "Agents with the UX they deserve. Connect anything. Organize your sessions. Everything you need to do the work of your life!",
+    "updateSettings": "Update Settings",
+    "updateDescription": "Update your API connection or change your setup.",
+    "getStarted": "Get Started",
+    "continue": "Continue"
+  },
+  "apiSetup": {
+    "title": "Connect API",
+    "description": "Choose your AI provider and enter your API key to get started."
+  },
+  "credentials": {
+    "apiKey": {
+      "label": "API Key",
+      "placeholder": "Enter your API key",
+      "baseUrlLabel": "Base URL (optional)",
+      "format": "Format: provider/model-name",
+      "help": "Your API key is stored locally and never sent to our servers."
+    }
+  }
+}

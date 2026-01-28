@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "about": {
+      "title": "About Permissions",
+      "description": "Permissions control how much autonomy your agent has. In Explore mode, the agent can only read and research — perfect for understanding a problem before committing to changes. When you're ready, switch to Execute mode to let the agent implement the plan autonomously.",
+      "workflow": "A good workflow: start in Explore to let the agent investigate, review the proposed plan, then execute with confidence.",
+      "learnMore": "Learn more"
+    }
+  }
+}

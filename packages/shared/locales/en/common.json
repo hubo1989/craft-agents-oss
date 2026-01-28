@@ -1,0 +1,23 @@
+{
+  "appName": "Craft Agents",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "close": "Close",
+  "loading": "Loading...",
+  "search": "Search",
+  "filter": "Filter",
+  "settings": "Settings",
+  "preferences": "Preferences",
+  "language": "Language",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System",
+  "navigation": {
+    "invalidLinkTitle": "Invalid link",
+    "contentMissingDescription": "The content may have been moved or deleted."
+  }
+}
