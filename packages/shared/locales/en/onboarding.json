@@ -1,0 +1,53 @@
+{
+  "welcome": {
+    "title": "Welcome to Craft Agents",
+    "subtitle": "Agents with the UX they deserve. Connect anything. Organize your sessions. Everything you need to do the work of your life!",
+    "updateSettings": "Update Settings",
+    "updateDescription": "Update your API connection or change your setup.",
+    "getStarted": "Get Started",
+    "continue": "Continue"
+  },
+  "apiSetup": {
+    "title": "Set Up API Connection",
+    "description": "Select how you'd like to power your AI agents.",
+    "claudeOption": "Claude Pro/Max",
+    "claudeDescription": "Use your Claude subscription for unlimited access.",
+    "apiKeyOption": "API Key",
+    "apiKeyDescription": "Anthropic, OpenRouter, Ollama, or compatible APIs.",
+    "recommended": "Recommended"
+  },
+  "credentials": {
+    "claudeAccountTitle": "Connect Claude Account",
+    "claudeAccountDescription": "Use your Claude subscription to power multi-agent workflows.",
+    "signInWithClaude": "Sign in with Claude",
+    "apiConfigTitle": "API Configuration",
+    "apiConfigDescription": "Enter your API key. Optionally configure a custom endpoint for OpenRouter, Ollama, or compatible APIs.",
+    "apiKey": {
+      "label": "API Key",
+      "placeholder": "Enter your API key",
+      "baseUrlLabel": "Base URL (optional)",
+      "format": "Format",
+      "help": "Your API key is stored locally and never sent to our servers.",
+      "modelLabel": "Model",
+      "optional": "optional",
+      "modelPlaceholder": "e.g. openai/gpt-5, qwen3-coder",
+      "leaveEmptyClaude": "Leave empty for Claude models. Only set for non-Claude models.",
+      "browseModels": "Browse models",
+      "viewSupported": "View supported models",
+      "ollamaHelp": "Use any model pulled via ollama pull. No API key required.",
+      "defaultsToAnthropic": "Defaults to Anthropic model names (Opus, Sonnet, Haiku) when empty"
+    }
+  },
+  "oauth": {
+    "authorizationCode": "Authorization Code",
+    "pasteCodePlaceholder": "Paste your authorization code here"
+  },
+  "common": {
+    "back": "Back",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "connecting": "Connecting...",
+    "validating": "Validating...",
+    "optional": "optional"
+  }
+}

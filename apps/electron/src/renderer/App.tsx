@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import './i18n'
 import { useTheme } from '@/hooks/useTheme'
 import type { ThemeOverrides } from '@config/theme'
 import { useSetAtom, useStore, useAtomValue } from 'jotai'
@@ -24,7 +25,6 @@ import { useSession } from '@/hooks/useSession'
 import { useUpdateChecker } from '@/hooks/useUpdateChecker'
 import { NavigationProvider } from '@/contexts/NavigationContext'
 import { navigate, routes } from './lib/navigate'
-import { stripMarkdown } from './utils/text'
 import { initRendererPerf } from './lib/perf'
 import { DEFAULT_MODEL } from '@config/models'
 import {
@@ -42,16 +42,7 @@ import { sourcesAtom } from '@/atoms/sources'
 import { skillsAtom } from '@/atoms/skills'
 import { extractBadges } from '@/lib/mentions'
 import { getDefaultStore } from 'jotai'
-import {
-  ShikiThemeProvider,
-  PlatformProvider,
-  ImagePreviewOverlay,
-  PDFPreviewOverlay,
-  CodePreviewOverlay,
-  DocumentFormattedMarkdownOverlay,
-  JSONPreviewOverlay,
-} from '@craft-agent/ui'
-import { useLinkInterceptor, type FilePreviewState } from '@/hooks/useLinkInterceptor'
+import { ShikiThemeProvider, PlatformProvider } from '@craft-agent/ui'
 
 type AppState = 'loading' | 'onboarding' | 'reauth' | 'ready'
 
@@ -233,7 +224,7 @@ export default function App() {
   // Apply theme via hook (injects CSS variables)
   // shikiTheme is passed to ShikiThemeProvider to ensure correct syntax highlighting
   // theme for dark-only themes in light system mode
-  const { shikiTheme, isDark } = useTheme({ appTheme })
+  const { shikiTheme } = useTheme({ appTheme })
 
   // Ref for sessionOptions to access current value in event handlers without re-registering
   const sessionOptionsRef = useRef(sessionOptions)
@@ -556,9 +547,7 @@ export default function App() {
             const lastMessage = updatedSession.messages.findLast(
               m => m.role === 'assistant' && !m.isIntermediate
             )
-            // Strip markdown so OS notifications display clean plain text
-            const rawPreview = lastMessage?.content?.substring(0, 200) || undefined
-            const preview = rawPreview ? stripMarkdown(rawPreview).substring(0, 100) || undefined : undefined
+            const preview = lastMessage?.content?.substring(0, 100) || undefined
             showSessionNotification(updatedSession, preview)
           }
         }
@@ -1039,29 +1028,21 @@ export default function App() {
     }
   }, [])
 
-  // Centralized link interceptor: classifies file types and decides whether to
-  // show an in-app preview overlay or open externally. Replaces the old
-  // handleOpenFile/handleOpenUrl that always opened in external apps.
-  const linkInterceptor = useLinkInterceptor({
-    openFileExternal: async (path) => {
-      try { await window.electronAPI.openFile(path) }
-      catch (error) { console.error('Failed to open file:', error) }
-    },
-    openUrl: async (url) => {
-      try { await window.electronAPI.openUrl(url) }
-      catch (error) { console.error('Failed to open URL:', error) }
-    },
-    showInFolder: async (path) => {
-      try { await window.electronAPI.showInFolder(path) }
-      catch (error) { console.error('Failed to show in folder:', error) }
-    },
-    readFile: (path) => window.electronAPI.readFile(path),
-    readFileDataUrl: (path) => window.electronAPI.readFileDataUrl(path),
-    readFileBinary: (path) => window.electronAPI.readFileBinary(path),
-  })
+  const handleOpenFile = useCallback(async (path: string) => {
+    try {
+      await window.electronAPI.openFile(path)
+    } catch (error) {
+      console.error('Failed to open file:', error)
+    }
+  }, [])
 
-  const handleOpenFile = linkInterceptor.handleOpenFile
-  const handleOpenUrl = linkInterceptor.handleOpenUrl
+  const handleOpenUrl = useCallback(async (url: string) => {
+    try {
+      await window.electronAPI.openUrl(url)
+    } catch (error) {
+      console.error('Failed to open URL:', error)
+    }
+  }, [])
 
   const handleOpenSettings = useCallback(() => {
     navigate(routes.view.settings())
@@ -1241,18 +1222,11 @@ export default function App() {
   const platformActions = useMemo(() => ({
     onOpenFile: handleOpenFile,
     onOpenUrl: handleOpenUrl,
-    // Bypass link interceptor — opens file directly in system editor.
-    // Used by overlay header badges (when already viewing a file, "Open" should launch editor).
-    onOpenFileExternal: linkInterceptor.openFileExternal,
-    // Reveal a file in the system file manager (Finder on macOS, Explorer on Windows)
-    onRevealInFinder: (path: string) => {
-      window.electronAPI.showInFolder(path).catch(() => {})
-    },
     // Hide/show macOS traffic lights when fullscreen overlays are open
     onSetTrafficLightsVisible: (visible: boolean) => {
       window.electronAPI.setTrafficLightsVisible(visible)
     },
-  }), [handleOpenFile, handleOpenUrl, linkInterceptor.openFileExternal])
+  }), [handleOpenFile, handleOpenUrl])
 
   // Loading state - show splash screen
   if (appState === 'loading') {
@@ -1348,17 +1322,6 @@ export default function App() {
               onCancel={() => setShowResetDialog(false)}
             />
           </div>
-
-          {/* File preview overlay — rendered by the link interceptor when a previewable file is clicked */}
-          {linkInterceptor.previewState && (
-            <FilePreviewRenderer
-              state={linkInterceptor.previewState}
-              onClose={linkInterceptor.closePreview}
-              loadDataUrl={linkInterceptor.readFileDataUrl}
-              loadPdfData={linkInterceptor.readFileBinary}
-              isDark={isDark}
-            />
-          )}
         </NavigationProvider>
         </TooltipProvider>
         </ModalProvider>
@@ -1375,118 +1338,4 @@ export default function App() {
 function WindowCloseHandler() {
   useWindowCloseHandler()
   return null
-}
-
-/**
- * FilePreviewRenderer - Routes file preview state to the correct overlay component.
- *
- * Handles all preview types from the link interceptor:
- * - image → ImagePreviewOverlay (binary, loaded via data URL)
- * - pdf → PDFPreviewOverlay (binary, embedded via Chromium viewer)
- * - code/text → CodePreviewOverlay (syntax highlighted)
- * - markdown → DocumentFormattedMarkdownOverlay
- * - json → JSONPreviewOverlay
- *
- * File path badges with "Open" / "Reveal in Finder" menus are provided
- * automatically by PlatformContext — no per-overlay callback props needed.
- */
-function FilePreviewRenderer({
-  state,
-  onClose,
-  loadDataUrl,
-  loadPdfData,
-  isDark,
-}: {
-  state: FilePreviewState
-  onClose: () => void
-  loadDataUrl: (path: string) => Promise<string>
-  loadPdfData: (path: string) => Promise<Uint8Array>
-  isDark: boolean
-}) {
-  const theme = isDark ? 'dark' : 'light' as const
-
-  switch (state.type) {
-    case 'image':
-      return (
-        <ImagePreviewOverlay
-          isOpen
-          onClose={onClose}
-          filePath={state.filePath}
-          loadDataUrl={loadDataUrl}
-          theme={theme}
-        />
-      )
-
-    case 'pdf':
-      return (
-        <PDFPreviewOverlay
-          isOpen
-          onClose={onClose}
-          filePath={state.filePath}
-          loadPdfData={loadPdfData}
-          theme={theme}
-        />
-      )
-
-    case 'code':
-    case 'text':
-      return (
-        <CodePreviewOverlay
-          isOpen
-          onClose={onClose}
-          filePath={state.filePath}
-          content={state.content ?? ''}
-          language={state.type === 'code' ? state.language : 'plaintext'}
-          mode="read"
-          theme={theme}
-          error={state.error}
-        />
-      )
-
-    case 'markdown':
-      return (
-        <DocumentFormattedMarkdownOverlay
-          isOpen
-          onClose={onClose}
-          content={state.content ?? ''}
-          filePath={state.filePath}
-        />
-      )
-
-    case 'json': {
-      // JSONPreviewOverlay expects parsed data, not a raw string
-      let parsedData: unknown = null
-      try {
-        if (state.content) parsedData = JSON.parse(state.content)
-      } catch {
-        // If parsing fails, fall back to showing as code
-        return (
-          <CodePreviewOverlay
-            isOpen
-            onClose={onClose}
-            filePath={state.filePath}
-            content={state.content ?? ''}
-            language="json"
-            mode="read"
-            theme={theme}
-            error={state.error}
-          />
-        )
-      }
-      return (
-        <JSONPreviewOverlay
-          isOpen
-          onClose={onClose}
-          filePath={state.filePath}
-          title={state.filePath.split('/').pop() ?? 'JSON'}
-          data={parsedData}
-          theme={theme}
-          error={state.error}
-        />
-      )
-    }
-
-    default:
-      return null
-  }
 }

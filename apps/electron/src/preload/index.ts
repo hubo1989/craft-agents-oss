@@ -1,5 +1,3 @@
-// Capture errors in the isolated preload context and forward to Sentry
-import '@sentry/electron/preload'
 import { contextBridge, ipcRenderer } from 'electron'
 import { IPC_CHANNELS, type SessionEvent, type ElectronAPI, type FileAttachment, type AuthType } from '../shared/types'
 
@@ -62,8 +60,6 @@ const api: ElectronAPI = {
 
   // File operations
   readFile: (path: string) => ipcRenderer.invoke(IPC_CHANNELS.READ_FILE, path),
-  readFileDataUrl: (path: string) => ipcRenderer.invoke(IPC_CHANNELS.READ_FILE_DATA_URL, path),
-  readFileBinary: (path: string) => ipcRenderer.invoke(IPC_CHANNELS.READ_FILE_BINARY, path) as Promise<Uint8Array>,
   openFileDialog: () => ipcRenderer.invoke(IPC_CHANNELS.OPEN_FILE_DIALOG),
   readFileAttachment: (path: string) => ipcRenderer.invoke(IPC_CHANNELS.READ_FILE_ATTACHMENT, path),
   storeAttachment: (sessionId: string, attachment: FileAttachment) => ipcRenderer.invoke(IPC_CHANNELS.STORE_ATTACHMENT, sessionId, attachment),
@@ -329,9 +325,6 @@ const api: ElectronAPI = {
   saveViews: (workspaceId: string, views: any[]) =>
     ipcRenderer.invoke(IPC_CHANNELS.VIEWS_SAVE, workspaceId, views),
 
-  // Tool icon mappings (for Appearance settings page)
-  getToolIconMappings: () => ipcRenderer.invoke(IPC_CHANNELS.TOOL_ICONS_GET_MAPPINGS),
-
   // Theme (app-level only)
   getAppTheme: () => ipcRenderer.invoke(IPC_CHANNELS.THEME_GET_APP),
   // Preset themes (app-level)
@@ -432,6 +425,9 @@ const api: ElectronAPI = {
   menuCopy: () => ipcRenderer.invoke(IPC_CHANNELS.MENU_COPY),
   menuPaste: () => ipcRenderer.invoke(IPC_CHANNELS.MENU_PASTE),
   menuSelectAll: () => ipcRenderer.invoke(IPC_CHANNELS.MENU_SELECT_ALL),
+
+  setLanguage: (language: string) => ipcRenderer.invoke(IPC_CHANNELS.LANGUAGE_SET, language),
+  getLanguage: () => ipcRenderer.invoke(IPC_CHANNELS.LANGUAGE_GET),
 }
 
 contextBridge.exposeInMainWorld('electronAPI', api)

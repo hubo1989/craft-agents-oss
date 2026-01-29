@@ -7,6 +7,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MoreHorizontal, Zap } from 'lucide-react'
 import { SkillAvatar } from '@/components/ui/skill-avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -49,64 +50,62 @@ export function SkillsListPanel({
   workspaceRootPath,
   className,
 }: SkillsListPanelProps) {
+  const { t } = useTranslation('settings')
+
   // Empty state - rendered outside ScrollArea for proper vertical centering
   if (skills.length === 0) {
     return (
-      <div className={cn('flex flex-col flex-1', className)}>
-        <Empty className="flex-1">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Zap />
-            </EmptyMedia>
-            <EmptyTitle>No skills configured</EmptyTitle>
-            <EmptyDescription>
-              Skills are reusable instructions that teach your agent specialized behaviors.
-            </EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent>
-            <button
-              onClick={() => window.electronAPI.openUrl(getDocUrl('skills'))}
-              className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-foreground/[0.02] shadow-minimal hover:bg-foreground/[0.05] transition-colors"
-            >
-              Learn more
-            </button>
-            {workspaceRootPath && (
-              <EditPopover
-                align="center"
-                trigger={
-                  <button className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-background shadow-minimal hover:bg-foreground/[0.03] transition-colors">
-                    Add Skill
-                  </button>
-                }
-                {...getEditConfig('add-skill', workspaceRootPath)}
-              />
-            )}
-          </EmptyContent>
-        </Empty>
-      </div>
+      <Empty className={cn('flex-1', className)}>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Zap />
+          </EmptyMedia>
+          <EmptyTitle>{t('skills.noSkills')}</EmptyTitle>
+          <EmptyDescription>
+            {t('skills.emptyDescription')}
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <button
+            onClick={() => window.electronAPI.openUrl(getDocUrl('skills'))}
+            className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-foreground/[0.02] shadow-minimal hover:bg-foreground/[0.05] transition-colors"
+          >
+            {t('skills.learnMore')}
+          </button>
+          {workspaceRootPath && (
+            <EditPopover
+              align="center"
+              trigger={
+                <button className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-background shadow-minimal hover:bg-foreground/[0.03] transition-colors">
+                  {t('skills.addSkill')}
+                </button>
+              }
+              {...getEditConfig('add-skill', workspaceRootPath)}
+            />
+          )}
+        </EmptyContent>
+      </Empty>
     )
   }
 
   return (
-    <div className={cn('flex flex-col flex-1 min-h-0', className)}>
-      <ScrollArea className="flex-1">
-        <div className="pb-2">
-          <div className="pt-2">
-            {skills.map((skill, index) => (
-              <SkillItem
-                key={skill.slug}
-                skill={skill}
-                isSelected={selectedSkillSlug === skill.slug}
-                isFirst={index === 0}
-                workspaceId={workspaceId}
-                onClick={() => onSkillClick(skill)}
-                onDelete={() => onDeleteSkill(skill.slug)}
-              />
-            ))}
-          </div>
+    <ScrollArea className={cn('flex-1', className)}>
+      <div className="pb-2">
+        <div className="pt-2">
+          {skills.map((skill, index) => (
+            <SkillItem
+              key={skill.slug}
+              skill={skill}
+              isSelected={selectedSkillSlug === skill.slug}
+              isFirst={index === 0}
+              workspaceId={workspaceId}
+              onClick={() => onSkillClick(skill)}
+              onDelete={() => onDeleteSkill(skill.slug)}
+            />
+          ))}
         </div>
-      </ScrollArea>
-    </div>
+      </div>
+    </ScrollArea>
   )
 }
 

@@ -10,6 +10,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { MoreHorizontal, AppWindow } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -27,21 +28,6 @@ const AppSettingsIcon = ({ className }: { className?: string }) => (
   >
     <path
       d="M16.5 12C18.9853 12 21 14.0147 21 16.5C21 18.9853 18.9853 21 16.5 21H7.5C5.01472 21 3 18.9853 3 16.5C3 14.0147 5.01472 12 7.5 12H16.5ZM7 14.5C5.89543 14.5 5 15.3954 5 16.5C5 17.6046 5.89543 18.5 7 18.5C8.10457 18.5 9 17.6046 9 16.5C9 15.3954 8.10457 14.5 7 14.5ZM16.5 2C18.9853 2 21 4.01472 21 6.5C21 8.98528 18.9853 11 16.5 11H7.5C5.01472 11 3 8.98528 3 6.5C3 4.01472 5.01472 2 7.5 2H16.5ZM17 4.5C15.8954 4.5 15 5.39543 15 6.5C15 7.60457 15.8954 8.5 17 8.5C18.1046 8.5 19 7.60457 19 6.5C19 5.39543 18.1046 4.5 17 4.5Z"
-      fill="currentColor"
-    />
-  </svg>
-)
-
-/** Palette icon for appearance settings */
-const AppearanceIcon = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <path
-      d="M12 2C17.5228 2 22 6.47715 22 12C22 12.6486 21.9378 13.2837 21.8193 13.8994C21.4337 15.9035 19.4222 16.7505 17.7373 16.4697L15.998 16.1797C15.5873 16.1112 15.1685 16.2457 14.874 16.54L14.7852 16.6289C14.4458 16.9682 14.3617 17.4868 14.5762 17.916C14.9989 18.7615 15.0045 19.7284 14.6309 20.5195C14.2469 21.3325 13.4592 21.9498 12.4092 21.9922C12.2735 21.9977 12.1369 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM7.5 11C6.67157 11 6 11.6716 6 12.5C6 13.3284 6.67157 14 7.5 14C8.32843 14 9 13.3284 9 12.5C9 11.6716 8.32843 11 7.5 11ZM9.5 7C8.67157 7 8 7.67157 8 8.5C8 9.32843 8.67157 10 9.5 10C10.3284 10 11 9.32843 11 8.5C11 7.67157 10.3284 7 9.5 7ZM14.5 7C13.6716 7 13 7.67157 13 8.5C13 9.32843 13.6716 10 14.5 10C15.3284 10 16 9.32843 16 8.5C16 7.67157 15.3284 7 14.5 7Z"
       fill="currentColor"
     />
   </svg>
@@ -153,50 +139,47 @@ interface SettingsItem {
   description: string
 }
 
-const settingsItems: SettingsItem[] = [
-  {
-    id: 'app',
-    label: 'App',
-    icon: AppSettingsIcon,
-    description: 'Notifications, API connection, updates',
-  },
-  {
-    id: 'appearance',
-    label: 'Appearance',
-    icon: AppearanceIcon,
-    description: 'Theme, font, tool icons',
-  },
-  {
-    id: 'workspace',
-    label: 'Workspace',
-    icon: WorkspaceIcon,
-    description: 'Model, mode cycling, advanced',
-  },
-  {
-    id: 'permissions',
-    label: 'Permissions',
-    icon: ShieldIcon,
-    description: 'Allowed commands in Explore mode',
-  },
-  {
-    id: 'labels',
-    label: 'Labels',
-    icon: LabelsIcon,
-    description: 'Label hierarchy and auto-apply rules',
-  },
-  {
-    id: 'shortcuts',
-    label: 'Shortcuts',
-    icon: KeyboardIcon,
-    description: 'Keyboard shortcuts reference',
-  },
-  {
-    id: 'preferences',
-    label: 'Preferences',
-    icon: PreferencesIcon,
-    description: 'Your personal preferences',
-  },
-]
+function useSettingsItems(): SettingsItem[] {
+  const { t } = useTranslation('settings')
+  return [
+    {
+      id: 'app',
+      label: t('navigation.app'),
+      icon: AppSettingsIcon,
+      description: t('navigation.appDescription'),
+    },
+    {
+      id: 'workspace',
+      label: t('navigation.workspace'),
+      icon: WorkspaceIcon,
+      description: t('navigation.workspaceDescription'),
+    },
+    {
+      id: 'permissions',
+      label: t('navigation.permissions'),
+      icon: ShieldIcon,
+      description: t('navigation.permissionsDescription'),
+    },
+    {
+      id: 'labels',
+      label: t('navigation.labels'),
+      icon: LabelsIcon,
+      description: t('navigation.labelsDescription'),
+    },
+    {
+      id: 'shortcuts',
+      label: t('navigation.shortcuts'),
+      icon: KeyboardIcon,
+      description: t('navigation.shortcutsDescription'),
+    },
+    {
+      id: 'preferences',
+      label: t('navigation.preferences'),
+      icon: PreferencesIcon,
+      description: t('navigation.preferencesDescription'),
+    },
+  ]
+}
 
 interface SettingsItemRowProps {
   item: SettingsItem
@@ -212,6 +195,7 @@ interface SettingsItemRowProps {
 function SettingsItemRow({ item, isSelected, isFirst, onSelect }: SettingsItemRowProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const Icon = item.icon
+  const { t } = useTranslation('settings')
 
   // Open settings page in a new window via deep link
   const handleOpenInNewWindow = () => {
@@ -285,7 +269,7 @@ function SettingsItemRow({ item, isSelected, isFirst, onSelect }: SettingsItemRo
                 <DropdownMenuProvider>
                   <StyledDropdownMenuItem onClick={handleOpenInNewWindow}>
                     <AppWindow className="h-3.5 w-3.5" />
-                    <span className="flex-1">Open in New Window</span>
+                    <span className="flex-1">{t('navigation.openInNewWindow')}</span>
                   </StyledDropdownMenuItem>
                 </DropdownMenuProvider>
               </StyledDropdownMenuContent>
@@ -301,6 +285,8 @@ export default function SettingsNavigator({
   selectedSubpage,
   onSelectSubpage,
 }: SettingsNavigatorProps) {
+  const settingsItems = useSettingsItems()
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">

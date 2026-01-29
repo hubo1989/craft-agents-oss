@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react"
+import { useTranslation } from 'react-i18next'
 import { formatDistanceToNow, formatDistanceToNowStrict, isToday, isYesterday, format, startOfDay } from "date-fns"
 import type { Locale } from "date-fns"
 import { MoreHorizontal, Flag, Search, X, Copy, Link2Off, CloudUpload, Globe, RefreshCw, Inbox } from "lucide-react"
@@ -687,6 +688,7 @@ export function SessionList({
   labels = [],
   onLabelsChange,
 }: SessionListProps) {
+  const { t } = useTranslation('chat')
   const [session] = useSession()
   const { navigate } = useNavigation()
   const navState = useNavigationState()
@@ -936,9 +938,9 @@ export function SessionList({
           <EmptyMedia variant="icon">
             <Inbox />
           </EmptyMedia>
-          <EmptyTitle>No conversations yet</EmptyTitle>
+          <EmptyTitle>{t('emptyState.noConversations')}</EmptyTitle>
           <EmptyDescription>
-            Conversations with your agent appear here. Start one to get going.
+            {t('emptyState.startConversation')}
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
@@ -952,7 +954,7 @@ export function SessionList({
             }}
             className="inline-flex items-center h-7 px-3 text-xs font-medium rounded-[8px] bg-background shadow-minimal hover:bg-foreground/[0.03] transition-colors"
           >
-            New Conversation
+            {t('emptyState.newConversation')}
           </button>
         </EmptyContent>
       </Empty>

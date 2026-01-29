@@ -24,7 +24,7 @@ import {
   isSettingsNavigation,
   isSkillsNavigation,
 } from '@/contexts/NavigationContext'
-import { AppSettingsPage, AppearanceSettingsPage, WorkspaceSettingsPage, PermissionsSettingsPage, LabelsSettingsPage, PreferencesPage, ShortcutsPage, SourceInfoPage, ChatPage } from '@/pages'
+import { AppSettingsPage, WorkspaceSettingsPage, PermissionsSettingsPage, LabelsSettingsPage, PreferencesPage, ShortcutsPage, SourceInfoPage, ChatPage } from '@/pages'
 import SkillInfoPage from '@/pages/SkillInfoPage'
 
 export interface MainContentPanelProps {
@@ -51,12 +51,6 @@ export function MainContentPanel({
   // Settings navigator - always has content (subpage determines which page)
   if (isSettingsNavigation(navState)) {
     switch (navState.subpage) {
-      case 'appearance':
-        return wrapWithStoplight(
-          <Panel variant="grow" className={className}>
-            <AppearanceSettingsPage />
-          </Panel>
-        )
       case 'workspace':
         return wrapWithStoplight(
           <Panel variant="grow" className={className}>
@@ -121,7 +115,7 @@ export function MainContentPanel({
 
   // Skills navigator - show skill info or empty state
   if (isSkillsNavigation(navState)) {
-    if (navState.details?.type === 'skill') {
+    if (navState.details) {
       return wrapWithStoplight(
         <Panel variant="grow" className={className}>
           <SkillInfoPage

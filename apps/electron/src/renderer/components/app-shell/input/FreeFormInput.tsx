@@ -65,6 +65,7 @@ import { type ThinkingLevel, THINKING_LEVELS, getThinkingLevelName } from '@craf
 import { useEscapeInterrupt } from '@/context/EscapeInterruptContext'
 import { hasOpenOverlay } from '@/lib/overlay-detection'
 import { EscapeInterruptOverlay } from './EscapeInterruptOverlay'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Format token count for display (e.g., 1500 -> "1.5k", 200000 -> "200k")
@@ -81,11 +82,11 @@ function formatTokenCount(tokens: number): string {
 
 /** Default rotating placeholders for onboarding/empty state */
 const DEFAULT_PLACEHOLDERS = [
-  'What would you like to work on?',
-  'Use Shift + Tab to switch between Explore and Execute',
-  'Type @ to mention files, folders, or skills',
-  'Type # to apply labels to this conversation',
-  'Press Shift + Return to add a new line',
+  'input.placeholder.workOn',
+  'input.placeholder.modeSwitch',
+  'input.placeholder.mention',
+  'input.placeholder.labels',
+  'input.placeholder.newLine',
 ]
 
 /** Fisher-Yates shuffle — returns a new array in random order */
@@ -230,6 +231,8 @@ export function FreeFormInput({
   isEmptySession = false,
   contextStatus,
 }: FreeFormInputProps) {
+  const { t } = useTranslation('chat')
+
   // Read custom model and workspace info from context.
   // Uses optional variant so playground (no provider) doesn't crash.
   const appShellCtx = useOptionalAppShellContext()
@@ -243,9 +246,15 @@ export function FreeFormInput({
     return appShellCtx.workspaces.find(w => w.id === workspaceId)?.rootPath ?? null
   }, [appShellCtx, workspaceId])
 
-  // Shuffle placeholder order once per mount so each session feels fresh
   const shuffledPlaceholder = React.useMemo(
-    () => Array.isArray(placeholder) ? shuffleArray(placeholder) : placeholder,
+    () => {
+      const isTranslationKey = (str: string) => str.startsWith('input.placeholder.')
+      if (Array.isArray(placeholder)) {
+        const translatedPlaceholders = placeholder.map(p => isTranslationKey(p) ? t(p) : p)
+        return shuffleArray(translatedPlaceholders)
+      }
+      return placeholder && isTranslationKey(placeholder) ? t(placeholder) : placeholder
+    },
     [] // eslint-disable-line react-hooks/exhaustive-deps -- intentionally shuffle only on mount
   )
 
@@ -1167,7 +1176,7 @@ export function FreeFormInput({
             overridePlaceholder={addLabelEditConfig.overridePlaceholder}
             secondaryAction={workspaceRootPath ? {
               label: 'Edit File',
-              filePath: `${workspaceRootPath}/labels/config.json`,
+              onClick: () => window.electronAPI?.openFile(`${workspaceRootPath}/labels/config.json`),
             } : undefined}
             side="top"
             align="start"
@@ -1214,17 +1223,16 @@ export function FreeFormInput({
           <EscapeInterruptOverlay isVisible={isProcessing && showEscapeOverlay} />
 
           <div className="flex items-center gap-1 px-2 py-2 border-t border-border/50">
-          {/* Left side: Context badges - shrinkable so model + send always stay visible */}
-          <div className="flex items-center gap-1 min-w-32 shrink overflow-hidden">
+          {/* Context Badges - Files, Sources, Folder */}
           {/* 1. Attach Files Badge */}
           <FreeFormInputContextBadge
             icon={<Paperclip className="h-4 w-4" />}
             // Show count ("1 file" / "X files") instead of filename for cleaner UI
             label={attachments.length > 0
               ? attachments.length === 1
-                ? "1 file"
-                : `${attachments.length} files`
-              : "Attach Files"
+                ? t('input.attachments.oneFile')
+                : t('input.attachments.manyFiles', { count: attachments.length })
+              : t('input.attachFiles')
             }
             isExpanded={isEmptySession}
             hasSelection={attachments.length > 0}
@@ -1236,7 +1244,7 @@ export function FreeFormInput({
 
           {/* 2. Source Selector Badge - only show if onSourcesChange is provided */}
           {onSourcesChange && (
-            <div className="relative shrink min-w-0 overflow-hidden">
+            <div className="relative">
               <FreeFormInputContextBadge
                 buttonRef={sourceButtonRef}
                 icon={
@@ -1275,12 +1283,12 @@ export function FreeFormInput({
                 }
                 label={
                   optimisticSourceSlugs.length === 0
-                    ? "Choose Sources"
+                    ? t('input.chooseSources')
                     : (() => {
                         const enabledSources = sources.filter(s => optimisticSourceSlugs.includes(s.config.slug))
                         if (enabledSources.length === 1) return enabledSources[0].config.name
                         if (enabledSources.length === 2) return enabledSources.map(s => s.config.name).join(', ')
-                        return `${enabledSources.length} sources`
+                        return t('input.sourcesCount', { count: enabledSources.length })
                       })()
                 }
                 isExpanded={isEmptySession}
@@ -1304,7 +1312,7 @@ export function FreeFormInput({
                   }
                   setSourceDropdownOpen(!sourceDropdownOpen)
                 }}
-                tooltip="Sources"
+                tooltip={t('input.sourcesTooltip')}
               />
               {sourceDropdownOpen && sourceDropdownPosition && ReactDOM.createPortal(
                 <>
@@ -1325,9 +1333,9 @@ export function FreeFormInput({
                   >
                     {sources.length === 0 ? (
                       <div className="text-xs text-muted-foreground p-3 select-none">
-                        No sources configured.
+                        {t('input.noSourcesConfigured')}
                         <br />
-                        Add sources in Settings.
+                        {t('input.addSourcesInSettings')}
                       </div>
                     ) : (
                       <CommandPrimitive
@@ -1339,7 +1347,7 @@ export function FreeFormInput({
                             ref={sourceFilterInputRef}
                             value={sourceFilter}
                             onValueChange={setSourceFilter}
-                            placeholder="Search sources..."
+                            placeholder={t('input.searchSources')}
                             className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground placeholder:select-none"
                           />
                         </div>
@@ -1403,13 +1411,10 @@ export function FreeFormInput({
               isEmptySession={isEmptySession}
             />
           )}
-          </div>
 
           {/* Spacer */}
           <div className="flex-1" />
 
-          {/* Right side: Model + Send - never shrink so they're always visible */}
-          <div className="flex items-center shrink-0">
           {/* 5. Model Selector - Radix DropdownMenu for automatic positioning and submenu support */}
           <DropdownMenu open={modelDropdownOpen} onOpenChange={setModelDropdownOpen}>
             <Tooltip>
@@ -1608,7 +1613,6 @@ export function FreeFormInput({
             </Button>
           )}
           </div>
-          </div>
         </div>
       </div>
     </form>
@@ -1747,7 +1751,7 @@ function WorkingDirectoryBadge({
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
-        <span className="shrink min-w-0 overflow-hidden">
+        <span>
           <FreeFormInputContextBadge
             icon={<Icon_Home className="h-4 w-4" />}
             label={folderName}

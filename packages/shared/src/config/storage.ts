@@ -46,6 +46,8 @@ export interface StoredConfig {
   colorTheme?: string;  // ID of selected preset theme (e.g., 'dracula', 'nord'). Default: 'default'
   // Auto-update
   dismissedUpdateVersion?: string;  // Version that user dismissed (skip notifications for this version)
+  // Language
+  language?: string;  // User interface language (e.g., 'en', 'zh-CN')
 }
 
 const CONFIG_FILE = join(CONFIG_DIR, 'config.json');
@@ -1151,4 +1153,28 @@ export function ensureToolIcons(): void {
   } catch {
     // Ignore errors — tool icons are optional enhancement
   }
+}
+
+// ============================================
+// Language / i18n
+// ============================================
+
+/**
+ * Get the current language setting from config
+ * @returns Language code (e.g., 'en', 'zh-CN')
+ */
+export function getLanguage(): string {
+  const config = loadStoredConfig();
+  return config?.language || 'en';
+}
+
+/**
+ * Set the language in config
+ * @param language Language code (e.g., 'en', 'zh-CN')
+ */
+export function setLanguage(language: string): void {
+  const config = loadStoredConfig();
+  if (!config) return;
+  config.language = language;
+  saveConfig(config);
 }

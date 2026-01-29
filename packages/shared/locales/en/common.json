@@ -1,0 +1,37 @@
+{
+  "appName": "Craft Agents",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "close": "Close",
+  "loading": "Loading...",
+  "search": "Search",
+  "filter": "Filter",
+  "clear": "Clear",
+  "settings": "Settings",
+  "preferences": "Preferences",
+  "language": "Language",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light",
+  "system": "System",
+  "appearance": "Appearance",
+  "notifications": "Notifications",
+  "newChat": "New Chat",
+  "open": "Open",
+  "copy": "Copy",
+  "refresh": "Refresh",
+  "help": "Help",
+  "documentation": "Documentation",
+  "navigation": {
+    "invalidLinkTitle": "Invalid link",
+    "contentMissingDescription": "The content may have been moved or deleted."
+  },
+  "tooltips": {
+    "openSidebar": "Open sidebar",
+    "closeSidebar": "Close sidebar",
+    "helpDocumentation": "Help & Documentation"
+  }
+}

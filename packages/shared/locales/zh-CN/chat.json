@@ -1,0 +1,100 @@
+{
+  "sidebar": {
+    "newChat": "新对话",
+    "allChats": "所有对话",
+    "inbox": "收件箱",
+    "archived": "归档",
+    "flagged": "已标记",
+    "status": "状态",
+    "labels": "标签",
+    "sources": "数据源",
+    "apis": "API",
+    "mcps": "MCP",
+    "localFolders": "本地文件夹",
+    "skills": "技能",
+    "allSkills": "所有技能",
+    "settings": "设置",
+    "views": "视图"
+  },
+  "nav": {
+    "statuses": "状态",
+    "labels": "标签",
+    "views": "视图"
+  },
+  "sidebarControls": {
+    "filterChats": "筛选对话",
+    "statuses": "状态",
+    "labels": "标签",
+    "noLabelsConfigured": "未配置标签"
+  },
+  "share": {
+    "shareOnline": "在线分享"
+  },
+  "sessionMenu": {
+    "share": "分享",
+    "shared": "已分享",
+    "openInBrowser": "在浏览器中打开",
+    "copyLink": "复制链接",
+    "updateShare": "更新分享",
+    "stopSharing": "停止分享",
+    "flag": "标记",
+    "unflag": "取消标记",
+    "markAsUnread": "标记为未读",
+    "rename": "重命名",
+    "regenerateTitle": "重新生成标题",
+    "openInNewWindow": "在新窗口中打开",
+    "viewInFinder": "在访达中查看",
+    "copyPath": "复制路径",
+    "delete": "删除",
+    "sources": "数据源",
+    "skills": "技能",
+    "statuses": "状态",
+    "permissions": "权限",
+    "allDocumentation": "全部文档"
+  },
+  "toast": {
+    "linkCopied": "链接已复制到剪贴板",
+    "failedToShare": "分享失败",
+    "shareUpdated": "分享已更新",
+    "failedToUpdateShare": "更新分享失败",
+    "sharingStopped": "分享已停止",
+    "failedToStopSharing": "停止分享失败",
+    "pathCopied": "路径已复制到剪贴板",
+    "titleRefreshed": "标题已刷新",
+    "failedToRefreshTitle": "刷新标题失败"
+  },
+  "emptyState": {
+    "noConversations": "暂无对话",
+    "startConversation": "与智能体的对话将显示在这里。开始一个新对话吧。",
+    "newConversation": "新建对话"
+  },
+  "input": {
+    "placeholder": {
+      "typeMessage": "输入消息...",
+      "workOn": "你想做什么？",
+      "modeSwitch": "使用 Shift + Tab 在探索和自动执行之间切换",
+      "mention": "输入 @ 提及文件、文件夹或技能",
+      "labels": "输入 # 为此对话添加标签",
+      "newLine": "按 Shift + 回车换行"
+    },
+    "attachFiles": "附加文件",
+    "attachments": {
+      "oneFile": "1 个文件",
+      "manyFiles": "{{count}} 个文件"
+    },
+    "chooseSources": "选择数据源",
+    "sourcesCount": "{{count}} 个数据源",
+    "sourcesTooltip": "数据源",
+    "noSourcesConfigured": "未配置数据源。",
+    "addSourcesInSettings": "在设置中添加数据源。",
+    "searchSources": "搜索数据源..."
+  },
+  "permissionMode": {
+    "explore": "探索",
+    "ask": "询问",
+    "execute": "自动",
+    "exploreDescription": "只读探索模式。阻止写入操作，从不提示。",
+    "askDescription": "在做出修改前进行提示。",
+    "executeDescription": "自动执行，无需提示。"
+  }
+}

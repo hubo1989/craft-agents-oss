@@ -1,0 +1,100 @@
+{
+  "sidebar": {
+    "newChat": "New Chat",
+    "allChats": "All Chats",
+    "inbox": "Inbox",
+    "archived": "Archived",
+    "flagged": "Flagged",
+    "status": "Status",
+    "labels": "Labels",
+    "sources": "Sources",
+    "apis": "APIs",
+    "mcps": "MCPs",
+    "localFolders": "Local Folders",
+    "skills": "Skills",
+    "allSkills": "All Skills",
+    "settings": "Settings",
+    "views": "Views"
+  },
+  "nav": {
+    "statuses": "Statuses",
+    "labels": "Labels",
+    "views": "Views"
+  },
+  "sidebarControls": {
+    "filterChats": "Filter Chats",
+    "statuses": "Statuses",
+    "labels": "Labels",
+    "noLabelsConfigured": "No labels configured"
+  },
+  "share": {
+    "shareOnline": "Share Online"
+  },
+  "sessionMenu": {
+    "share": "Share",
+    "shared": "Shared",
+    "openInBrowser": "Open in Browser",
+    "copyLink": "Copy Link",
+    "updateShare": "Update Share",
+    "stopSharing": "Stop Sharing",
+    "flag": "Flag",
+    "unflag": "Unflag",
+    "markAsUnread": "Mark as Unread",
+    "rename": "Rename",
+    "regenerateTitle": "Regenerate Title",
+    "openInNewWindow": "Open in New Window",
+    "viewInFinder": "View in Finder",
+    "copyPath": "Copy Path",
+    "delete": "Delete",
+    "sources": "Sources",
+    "skills": "Skills",
+    "statuses": "Statuses",
+    "permissions": "Permissions",
+    "allDocumentation": "All Documentation"
+  },
+  "toast": {
+    "linkCopied": "Link copied to clipboard",
+    "failedToShare": "Failed to share",
+    "shareUpdated": "Share updated",
+    "failedToUpdateShare": "Failed to update share",
+    "sharingStopped": "Sharing stopped",
+    "failedToStopSharing": "Failed to stop sharing",
+    "pathCopied": "Path copied to clipboard",
+    "titleRefreshed": "Title refreshed",
+    "failedToRefreshTitle": "Failed to refresh title"
+  },
+  "emptyState": {
+    "noConversations": "No conversations yet",
+    "startConversation": "Conversations with your agent appear here. Start one to get going.",
+    "newConversation": "New Conversation"
+  },
+  "input": {
+    "placeholder": {
+      "typeMessage": "Type a message...",
+      "workOn": "What would you like to work on?",
+      "modeSwitch": "Use Shift + Tab to switch between Explore and Execute",
+      "mention": "Type @ to mention files, folders, or skills",
+      "labels": "Type # to apply labels to this conversation",
+      "newLine": "Press Shift + Return to add a new line"
+    },
+    "attachFiles": "Attach Files",
+    "attachments": {
+      "oneFile": "1 file",
+      "manyFiles": "{{count}} files"
+    },
+    "chooseSources": "Choose Sources",
+    "sourcesCount": "{{count}} sources",
+    "sourcesTooltip": "Sources",
+    "noSourcesConfigured": "No sources configured.",
+    "addSourcesInSettings": "Add sources in Settings.",
+    "searchSources": "Search sources..."
+  },
+  "permissionMode": {
+    "explore": "Explore",
+    "ask": "Ask",
+    "execute": "Execute",
+    "exploreDescription": "Read-only exploration. Blocks writes, never prompts.",
+    "askDescription": "Prompts before making edits.",
+    "executeDescription": "Automatic execution, no prompts."
+  }
+}
