@@ -15,6 +15,14 @@
     "preferencesDescription": "您的个人偏好",
     "openInNewWindow": "在新窗口中打开"
   },
+  "addWorkspace": {
+    "title": "添加工作区",
+    "description": "在这里，您的想法与实现它们的工具相遇。",
+    "createNew": "创建新工作区",
+    "createNewDesc": "从空白工作区开始。",
+    "openFolder": "打开文件夹",
+    "openFolderDesc": "选择现有文件夹作为工作区。"
+  },
   "permissions": {
     "title": "权限",
     "about": {

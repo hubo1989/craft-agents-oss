@@ -15,6 +15,14 @@
     "preferencesDescription": "Your personal preferences",
     "openInNewWindow": "Open in New Window"
   },
+  "addWorkspace": {
+    "title": "Add Workspace",
+    "description": "Where your ideas meet the tools to bring them to life.",
+    "createNew": "Create New Workspace",
+    "createNewDesc": "Start with a fresh workspace.",
+    "openFolder": "Open Folder",
+    "openFolderDesc": "Select an existing folder as a workspace."
+  },
   "permissions": {
     "title": "Permissions",
     "about": {
