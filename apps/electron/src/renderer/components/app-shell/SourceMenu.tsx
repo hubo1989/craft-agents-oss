@@ -20,6 +20,7 @@ import {
   FolderOpen,
   AppWindow,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useMenuComponents } from '@/components/ui/menu-context'
 
 export interface SourceMenuProps {
@@ -44,6 +45,7 @@ export function SourceMenu({
   onShowInFinder,
   onDelete,
 }: SourceMenuProps) {
+  const { t } = useTranslation('settings')
   // Get menu components from context (works with both DropdownMenu and ContextMenu)
   const { MenuItem, Separator } = useMenuComponents()
 
@@ -52,13 +54,13 @@ export function SourceMenu({
       {/* Open in New Window */}
       <MenuItem onClick={onOpenInNewWindow}>
         <AppWindow className="h-3.5 w-3.5" />
-        <span className="flex-1">Open in New Window</span>
+        <span className="flex-1">{t('sourceMenu.openInNewWindow')}</span>
       </MenuItem>
 
       {/* Show in Finder */}
       <MenuItem onClick={onShowInFinder}>
         <FolderOpen className="h-3.5 w-3.5" />
-        <span className="flex-1">Show in Finder</span>
+        <span className="flex-1">{t('sourceMenu.showInFinder')}</span>
       </MenuItem>
 
       <Separator />
@@ -66,7 +68,7 @@ export function SourceMenu({
       {/* Delete */}
       <MenuItem onClick={onDelete} variant="destructive">
         <Trash2 className="h-3.5 w-3.5" />
-        <span className="flex-1">Delete Source</span>
+        <span className="flex-1">{t('sourceMenu.deleteSource')}</span>
       </MenuItem>
     </>
   )

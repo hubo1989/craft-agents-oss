@@ -290,9 +290,9 @@ export function PermissionsDataTable({
       <Info_DataTable
         columns={columns}
         data={data}
-        searchable={searchable ? { placeholder: 'Search patterns...' } : false}
+        searchable={searchable ? { placeholder: t('permissions.searchPatterns') } : false}
         maxHeight={maxHeight}
-        emptyContent="No permissions configured"
+        emptyContent={t('permissions.noPermissions')}
         floatingAction={fullscreenButton}
         className={cn(fullscreen && 'group', className)}
       />
@@ -303,13 +303,13 @@ export function PermissionsDataTable({
           isOpen={isFullscreen}
           onClose={() => setIsFullscreen(false)}
           title={fullscreenTitle}
-          subtitle={`${data.length} ${data.length === 1 ? 'rule' : 'rules'}`}
+          subtitle={`${data.length} ${data.length === 1 ? t('permissions.rule') : t('permissions.rules')}`}
           theme={isDark ? 'dark' : 'light'}
         >
           <Info_DataTable
             columns={columns}
             data={data}
-        searchable={searchable ? { placeholder: t('permissions.searchPatterns') } : false}
+            searchable={searchable ? { placeholder: t('permissions.searchPatterns') } : false}
             emptyContent={t('permissions.noPermissions')}
           />
         </DataTableOverlay>

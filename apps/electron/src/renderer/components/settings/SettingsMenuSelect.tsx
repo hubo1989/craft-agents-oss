@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Check, ChevronDown, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -55,19 +56,24 @@ export function SettingsMenuSelect({
   value,
   onValueChange,
   options,
-  placeholder = 'Select...',
+  placeholder,
   disabled,
   className,
   menuWidth = 280,
   onHover,
   searchable,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder,
 }: SettingsMenuSelectProps) {
+  const { t } = useTranslation('settings')
   const [isOpen, setIsOpen] = React.useState(false)
   const [searchQuery, setSearchQuery] = React.useState('')
   const searchInputRef = React.useRef<HTMLInputElement>(null)
 
   const selectedOption = options.find((o) => o.value === value)
+
+  // Use translated defaults if not provided
+  const resolvedPlaceholder = placeholder ?? t('common.select')
+  const resolvedSearchPlaceholder = searchPlaceholder ?? t('common.searchPlaceholder')
 
   // Show search when explicitly enabled or when there are many options
   const showSearch = searchable ?? options.length > 8
@@ -118,7 +124,7 @@ export function SettingsMenuSelect({
             className
           )}
         >
-          <span className="truncate">{selectedOption?.label || placeholder}</span>
+          <span className="truncate">{selectedOption?.label || resolvedPlaceholder}</span>
           <ChevronDown className="opacity-50 shrink-0 size-3.5" />
         </button>
       </PopoverTrigger>
@@ -138,7 +144,7 @@ export function SettingsMenuSelect({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={searchPlaceholder}
+              placeholder={resolvedSearchPlaceholder}
               className={cn(
                 'w-full h-8 pl-8 pr-3 text-sm rounded-md',
                 'bg-foreground/5 border-0',
@@ -151,7 +157,7 @@ export function SettingsMenuSelect({
         <div className="space-y-0.5 max-h-64 overflow-auto">
           {filteredOptions.length === 0 ? (
             <div className="px-2.5 py-3 text-sm text-muted-foreground text-center">
-              No results found
+              {t('common.noResults')}
             </div>
           ) : (
             filteredOptions.map((option) => {

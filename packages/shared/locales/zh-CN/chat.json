@@ -1,4 +1,10 @@
 {
+  "common": {
+    "search": "搜索",
+    "learnMore": "了解更多",
+    "clear": "清除",
+    "close": "关闭"
+  },
   "sidebar": {
     "newChat": "新对话",
     "allChats": "所有对话",
@@ -14,7 +20,11 @@
     "skills": "技能",
     "allSkills": "所有技能",
     "settings": "设置",
-    "views": "视图"
+    "views": "视图",
+    "searchConversations": "搜索对话...",
+    "closeSearch": "关闭搜索",
+    "clearSearch": "清除搜索",
+    "noConversationsFound": "未找到对话"
   },
   "nav": {
     "statuses": "状态",
@@ -50,7 +60,9 @@
     "skills": "技能",
     "statuses": "状态",
     "permissions": "权限",
-    "allDocumentation": "全部文档"
+    "allDocumentation": "全部文档",
+    "learnMore": "了解更多",
+    "sessionNotFound": "此会话已不存在"
   },
   "toast": {
     "linkCopied": "链接已复制到剪贴板",
@@ -87,7 +99,9 @@
     "sourcesTooltip": "数据源",
     "noSourcesConfigured": "未配置数据源。",
     "addSourcesInSettings": "在设置中添加数据源。",
-    "searchSources": "搜索数据源..."
+    "searchSources": "搜索数据源...",
+    "workingDirectory": "工作目录",
+    "chooseWorkingDirectory": "选择工作目录"
   },
   "permissionMode": {
     "explore": "探索",
@@ -96,5 +110,12 @@
     "exploreDescription": "只读探索模式。阻止写入操作，从不提示。",
     "askDescription": "在做出修改前进行提示。",
     "executeDescription": "自动执行，无需提示。"
+  },
+  "relativeTime": {
+    "never": "从未",
+    "justNow": "刚刚",
+    "minuteAgo": "{{count}} 分钟前",
+    "hourAgo": "{{count}} 小时前",
+    "dayAgo": "{{count}} 天前"
   }
 }

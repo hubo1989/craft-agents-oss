@@ -42,6 +42,38 @@
     "authorizationCode": "Authorization Code",
     "pasteCodePlaceholder": "Paste your authorization code here"
   },
+  "complete": {
+    "title": "You're all set!",
+    "subtitle": "Just start a chat and get to work.",
+    "settingUp": "Setting up...",
+    "savingConfig": "Saving your configuration...",
+    "getStarted": "Get Started"
+  },
+  "gitBash": {
+    "title": "Git Bash Required",
+    "description": "Craft Agent needs Git Bash to run shell commands on Windows. It was not found on your system.",
+    "downloadTitle": "Install Git for Windows",
+    "downloadDescription": "The easiest way to get Git Bash. It's free and includes everything you need.",
+    "downloadButton": "Download Git for Windows",
+    "alreadyInstalledTitle": "Already have Git installed?",
+    "alreadyInstalledDescription": "If Git is installed in a non-standard location, you can specify the path to bash.exe.",
+    "useThisPath": "Use this path",
+    "checking": "Checking...",
+    "recheck": "Re-check",
+    "browse": "Browse..."
+  },
+  "reauth": {
+    "title": "Session Expired",
+    "description": {
+      "line1": "Your Craft session has expired or is no longer valid.",
+      "line2": "Please log in again to continue using Craft Agents.",
+      "preserved": "Your conversations and settings are preserved."
+    },
+    "loginButton": "Log In with Craft",
+    "loggingIn": "Logging in...",
+    "resetButton": "Reset app and start fresh...",
+    "loginFailed": "Login failed"
+  },
   "common": {
     "back": "Back",
     "continue": "Continue",

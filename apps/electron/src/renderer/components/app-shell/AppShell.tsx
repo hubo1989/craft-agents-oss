@@ -2013,7 +2013,7 @@ function AppShellContent({
                           }}
                         >
                           <Search className="h-3.5 w-3.5" />
-                          <span className="flex-1">Search</span>
+                          <span className="flex-1">{t('common:search')}</span>
                         </StyledDropdownMenuItem>
                         <StyledDropdownMenuSeparator />
                         <StyledDropdownMenuItem
@@ -2022,7 +2022,7 @@ function AppShellContent({
                           }}
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
-                          <span className="flex-1">Learn More</span>
+                          <span className="flex-1">{t('common:learnMore')}</span>
                         </StyledDropdownMenuItem>
                       </StyledDropdownMenuContent>
                     </DropdownMenu>
@@ -2302,6 +2302,7 @@ function AppShellContent({
             align="start"
             secondaryAction={{
               label: 'Edit File',
+              // eslint-disable-next-line craft-links/no-direct-file-open
               onClick: () => window.electronAPI?.openFile(`${activeWorkspace.rootPath}/statuses/config.json`),
             }}
             {...getEditConfig('edit-statuses', activeWorkspace.rootPath)}
@@ -2322,6 +2323,7 @@ function AppShellContent({
             align="start"
             secondaryAction={{
               label: 'Edit File',
+              // eslint-disable-next-line craft-links/no-direct-file-open
               onClick: () => window.electronAPI?.openFile(`${activeWorkspace.rootPath}/labels/config.json`),
             }}
             {...(() => {
@@ -2358,6 +2360,7 @@ function AppShellContent({
             align="start"
             secondaryAction={{
               label: 'Edit File',
+              // eslint-disable-next-line craft-links/no-direct-file-open
               onClick: () => window.electronAPI?.openFile(`${activeWorkspace.rootPath}/views.json`),
             }}
             {...getEditConfig('edit-views', activeWorkspace.rootPath)}
@@ -2415,6 +2418,7 @@ function AppShellContent({
             align="start"
             secondaryAction={{
               label: 'Edit File',
+              // eslint-disable-next-line craft-links/no-direct-file-open
               onClick: () => window.electronAPI?.openFile(`${activeWorkspace.rootPath}/labels/config.json`),
             }}
             {...(() => {

@@ -42,6 +42,38 @@
     "authorizationCode": "授权码",
     "pasteCodePlaceholder": "在此处粘贴您的授权码"
   },
+  "complete": {
+    "title": "设置完成！",
+    "subtitle": "开始一个对话，开始工作吧。",
+    "settingUp": "设置中...",
+    "savingConfig": "正在保存您的配置...",
+    "getStarted": "开始使用"
+  },
+  "gitBash": {
+    "title": "需要 Git Bash",
+    "description": "Craft Agent 需要 Git Bash 在 Windows 上运行 shell 命令。在您的系统上未找到。",
+    "downloadTitle": "安装 Git for Windows",
+    "downloadDescription": "获取 Git Bash 的最简单方式。它是免费的，包含您所需的一切。",
+    "downloadButton": "下载 Git for Windows",
+    "alreadyInstalledTitle": "已经安装了 Git？",
+    "alreadyInstalledDescription": "如果 Git 安装在非标准位置，您可以指定 bash.exe 的路径。",
+    "useThisPath": "使用此路径",
+    "checking": "检查中...",
+    "recheck": "重新检查",
+    "browse": "浏览..."
+  },
+  "reauth": {
+    "title": "会话已过期",
+    "description": {
+      "line1": "您的 Craft 会话已过期或不再有效。",
+      "line2": "请重新登录以继续使用 Craft Agents。",
+      "preserved": "您的对话和设置已被保留。"
+    },
+    "loginButton": "使用 Craft 登录",
+    "loggingIn": "登录中...",
+    "resetButton": "重置应用并重新开始...",
+    "loginFailed": "登录失败"
+  },
   "common": {
     "back": "返回",
     "continue": "继续",

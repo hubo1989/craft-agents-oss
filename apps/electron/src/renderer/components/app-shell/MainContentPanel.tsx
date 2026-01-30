@@ -13,6 +13,7 @@
  */
 
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Panel } from './Panel'
 import { cn } from '@/lib/utils'
 import { useAppShellContext } from '@/context/AppShellContext'
@@ -38,6 +39,7 @@ export function MainContentPanel({
   isFocusedMode = false,
   className,
 }: MainContentPanelProps) {
+  const { t } = useTranslation('settings')
   const navState = useNavigationState()
   const { activeWorkspaceId } = useAppShellContext()
 
@@ -107,7 +109,7 @@ export function MainContentPanel({
     return wrapWithStoplight(
       <Panel variant="grow" className={className}>
         <div className="flex items-center justify-center h-full text-muted-foreground">
-          <p className="text-sm">No sources configured</p>
+          <p className="text-sm">{t('sources.noSources')}</p>
         </div>
       </Panel>
     )
@@ -129,7 +131,7 @@ export function MainContentPanel({
     return wrapWithStoplight(
       <Panel variant="grow" className={className}>
         <div className="flex items-center justify-center h-full text-muted-foreground">
-          <p className="text-sm">No skills configured</p>
+          <p className="text-sm">{t('skills.noSkills')}</p>
         </div>
       </Panel>
     )
@@ -150,8 +152,8 @@ export function MainContentPanel({
         <div className="flex items-center justify-center h-full text-muted-foreground">
           <p className="text-sm">
             {navState.filter.kind === 'flagged'
-              ? 'No flagged conversations'
-              : 'No conversations yet'}
+              ? t('sources.noFlaggedConversations')
+              : t('emptyState.noConversations')}
           </p>
         </div>
       </Panel>
@@ -162,7 +164,7 @@ export function MainContentPanel({
   return wrapWithStoplight(
     <Panel variant="grow" className={className}>
       <div className="flex items-center justify-center h-full text-muted-foreground">
-        <p className="text-sm">Select a conversation to get started</p>
+        <p className="text-sm">{t('emptyState.startConversation')}</p>
       </div>
     </Panel>
   )

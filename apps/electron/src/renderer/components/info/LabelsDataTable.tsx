@@ -8,6 +8,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ColumnDef, Row } from '@tanstack/react-table'
 import { ChevronRight, Maximize2 } from 'lucide-react'
 import { Info_DataTable, SortableHeader } from './Info_DataTable'
@@ -72,48 +73,6 @@ function ExpandableNameCell({ row }: { row: Row<LabelConfig> }) {
   )
 }
 
-// Column definitions for the labels tree table
-const columns: ColumnDef<LabelConfig>[] = [
-  {
-    id: 'color',
-    header: () => <span className="p-1.5 pl-2.5">Color</span>,
-    cell: ({ row }) => (
-      <div className="p-1.5 pl-2.5">
-        <LabelIcon
-          label={row.original}
-          size="sm"
-          hasChildren={!!row.original.children?.length}
-        />
-      </div>
-    ),
-    minSize: 60,
-    maxSize: 60,
-  },
-  {
-    accessorKey: 'name',
-    header: ({ column }) => <SortableHeader column={column} title="Name" />,
-    cell: ({ row }) => <ExpandableNameCell row={row} />,
-    meta: { fillWidth: true },
-  },
-  {
-    id: 'valueType',
-    accessorKey: 'valueType',
-    header: ({ column }) => <SortableHeader column={column} title="Type" />,
-    cell: ({ row }) => (
-      <div className="p-1.5 pl-2.5">
-        {row.original.valueType ? (
-          <Info_Badge color="muted" className="capitalize whitespace-nowrap">
-            {row.original.valueType}
-          </Info_Badge>
-        ) : (
-          <span className="text-muted-foreground/50 text-sm">—</span>
-        )}
-      </div>
-    ),
-    minSize: 120,
-  },
-]
-
 /**
  * Extract children from a LabelConfig for tree expansion.
  * Returns undefined if no children (tells TanStack this is a leaf node).
@@ -127,11 +86,54 @@ export function LabelsDataTable({
   searchable = false,
   maxHeight = 400,
   fullscreen = false,
-  fullscreenTitle = 'Labels',
+  fullscreenTitle,
   className,
 }: LabelsDataTableProps) {
+  const { t } = useTranslation('settings')
   const [isFullscreen, setIsFullscreen] = useState(false)
   const { isDark } = useTheme()
+
+  // Column definitions for the labels tree table
+  const columns: ColumnDef<LabelConfig>[] = React.useMemo(() => [
+    {
+      id: 'color',
+      header: () => <span className="p-1.5 pl-2.5">{t('labels.color')}</span>,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          <LabelIcon
+            label={row.original}
+            size="sm"
+            hasChildren={!!row.original.children?.length}
+          />
+        </div>
+      ),
+      minSize: 60,
+      maxSize: 60,
+    },
+    {
+      accessorKey: 'name',
+      header: ({ column }) => <SortableHeader column={column} title={t('labels.name')} />,
+      cell: ({ row }) => <ExpandableNameCell row={row} />,
+      meta: { fillWidth: true },
+    },
+    {
+      id: 'valueType',
+      accessorKey: 'valueType',
+      header: ({ column }) => <SortableHeader column={column} title={t('labels.type')} />,
+      cell: ({ row }) => (
+        <div className="p-1.5 pl-2.5">
+          {row.original.valueType ? (
+            <Info_Badge color="muted" className="capitalize whitespace-nowrap">
+              {row.original.valueType}
+            </Info_Badge>
+          ) : (
+            <span className="text-muted-foreground/50 text-sm">—</span>
+          )}
+        </div>
+      ),
+      minSize: 120,
+    },
+  ], [t])
 
   // Fullscreen button (shown on hover via group class)
   const fullscreenButton = fullscreen ? (
@@ -144,7 +146,7 @@ export function LabelsDataTable({
         'text-muted-foreground/50 hover:text-foreground',
         'focus:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:opacity-100'
       )}
-      title="View Fullscreen"
+      title={t('common.viewFullscreen')}
     >
       <Maximize2 className="w-3.5 h-3.5" />
     </button>
@@ -160,9 +162,9 @@ export function LabelsDataTable({
       <Info_DataTable
         columns={columns}
         data={data}
-        searchable={searchable ? { placeholder: 'Search labels...' } : false}
+        searchable={searchable ? { placeholder: t('labels.searchLabels') } : false}
         maxHeight={maxHeight}
-        emptyContent="No labels configured"
+        emptyContent={t('labels.noLabels')}
         floatingAction={fullscreenButton}
         className={cn(fullscreen && 'group', className)}
         getSubRows={getSubRows}
@@ -173,15 +175,15 @@ export function LabelsDataTable({
         <DataTableOverlay
           isOpen={isFullscreen}
           onClose={() => setIsFullscreen(false)}
-          title={fullscreenTitle}
-          subtitle={`${totalCount} ${totalCount === 1 ? 'label' : 'labels'}`}
+          title={fullscreenTitle || t('labels.title')}
+          subtitle={`${totalCount} ${totalCount === 1 ? t('labels.label') : t('labels.labels')}`}
           theme={isDark ? 'dark' : 'light'}
         >
           <Info_DataTable
             columns={columns}
             data={data}
-            searchable={searchable ? { placeholder: 'Search labels...' } : false}
-            emptyContent="No labels configured"
+            searchable={searchable ? { placeholder: t('labels.searchLabels') } : false}
+            emptyContent={t('labels.noLabels')}
             getSubRows={getSubRows}
           />
         </DataTableOverlay>

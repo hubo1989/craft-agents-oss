@@ -33,7 +33,21 @@
     "comment": "注释",
     "workspaceCustomizations": "工作区自定义",
     "workspaceCustomizationsDescription": "为工作区中的特定文件、文件夹或工具自定义权限。",
-    "noWorkspacePermissions": "未配置工作区权限"
+    "noWorkspacePermissions": "未配置工作区权限",
+    "noDefaultPermissions": "未配置默认权限",
+    "noPermissions": "未配置权限",
+    "searchPatterns": "搜索模式...",
+    "rule": "规则",
+    "rules": "规则",
+    "defaultPermissionsLocation": "默认权限应位于 <code>{{path}}</code>",
+    "customComments": {
+      "blockedTool": "自定义阻止的工具",
+      "bashPattern": "自定义 Bash 模式",
+      "mcpPattern": "自定义 MCP 模式",
+      "apiEndpoint": "自定义 API 端点",
+      "writePath": "允许的写入路径"
+    },
+    "writeTo": "写入到: {{path}}"
   },
   "appSettings": {
     "title": "应用设置",
@@ -47,7 +61,14 @@
       "defaultTheme": "默认",
       "font": "字体",
       "systemFont": "系统字体",
-      "language": "语言"
+      "language": "语言",
+      "icon": "图标",
+      "tool": "工具",
+      "commands": "命令",
+      "toolIcons": "工具图标",
+      "toolIconsDescription": "聊天活动中显示在 CLI 命令旁边的图标。存储在 ~/.craft-agent/tool-icons/。",
+      "searchTools": "搜索工具...",
+      "noToolIcons": "未找到工具图标映射"
     },
     "notifications": {
       "title": "通知",
@@ -72,7 +93,9 @@
       "test": "测试连接",
       "testing": "测试中...",
       "success": "连接成功",
-      "error": "连接失败"
+      "error": "连接失败",
+      "searchModels": "搜索模型...",
+      "noModelsFound": "未找到模型"
     },
     "about": {
       "title": "关于",
@@ -190,6 +213,12 @@
     "title": "标签",
     "editFile": "编辑文件",
     "aboutTitle": "关于标签",
+    "color": "颜色",
+    "name": "名称",
+    "type": "类型",
+    "searchLabels": "搜索标签...",
+    "label": "标签",
+    "labels": "标签",
     "description1": "标签帮助您使用彩色标记整理会话。使用它们按项目、主题或优先级对对话进行分类 — 让您以后可以轻松筛选和查找相关会话。",
     "description2": "每个标签可以选择性地携带一个具有特定类型的值（文本、数字或日期）。这会将标签转换为结构化元数据 — 例如，值为 3 的「优先级」标签，或带有日期的「截止日期」标签。",
     "description3": "自动应用规则会在消息匹配正则表达式模式时自动分配标签。例如，粘贴 Linear 问题 URL 可以自动用项目名称和问题 ID 标记会话 — 无需手动标记。",
@@ -213,11 +242,29 @@
       "default": "描述您想要更改的内容...",
       "whatFolder": "您想连接哪个文件夹？",
       "whatSkill": "我应该学习做什么？",
-      "whatLabel": "您想创建什么标签？"
+      "whatLabel": "您想创建什么标签？",
+      "eg": "例如"
     }
   },
   "common": {
-    "edit": "编辑"
+    "edit": "编辑",
+    "editFile": "编辑文件",
+    "delete": "删除",
+    "search": "搜索",
+    "searchPlaceholder": "搜索...",
+    "select": "选择...",
+    "reset": "重置",
+    "chooseFolder": "选择文件夹...",
+    "add": "添加",
+    "configure": "配置",
+    "showInFinder": "在访达中显示",
+    "openInNewWindow": "在新窗口中打开",
+    "viewFullscreen": "全屏查看",
+    "noResults": "未找到结果"
+  },
+  "emptyState": {
+    "noConversations": "暂无对话",
+    "startConversation": "开始一个新对话"
   },
   "sidebar": {
     "allChats": "所有对话",
@@ -234,6 +281,7 @@
     "title": "数据源",
     "noSources": "未配置数据源。",
     "noTypeSources": "未配置 {{type}} 数据源。",
+    "noFlaggedConversations": "没有标记的对话",
     "emptyTitle": "无数据源",
     "emptyDescription": "数据源将您的智能体连接到外部数据 — MCP 服务器、REST API 和本地文件夹。",
     "learnMore": "了解更多",
@@ -256,7 +304,6 @@
     "addSkill": "添加技能"
   },
   "workspace": {
-    "addWorkspace": "添加工作区...",
     "created": "已创建工作区 \"{{name}}\"",
     "addWorkspaceTitle": "添加工作区",
     "addWorkspaceDescription": "在这里，您的想法与实现它们的工具相遇。",
@@ -265,10 +312,89 @@
     "openFolder": "打开文件夹",
     "openFolderDesc": "选择现有文件夹作为工作区。",
     "chooseFolder": "选择文件夹...",
-    "workInFolder": "在工作文件夹中"
+    "workInFolder": "在工作文件夹中",
+    "addWorkspace": {
+      "title": "添加工作区",
+      "description": "在这里，您的想法与实现它们的工具相遇。",
+      "createNew": "创建新工作区",
+      "createNewDesc": "从空白工作区开始。",
+      "openFolder": "打开文件夹",
+      "openFolderDesc": "选择现有文件夹作为工作区。"
+    }
   },
   "api": {
     "customConnection": "自定义 API 连接"
+  },
+  "sidebarMenu": {
+    "openInNewWindow": "在新窗口中打开",
+    "configureStatuses": "配置状态",
+    "addNewLabel": "添加新标签",
+    "editLabels": "编辑标签",
+    "deleteLabel": "删除标签",
+    "editViews": "编辑视图",
+    "deleteView": "删除视图",
+    "addSource": "添加数据源",
+    "addSkill": "添加技能",
+    "learnMore": "了解更多",
+    "learnMoreAboutAPIs": "了解更多关于 API",
+    "learnMoreAboutMCP": "了解更多关于 MCP",
+    "learnMoreAboutLocalFolders": "了解更多关于本地文件夹",
+    "learnMoreAboutSources": "了解更多关于数据源"
+  },
+  "slashCommand": {
+    "searchCommands": "搜索命令...",
+    "noCommandsFound": "未找到命令",
+    "useForSkillsAndFiles": "使用 @ 查找技能和文件",
+    "modes": "模式",
+    "features": "功能",
+    "recentWorkingDirectories": "最近的工作目录",
+    "ultrathink": "深度思考",
+    "ultrathinkDesc": "复杂问题的扩展推理"
+  },
+  "sourceMenu": {
+    "openInNewWindow": "在新窗口中打开",
+    "showInFinder": "在访达中显示",
+    "deleteSource": "删除数据源"
+  },
+  "skillMenu": {
+    "openInNewWindow": "在新窗口中打开",
+    "showInFinder": "在访达中显示",
+    "deleteSkill": "删除技能"
+  },
+  "sourceInfo": {
+    "connection": "连接",
+    "permissions": "权限",
+    "tools": "工具",
+    "documentation": "文档",
+    "type": "类型",
+    "url": "URL",
+    "lastTested": "上次测试",
+    "editFile": "编辑文件",
+    "sourceDisabled": "数据源已禁用",
+    "sourceDisabledDescription": "本地 MCP 服务器在设置 > 高级中已禁用。启用它们以使用此数据源。",
+    "connectionDescriptions": {
+      "mcpStdio": "生成此 MCP 服务器的本地命令。",
+      "mcp": "服务器 URL 和连接状态。",
+      "api": "API 请求的基础 URL。",
+      "local": "此源的文件系统路径。",
+      "default": "连接详情。"
+    },
+    "permissionsDescriptions": {
+      "mcp": "探索模式下允许的工具模式。",
+      "api": "探索模式下允许的 API 端点。",
+      "default": "探索模式的访问规则。"
+    },
+    "toolsDescription": "此服务器公开的操作。",
+    "documentationDescription": "代理的上下文和指南。",
+    "access": "访问",
+    "tool": "工具",
+    "description": "描述",
+    "noToolsAvailable": "无可用工具",
+    "sourceNotFound": "未找到数据源",
+    "failedToLoadSource": "加载数据源失败",
+    "failedToLoadTools": "加载工具失败",
+    "deletedSource": "已删除数据源：{{name}}",
+    "failedToDeleteSource": "删除数据源失败"
   },
   "thinking": {
     "noThinking": "不思考",
@@ -277,5 +403,15 @@
     "thinkingDesc": "平衡速度和推理",
     "maxThinking": "最大思考",
     "maxThinkingDesc": "复杂任务的最深推理"
+  },
+  "sessionInfo": {
+    "title": "聊天信息",
+    "name": "名称",
+    "untitled": "未命名",
+    "notes": "备注",
+    "addNotes": "添加备注...",
+    "loading": "加载中...",
+    "noSessionSelected": "未选择会话",
+    "loadingSession": "加载会话中..."
   }
 }

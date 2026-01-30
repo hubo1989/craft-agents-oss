@@ -33,7 +33,21 @@
     "comment": "Comment",
     "workspaceCustomizations": "Workspace Customizations",
     "workspaceCustomizationsDescription": "Customize permissions for specific files, folders, or tools in your workspace.",
-    "noWorkspacePermissions": "No workspace permissions configured"
+    "noWorkspacePermissions": "No workspace permissions configured",
+    "noDefaultPermissions": "No default permissions configured",
+    "noPermissions": "No permissions configured",
+    "searchPatterns": "Search patterns...",
+    "rule": "rule",
+    "rules": "rules",
+    "defaultPermissionsLocation": "Default permissions should be at <code>{{path}}</code>",
+    "customComments": {
+      "blockedTool": "Custom blocked tool",
+      "bashPattern": "Custom bash pattern",
+      "mcpPattern": "Custom MCP pattern",
+      "apiEndpoint": "Custom API endpoint",
+      "writePath": "Allowed write path"
+    },
+    "writeTo": "Write to: {{path}}"
   },
   "appSettings": {
     "title": "App Settings",
@@ -47,7 +61,14 @@
       "defaultTheme": "Default",
       "font": "Font",
       "systemFont": "System",
-      "language": "Language"
+      "language": "Language",
+      "icon": "Icon",
+      "tool": "Tool",
+      "commands": "Commands",
+      "toolIcons": "Tool Icons",
+      "toolIconsDescription": "Icons shown next to CLI commands in chat activity. Stored in ~/.craft-agent/tool-icons/.",
+      "searchTools": "Search tools...",
+      "noToolIcons": "No tool icon mappings found"
     },
     "notifications": {
       "title": "Notifications",
@@ -72,7 +93,9 @@
       "test": "Test Connection",
       "testing": "Testing...",
       "success": "Connection successful",
-      "error": "Connection failed"
+      "error": "Connection failed",
+      "searchModels": "Search models...",
+      "noModelsFound": "No models found"
     },
     "about": {
       "title": "About",
@@ -190,6 +213,12 @@
     "title": "Labels",
     "editFile": "Edit File",
     "aboutTitle": "About Labels",
+    "color": "Color",
+    "name": "Name",
+    "type": "Type",
+    "searchLabels": "Search labels...",
+    "label": "label",
+    "labels": "labels",
     "description1": "Labels help you organize sessions with colored tags. Use them to categorize conversations by project, topic, or priority — making it easy to filter and find related sessions later.",
     "description2": "Each label can optionally carry a value with a specific type (text, number, or date). This turns labels into structured metadata — for example, a \"priority\" label with value 3, or a \"due\" label with a date.",
     "description3": "Auto-apply rules assign labels automatically when a message matches a regex pattern. For example, pasting a Linear issue URL can auto-tag the session with the project name and issue ID — no manual tagging needed.",
@@ -207,17 +236,38 @@
     "template": "Template",
     "description": "Description",
     "searchRules": "Search rules...",
+    "searchLabels": "Search labels...",
     "rule": "rule",
     "rules": "rules",
+    "label": "label",
+    "labels": "labels",
     "placeholder": {
       "default": "Describe what you'd like to change...",
       "whatFolder": "What folder would you like to connect?",
       "whatSkill": "What should I learn to do?",
-      "whatLabel": "What label would you like to create?"
+      "whatLabel": "What label would you like to create?",
+      "eg": "e.g."
     }
   },
   "common": {
-    "edit": "Edit"
+    "edit": "Edit",
+    "editFile": "Edit File",
+    "delete": "Delete",
+    "search": "Search",
+    "searchPlaceholder": "Search...",
+    "select": "Select...",
+    "reset": "Reset",
+    "chooseFolder": "Choose Folder...",
+    "add": "Add",
+    "configure": "Configure",
+    "showInFinder": "Show in Finder",
+    "openInNewWindow": "Open in New Window",
+    "viewFullscreen": "View Fullscreen",
+    "noResults": "No results found"
+  },
+  "emptyState": {
+    "noConversations": "No conversations yet",
+    "startConversation": "Start a conversation to get going"
   },
   "sidebar": {
     "allChats": "All Chats",
@@ -234,6 +284,7 @@
     "title": "Sources",
     "noSources": "No sources configured.",
     "noTypeSources": "No {{type}} sources configured.",
+    "noFlaggedConversations": "No flagged conversations",
     "emptyTitle": "No Sources",
     "emptyDescription": "Sources connect your agent to external data — MCP servers, REST APIs, and local folders.",
     "learnMore": "Learn more",
@@ -256,7 +307,6 @@
     "addSkill": "Add Skill"
   },
   "workspace": {
-    "addWorkspace": "Add Workspace...",
     "created": "Created workspace \"{{name}}\"",
     "addWorkspaceTitle": "Add Workspace",
     "addWorkspaceDescription": "Where your ideas meet the tools to make them happen.",
@@ -265,10 +315,89 @@
     "openFolder": "Open folder",
     "openFolderDesc": "Choose an existing folder as workspace.",
     "chooseFolder": "Choose Folder...",
-    "workInFolder": "Work in Folder"
+    "workInFolder": "Work in Folder",
+    "addWorkspace": {
+      "title": "Add Workspace",
+      "description": "Where your ideas meet the tools to make them happen.",
+      "createNew": "Create new workspace",
+      "createNewDesc": "Start fresh with an empty workspace.",
+      "openFolder": "Open folder",
+      "openFolderDesc": "Choose an existing folder as workspace."
+    }
   },
   "api": {
     "customConnection": "Custom API connection"
+  },
+  "sidebarMenu": {
+    "openInNewWindow": "Open in New Window",
+    "configureStatuses": "Configure Statuses",
+    "addNewLabel": "Add New Label",
+    "editLabels": "Edit Labels",
+    "deleteLabel": "Delete Label",
+    "editViews": "Edit Views",
+    "deleteView": "Delete View",
+    "addSource": "Add Source",
+    "addSkill": "Add Skill",
+    "learnMore": "Learn More",
+    "learnMoreAboutAPIs": "Learn More about APIs",
+    "learnMoreAboutMCP": "Learn More about MCP",
+    "learnMoreAboutLocalFolders": "Learn More about Local Folders",
+    "learnMoreAboutSources": "Learn More about Sources"
+  },
+  "slashCommand": {
+    "searchCommands": "Search commands...",
+    "noCommandsFound": "No commands found",
+    "useForSkillsAndFiles": "Use @ for skills and files",
+    "modes": "Modes",
+    "features": "Features",
+    "recentWorkingDirectories": "Recent Working Directories",
+    "ultrathink": "Ultrathink",
+    "ultrathinkDesc": "Extended reasoning for complex problems"
+  },
+  "sourceMenu": {
+    "openInNewWindow": "Open in New Window",
+    "showInFinder": "Show in Finder",
+    "deleteSource": "Delete Source"
+  },
+  "skillMenu": {
+    "openInNewWindow": "Open in New Window",
+    "showInFinder": "Show in Finder",
+    "deleteSkill": "Delete Skill"
+  },
+  "sourceInfo": {
+    "connection": "Connection",
+    "permissions": "Permissions",
+    "tools": "Tools",
+    "documentation": "Documentation",
+    "type": "Type",
+    "url": "URL",
+    "lastTested": "Last Tested",
+    "editFile": "Edit File",
+    "sourceDisabled": "Source Disabled",
+    "sourceDisabledDescription": "Local MCP servers are disabled in Settings > Advanced. Enable them to use this source.",
+    "connectionDescriptions": {
+      "mcpStdio": "Local command that spawns this MCP server.",
+      "mcp": "Server URL and connection status.",
+      "api": "Base URL for API requests.",
+      "local": "Filesystem path for this source.",
+      "default": "Connection details."
+    },
+    "permissionsDescriptions": {
+      "mcp": "Tool patterns allowed in Explore mode.",
+      "api": "API endpoints allowed in Explore mode.",
+      "default": "Access rules for Explore mode."
+    },
+    "toolsDescription": "Operations exposed by this server.",
+    "documentationDescription": "Context and guidelines for the agent.",
+    "access": "Access",
+    "tool": "Tool",
+    "description": "Description",
+    "noToolsAvailable": "No tools available",
+    "sourceNotFound": "Source not found",
+    "failedToLoadSource": "Failed to load source",
+    "failedToLoadTools": "Failed to load tools",
+    "deletedSource": "Deleted source: {{name}}",
+    "failedToDeleteSource": "Failed to delete source"
   },
   "thinking": {
     "noThinking": "No Thinking",
@@ -277,5 +406,15 @@
     "thinkingDesc": "Balanced speed and reasoning",
     "maxThinking": "Max Thinking",
     "maxThinkingDesc": "Deepest reasoning for complex tasks"
+  },
+  "sessionInfo": {
+    "title": "Chat Info",
+    "name": "Name",
+    "untitled": "Untitled",
+    "notes": "Notes",
+    "addNotes": "Add notes...",
+    "loading": "Loading...",
+    "noSessionSelected": "No session selected",
+    "loadingSession": "Loading session..."
   }
 }

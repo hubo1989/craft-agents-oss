@@ -976,13 +976,13 @@ export function SessionList({
                 value={searchQuery}
                 onChange={(e) => onSearchChange?.(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
-                placeholder="Search conversations..."
+                placeholder={t('sidebar.searchConversations')}
                 className="w-full h-8 pl-8 pr-8 text-sm bg-foreground/5 border-0 rounded-[8px] outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
               />
               <button
                 onClick={onSearchClose}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-foreground/10 rounded"
-                title="Close search"
+                title={t('sidebar.closeSearch')}
               >
                 <X className="h-3.5 w-3.5 text-muted-foreground" />
               </button>
@@ -999,12 +999,12 @@ export function SessionList({
           {/* No results message when searching */}
           {searchActive && searchQuery && flatItems.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12 px-4">
-              <p className="text-sm text-muted-foreground">No conversations found</p>
+              <p className="text-sm text-muted-foreground">{t('sidebar.noConversationsFound')}</p>
               <button
                 onClick={() => onSearchChange?.('')}
                 className="text-xs text-foreground hover:underline mt-1"
               >
-                Clear search
+                {t('sidebar.clearSearch')}
               </button>
             </div>
           )}

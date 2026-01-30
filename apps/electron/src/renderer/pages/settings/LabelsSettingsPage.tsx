@@ -53,6 +53,7 @@ export default function LabelsSettingsPage() {
     label: t('labels.editFile'),
     onClick: () => {
       const configPath = `${rootPath}/labels/config.json`
+      // eslint-disable-next-line craft-links/no-direct-file-open
       window.electronAPI?.openFile(configPath)
     },
   } : undefined

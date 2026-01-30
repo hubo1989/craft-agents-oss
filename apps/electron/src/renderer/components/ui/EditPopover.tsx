@@ -10,6 +10,7 @@ import * as React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ArrowUp } from 'lucide-react'
+import type { TFunction } from 'i18next'
 import { Popover, PopoverTrigger, PopoverContent } from './popover'
 import { Button } from './button'
 import { cn } from '@/lib/utils'
@@ -547,8 +548,9 @@ export function EditPopover({
   // Build placeholder: use override if provided, otherwise default to "change" wording
   // overridePlaceholder allows contexts like add-source/add-skill to say "add" instead of "change"
   const basePlaceholder = overridePlaceholder ?? t('labels.placeholder.default')
+  const egText = t('labels.placeholder.eg')
   const placeholder = example
-    ? `${basePlaceholder.replace(/\.{3}$/, '')}, e.g., "${example}"`
+    ? `${basePlaceholder.replace(/\.{3}$/, '')}, ${egText}, "${example}"`
     : basePlaceholder
   // Support both controlled and uncontrolled modes:
   // - Uncontrolled (default): internal state manages open/close
@@ -716,6 +718,7 @@ export const EditButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof Button>
 >(function EditButton({ className, children, ...props }, ref) {
+  const { t } = useTranslation('settings')
   return (
     <Button
       ref={ref}
@@ -724,7 +727,7 @@ export const EditButton = React.forwardRef<
       className={cn("h-8 px-3 rounded-[6px] bg-background shadow-minimal text-foreground/70 hover:text-foreground", className)}
       {...props}
     >
-      {children ?? 'Edit'}
+      {children ?? t('common.edit')}
     </Button>
   )
 })

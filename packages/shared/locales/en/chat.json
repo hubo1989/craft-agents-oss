@@ -1,4 +1,10 @@
 {
+  "common": {
+    "search": "Search",
+    "learnMore": "Learn More",
+    "clear": "Clear",
+    "close": "Close"
+  },
   "sidebar": {
     "newChat": "New Chat",
     "allChats": "All Chats",
@@ -14,7 +20,11 @@
     "skills": "Skills",
     "allSkills": "All Skills",
     "settings": "Settings",
-    "views": "Views"
+    "views": "Views",
+    "searchConversations": "Search conversations...",
+    "closeSearch": "Close search",
+    "clearSearch": "Clear search",
+    "noConversationsFound": "No conversations found"
   },
   "nav": {
     "statuses": "Statuses",
@@ -50,7 +60,9 @@
     "skills": "Skills",
     "statuses": "Statuses",
     "permissions": "Permissions",
-    "allDocumentation": "All Documentation"
+    "allDocumentation": "All Documentation",
+    "learnMore": "Learn More",
+    "sessionNotFound": "This session no longer exists"
   },
   "toast": {
     "linkCopied": "Link copied to clipboard",
@@ -87,7 +99,9 @@
     "sourcesTooltip": "Sources",
     "noSourcesConfigured": "No sources configured.",
     "addSourcesInSettings": "Add sources in Settings.",
-    "searchSources": "Search sources..."
+    "searchSources": "Search sources...",
+    "workingDirectory": "Working directory",
+    "chooseWorkingDirectory": "Choose working directory"
   },
   "permissionMode": {
     "explore": "Explore",
@@ -96,5 +110,15 @@
     "exploreDescription": "Read-only exploration. Blocks writes, never prompts.",
     "askDescription": "Prompts before making edits.",
     "executeDescription": "Automatic execution, no prompts."
+  },
+  "relativeTime": {
+    "never": "Never",
+    "justNow": "Just now",
+    "minuteAgo": "{{count}} minute ago",
+    "minuteAgo_plural": "{{count}} minutes ago",
+    "hourAgo": "{{count}} hour ago",
+    "hourAgo_plural": "{{count}} hours ago",
+    "dayAgo": "{{count}} day ago",
+    "dayAgo_plural": "{{count}} days ago"
   }
 }

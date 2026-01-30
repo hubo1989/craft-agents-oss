@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { isMac } from "@/lib/platform"
 import {
   DropdownMenu,
@@ -83,6 +84,7 @@ export function AppMenu({
   canGoBack = true,
   canGoForward = true,
 }: AppMenuProps) {
+  const { t } = useTranslation('common')
   const [isDebugMode, setIsDebugMode] = useState(false)
   const modKey = isMac ? '⌘' : 'Ctrl+'
 
@@ -103,13 +105,13 @@ export function AppMenu({
           {/* File actions at root level */}
           <StyledDropdownMenuItem onClick={onNewChat}>
             <SquarePenRounded className="h-3.5 w-3.5" />
-            New Chat
+            {t('newChat')}
             <DropdownMenuShortcut className="pl-6">{modKey}N</DropdownMenuShortcut>
           </StyledDropdownMenuItem>
           {onNewWindow && (
             <StyledDropdownMenuItem onClick={onNewWindow}>
               <AppWindow className="h-3.5 w-3.5" />
-              New Window
+              {t('newWindow')}
               <DropdownMenuShortcut className="pl-6">{modKey}⇧N</DropdownMenuShortcut>
             </StyledDropdownMenuItem>
           )}
@@ -120,39 +122,39 @@ export function AppMenu({
           <DropdownMenuSub>
             <StyledDropdownMenuSubTrigger>
               <Pencil className="h-3.5 w-3.5" />
-              Edit
+              {t('edit')}
             </StyledDropdownMenuSubTrigger>
             <StyledDropdownMenuSubContent>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuUndo()}>
                 <Undo2 className="h-3.5 w-3.5" />
-                Undo
+                {t('undo')}
                 <DropdownMenuShortcut className="pl-6">{modKey}Z</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuRedo()}>
                 <Redo2 className="h-3.5 w-3.5" />
-                Redo
+                {t('redo')}
                 <DropdownMenuShortcut className="pl-6">{modKey}⇧Z</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuSeparator />
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuCut()}>
                 <Scissors className="h-3.5 w-3.5" />
-                Cut
+                {t('cut')}
                 <DropdownMenuShortcut className="pl-6">{modKey}X</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuCopy()}>
                 <Copy className="h-3.5 w-3.5" />
-                Copy
+                {t('copy')}
                 <DropdownMenuShortcut className="pl-6">{modKey}C</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuPaste()}>
                 <ClipboardPaste className="h-3.5 w-3.5" />
-                Paste
+                {t('paste')}
                 <DropdownMenuShortcut className="pl-6">{modKey}V</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuSeparator />
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuSelectAll()}>
                 <TextSelect className="h-3.5 w-3.5" />
-                Select All
+                {t('selectAll')}
                 <DropdownMenuShortcut className="pl-6">{modKey}A</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
             </StyledDropdownMenuSubContent>
@@ -162,22 +164,22 @@ export function AppMenu({
           <DropdownMenuSub>
             <StyledDropdownMenuSubTrigger>
               <Eye className="h-3.5 w-3.5" />
-              View
+              {t('view')}
             </StyledDropdownMenuSubTrigger>
             <StyledDropdownMenuSubContent>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuZoomIn()}>
                 <ZoomIn className="h-3.5 w-3.5" />
-                Zoom In
+                {t('zoomIn')}
                 <DropdownMenuShortcut className="pl-6">{modKey}+</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuZoomOut()}>
                 <ZoomOut className="h-3.5 w-3.5" />
-                Zoom Out
+                {t('zoomOut')}
                 <DropdownMenuShortcut className="pl-6">{modKey}-</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuZoomReset()}>
                 <RotateCcw className="h-3.5 w-3.5" />
-                Reset Zoom
+                {t('resetZoom')}
                 <DropdownMenuShortcut className="pl-6">{modKey}0</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
             </StyledDropdownMenuSubContent>
@@ -187,17 +189,17 @@ export function AppMenu({
           <DropdownMenuSub>
             <StyledDropdownMenuSubTrigger>
               <AppWindow className="h-3.5 w-3.5" />
-              Window
+              {t('window')}
             </StyledDropdownMenuSubTrigger>
             <StyledDropdownMenuSubContent>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuMinimize()}>
                 <Minimize2 className="h-3.5 w-3.5" />
-                Minimize
+                {t('minimize')}
                 <DropdownMenuShortcut className="pl-6">{modKey}M</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.menuMaximize()}>
                 <Maximize2 className="h-3.5 w-3.5" />
-                Maximize
+                {t('maximize')}
               </StyledDropdownMenuItem>
             </StyledDropdownMenuSubContent>
           </DropdownMenuSub>
@@ -208,17 +210,17 @@ export function AppMenu({
           <DropdownMenuSub>
             <StyledDropdownMenuSubTrigger>
               <Settings className="h-3.5 w-3.5" />
-              Settings
+              {t('settings')}
             </StyledDropdownMenuSubTrigger>
             <StyledDropdownMenuSubContent>
               <StyledDropdownMenuItem onClick={onOpenSettings}>
                 <Wrench className="h-3.5 w-3.5" />
-                Settings...
+                {t('settingsWithEllipsis')}
                 <DropdownMenuShortcut className="pl-6">{modKey},</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={onOpenStoredUserPreferences}>
                 <User className="h-3.5 w-3.5" />
-                Stored User Preferences
+                {t('storedUserPreferences')}
               </StyledDropdownMenuItem>
             </StyledDropdownMenuSubContent>
           </DropdownMenuSub>
@@ -227,17 +229,17 @@ export function AppMenu({
           <DropdownMenuSub>
             <StyledDropdownMenuSubTrigger>
               <HelpCircle className="h-3.5 w-3.5" />
-              Help
+              {t('help')}
             </StyledDropdownMenuSubTrigger>
             <StyledDropdownMenuSubContent>
               <StyledDropdownMenuItem onClick={() => window.electronAPI.openUrl('https://agents.craft.do/docs')}>
                 <HelpCircle className="h-3.5 w-3.5" />
-                Help & Documentation
+                {t('helpAndDocumentation')}
                 <ExternalLink className="h-3 w-3 ml-auto text-muted-foreground" />
               </StyledDropdownMenuItem>
               <StyledDropdownMenuItem onClick={onOpenKeyboardShortcuts}>
                 <Keyboard className="h-3.5 w-3.5" />
-                Keyboard Shortcuts
+                {t('keyboardShortcuts')}
                 <DropdownMenuShortcut className="pl-6">{modKey}/</DropdownMenuShortcut>
               </StyledDropdownMenuItem>
             </StyledDropdownMenuSubContent>
@@ -249,21 +251,21 @@ export function AppMenu({
               <DropdownMenuSub>
                 <StyledDropdownMenuSubTrigger>
                   <Bug className="h-3.5 w-3.5" />
-                  Debug
+                  {t('debug')}
                 </StyledDropdownMenuSubTrigger>
                 <StyledDropdownMenuSubContent>
                   <StyledDropdownMenuItem onClick={() => window.electronAPI.checkForUpdates()}>
                     <Download className="h-3.5 w-3.5" />
-                    Check for Updates
+                    {t('checkForUpdates')}
                   </StyledDropdownMenuItem>
                   <StyledDropdownMenuItem onClick={() => window.electronAPI.installUpdate()}>
                     <Download className="h-3.5 w-3.5" />
-                    Install Update
+                    {t('installUpdate')}
                   </StyledDropdownMenuItem>
                   <StyledDropdownMenuSeparator />
                   <StyledDropdownMenuItem onClick={() => window.electronAPI.menuToggleDevTools()}>
                     <Bug className="h-3.5 w-3.5" />
-                    Toggle DevTools
+                    {t('toggleDevTools')}
                     <DropdownMenuShortcut className="pl-6">{isMac ? '⌥⌘I' : 'Ctrl+Shift+I'}</DropdownMenuShortcut>
                   </StyledDropdownMenuItem>
                 </StyledDropdownMenuSubContent>
@@ -276,7 +278,7 @@ export function AppMenu({
           {/* Quit */}
           <StyledDropdownMenuItem onClick={() => window.electronAPI.menuQuit()}>
             <LogOut className="h-3.5 w-3.5" />
-            Quit Craft Agents
+            {t('quit', { appName: t('appName') })}
             <DropdownMenuShortcut className="pl-6">{modKey}Q</DropdownMenuShortcut>
           </StyledDropdownMenuItem>
         </StyledDropdownMenuContent>

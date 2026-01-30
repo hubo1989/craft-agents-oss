@@ -664,6 +664,11 @@ export const IPC_CHANNELS = {
   // Logo URL resolution (uses Node.js filesystem cache)
   LOGO_GET_URL: 'logo:getUrl',
 
+  // Language/i18n
+  LANGUAGE_GET: 'language:get',
+  LANGUAGE_SET: 'language:set',
+  LANGUAGE_CHANGED: 'language:changed',  // Broadcast: language changed in another window
+
   // Notifications
   NOTIFICATION_SHOW: 'notification:show',
   NOTIFICATION_NAVIGATE: 'notification:navigate',  // Broadcast: { workspaceId, sessionId }
@@ -833,6 +838,11 @@ export interface ElectronAPI {
   // Session-specific model (overrides global)
   getSessionModel(sessionId: string, workspaceId: string): Promise<string | null>
   setSessionModel(sessionId: string, workspaceId: string, model: string | null): Promise<void>
+
+  // Language/i18n
+  getLanguage(): Promise<string>
+  setLanguage(language: string): Promise<void>
+  onLanguageChanged(callback: (language: string) => void): () => void
 
   // Workspace Settings (per-workspace configuration)
   getWorkspaceSettings(workspaceId: string): Promise<WorkspaceSettings | null>

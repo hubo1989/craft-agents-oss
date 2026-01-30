@@ -1176,6 +1176,7 @@ export function FreeFormInput({
             overridePlaceholder={addLabelEditConfig.overridePlaceholder}
             secondaryAction={workspaceRootPath ? {
               label: 'Edit File',
+              // eslint-disable-next-line craft-links/no-direct-file-open
               onClick: () => window.electronAPI?.openFile(`${workspaceRootPath}/labels/config.json`),
             } : undefined}
             side="top"
@@ -1662,6 +1663,7 @@ function WorkingDirectoryBadge({
   sessionFolderPath?: string
   isEmptySession?: boolean
 }) {
+  const { t } = useTranslation('chat')
   const [recentDirs, setRecentDirs] = React.useState<string[]>([])
   const [popoverOpen, setPopoverOpen] = React.useState(false)
   const [homeDir, setHomeDir] = React.useState<string>('')
@@ -1762,11 +1764,11 @@ function WorkingDirectoryBadge({
             tooltip={
               hasFolder ? (
                 <span className="flex flex-col gap-0.5">
-                  <span className="font-medium">Working directory</span>
+                  <span className="font-medium">{t('input.workingDirectory')}</span>
                   <span className="text-xs opacity-70">{formatPathForDisplay(workingDirectory, homeDir)}</span>
                   {gitBranch && <span className="text-xs opacity-70">on {gitBranch}</span>}
                 </span>
-              ) : "Choose working directory"
+              ) : t('input.chooseWorkingDirectory')
             }
           />
         </span>

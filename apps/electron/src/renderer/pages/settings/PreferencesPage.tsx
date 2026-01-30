@@ -185,6 +185,7 @@ export default function PreferencesPage() {
   // Handle opening preferences file in editor
   const handleEditPreferences = useCallback(async () => {
     if (!preferencesPath) return
+    // eslint-disable-next-line craft-links/no-direct-file-open
     await window.electronAPI.openFile(preferencesPath)
   }, [preferencesPath])
 

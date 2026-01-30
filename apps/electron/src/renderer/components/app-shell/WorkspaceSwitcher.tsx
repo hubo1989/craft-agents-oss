@@ -217,7 +217,7 @@ export function WorkspaceSwitcher({
           className="font-sans"
         >
           <FolderPlus className="h-4 w-4" />
-          {t('workspace.addWorkspace')}
+          {t('workspace.addWorkspaceTitle')}
         </StyledDropdownMenuItem>
       </StyledDropdownMenuContent>
     </DropdownMenu>

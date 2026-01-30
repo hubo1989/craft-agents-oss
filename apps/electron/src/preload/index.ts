@@ -428,6 +428,15 @@ const api: ElectronAPI = {
 
   setLanguage: (language: string) => ipcRenderer.invoke(IPC_CHANNELS.LANGUAGE_SET, language),
   getLanguage: () => ipcRenderer.invoke(IPC_CHANNELS.LANGUAGE_GET),
+  onLanguageChanged: (callback: (language: string) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, language: string) => {
+      callback(language)
+    }
+    ipcRenderer.on(IPC_CHANNELS.LANGUAGE_CHANGED, handler)
+    return () => {
+      ipcRenderer.removeListener(IPC_CHANNELS.LANGUAGE_CHANGED, handler)
+    }
+  },
 }
 
 contextBridge.exposeInMainWorld('electronAPI', api)

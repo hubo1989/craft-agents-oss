@@ -29,7 +29,7 @@ import { EditPopover, EditButton, getEditConfig } from '@/components/ui/EditPopo
 import { getDocUrl } from '@craft-agent/shared/docs/doc-links'
 import { routes } from '@/lib/navigate'
 import type { DetailsPageMeta } from '@/lib/navigation-registry'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 export const meta: DetailsPageMeta = {
   navigator: 'settings',
@@ -79,7 +79,7 @@ function buildDefaultPermissionsData(config: PermissionsConfigFile | null): Perm
   // Write paths
   config.allowedWritePaths?.forEach((item) => {
     const { pattern, comment } = extractPatternInfo(item)
-    rows.push({ access: 'allowed', type: 'tool', pattern: `Write to: ${pattern}`, comment })
+    rows.push({ access: 'allowed', type: 'tool', pattern: pattern, comment })
   })
 
   return rows
@@ -89,42 +89,42 @@ function buildDefaultPermissionsData(config: PermissionsConfigFile | null): Perm
  * Build custom permissions data from workspace permissions.json.
  * These are user-added patterns that extend the defaults.
  */
-function buildCustomPermissionsData(config: PermissionsConfigFile): PermissionRow[] {
+function buildCustomPermissionsData(config: PermissionsConfigFile, t: (key: string, options?: Record<string, unknown>) => string): PermissionRow[] {
   const rows: PermissionRow[] = []
 
   // Additional blocked tools
   config.blockedTools?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Custom blocked tool' : (item.comment || 'Custom blocked tool')
+    const comment = typeof item === 'string' ? t('permissions.customComments.blockedTool') : (item.comment || t('permissions.customComments.blockedTool'))
     rows.push({ access: 'blocked', type: 'tool', pattern, comment })
   })
 
   // Additional bash patterns
   config.allowedBashPatterns?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Custom bash pattern' : (item.comment || 'Custom bash pattern')
+    const comment = typeof item === 'string' ? t('permissions.customComments.bashPattern') : (item.comment || t('permissions.customComments.bashPattern'))
     rows.push({ access: 'allowed', type: 'bash', pattern, comment })
   })
 
   // Additional MCP patterns
   config.allowedMcpPatterns?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Custom MCP pattern' : (item.comment || 'Custom MCP pattern')
+    const comment = typeof item === 'string' ? t('permissions.customComments.mcpPattern') : (item.comment || t('permissions.customComments.mcpPattern'))
     rows.push({ access: 'allowed', type: 'mcp', pattern, comment })
   })
 
   // API endpoints
   config.allowedApiEndpoints?.forEach((item) => {
     const pattern = `${item.method} ${item.path}`
-    rows.push({ access: 'allowed', type: 'api', pattern, comment: item.comment || 'Custom API endpoint' })
+    rows.push({ access: 'allowed', type: 'api', pattern, comment: item.comment || t('permissions.customComments.apiEndpoint') })
   })
 
   // Write paths are shown as allowed paths
   config.allowedWritePaths?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Allowed write path' : (item.comment || 'Allowed write path')
+    const comment = typeof item === 'string' ? t('permissions.customComments.writePath') : (item.comment || t('permissions.customComments.writePath'))
     // Show as a special "tool" type since it's about Write/Edit operations
-    rows.push({ access: 'allowed', type: 'tool', pattern: `Write to: ${pattern}`, comment })
+    rows.push({ access: 'allowed', type: 'tool', pattern: t('permissions.writeTo', { path: pattern }) as string, comment })
   })
 
   return rows
@@ -147,8 +147,8 @@ export default function PermissionsSettingsPage() {
   // Build custom permissions data from workspace permissions.json
   const customPermissionsData = useMemo(() => {
     if (!customConfig) return []
-    return buildCustomPermissionsData(customConfig)
-  }, [customConfig])
+    return buildCustomPermissionsData(customConfig, t)
+  }, [customConfig, t])
 
   // Load both default and workspace permissions configs
   useEffect(() => {
@@ -242,6 +242,7 @@ export default function PermissionsSettingsPage() {
                           secondaryAction={{
                             label: t('permissions.editFile'),
                             onClick: () => {
+                              // eslint-disable-next-line craft-links/no-direct-file-open
                               window.electronAPI.openFile(defaultPermissionsPath)
                             },
                           }}
@@ -262,7 +263,11 @@ export default function PermissionsSettingsPage() {
                         <div className="p-8 text-center text-muted-foreground">
                           <p className="text-sm">{t('permissions.noDefaultPermissions')}</p>
                           <p className="text-xs mt-1 text-foreground/40">
-                            Default permissions should be at <code className="bg-foreground/5 px-1 rounded">~/.craft-agent/permissions/default.json</code>
+                            <Trans
+                              i18nKey="settings:permissions.defaultPermissionsLocation"
+                              values={{ path: '~/.craft-agent/permissions/default.json' }}
+                              components={{ code: <code className="bg-foreground/5 px-1 rounded" /> }}
+                            />
                           </p>
                         </div>
                       )}
@@ -286,6 +291,7 @@ export default function PermissionsSettingsPage() {
                               label: t('permissions.editFile'),
                               onClick: () => {
                                 const permissionsPath = `${activeWorkspace.rootPath}/permissions.json`
+                                // eslint-disable-next-line craft-links/no-direct-file-open
                                 window.electronAPI.openFile(permissionsPath)
                               },
                             } : undefined}

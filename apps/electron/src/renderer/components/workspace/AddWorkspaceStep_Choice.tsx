@@ -57,7 +57,7 @@ export function AddWorkspaceStep_Choice({
   onCreateNew,
   onOpenFolder
 }: AddWorkspaceStep_ChoiceProps) {
-  const { t } = useTranslation('workspace')
+  const { t } = useTranslation('settings')
   return (
     <AddWorkspaceContainer>
       <div className="mt-2" />

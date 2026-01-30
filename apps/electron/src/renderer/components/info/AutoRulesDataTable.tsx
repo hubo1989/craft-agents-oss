@@ -277,7 +277,7 @@ export function AutoRulesDataTable({
         'text-muted-foreground/50 hover:text-foreground',
         'focus:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:opacity-100'
       )}
-      title="View Fullscreen"
+      title={t('common.viewFullscreen')}
     >
       <Maximize2 className="w-3.5 h-3.5" />
     </button>
@@ -288,9 +288,9 @@ export function AutoRulesDataTable({
       <Info_DataTable
         columns={columns}
         data={rows}
-        searchable={searchable ? { placeholder: 'Search rules...' } : false}
+        searchable={searchable ? { placeholder: t('labels.searchRules') } : false}
         maxHeight={maxHeight}
-        emptyContent="No auto-apply rules configured"
+        emptyContent={t('labels.noAutoApplyRules')}
         floatingAction={fullscreenButton}
         className={cn(fullscreen && 'group', className)}
       />
